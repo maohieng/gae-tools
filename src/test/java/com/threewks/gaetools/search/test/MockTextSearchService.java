@@ -34,12 +34,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class MockTextSearchService<T, K> implements TextSearchService<T, K>, SearchExecutor<T, K, MockSearch<T, K>> {
-    private List<T> indexed = new ArrayList<T>();
-    private List<T> removed = new ArrayList<T>();
-    private List<K> removedIds = new ArrayList<K>();
+    private List<T> indexed = new ArrayList<>();
+    private List<T> removed = new ArrayList<>();
+    private List<K> removedIds = new ArrayList<>();
     private boolean removedAll = false;
-    private List<K> expectedResultIds = new ArrayList<K>();
-    private List<T> expectedResults = new ArrayList<T>();
+    private List<K> expectedResultIds = new ArrayList<>();
+    private List<T> expectedResults = new ArrayList<>();
 
     public MockTextSearchService() {
     }

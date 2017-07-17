@@ -150,7 +150,7 @@ public class TransformerManagerTest {
     public void shouldReturnANoopTransformerForAssignableTypes() {
         ETransformer<ArrayList, List> noop = transformerManager.getTransformer(ArrayList.class, List.class);
         assertThat(noop, is(notNullValue()));
-        ArrayList<String> original = new ArrayList<String>();
+        ArrayList<String> original = new ArrayList<>();
         original.add("entry");
         assertThat(noop.from(original), sameInstance((List) original));
     }
@@ -182,12 +182,7 @@ public class TransformerManagerTest {
 
     @Test
     public void shouldRegisterBasicTypeAndBoxedTypeForToAndFromTransformer() {
-        ETransformer<Integer, Long> expected = new ETransformer<Integer, Long>() {
-            @Override
-            public Long from(Integer from) {
-                return null;
-            }
-        };
+        ETransformer<Integer, Long> expected = from -> null;
 
         assertThat(transformerManager.getTransformer(Integer.class, Long.class), is(nullValue()));
         assertThat(transformerManager.getTransformer(int.class, long.class), is(nullValue()));
@@ -324,8 +319,8 @@ public class TransformerManagerTest {
         StringToLong registered = new StringToLong();
         transformerManager.register(String.class, Long.class, registered);
 
-        assertThat(transformerManager.transform(String.class, Long.class, "1"), is(1l));
-        assertThat(transformerManager.transform(String.class, Number.class, "1"), is((Number) new Long(1)));
+        assertThat(transformerManager.transform(String.class, Long.class, "1"), is(1L));
+        assertThat(transformerManager.transform(String.class, Number.class, "1"), is((Number) 1L));
     }
 
     @Test
@@ -334,7 +329,7 @@ public class TransformerManagerTest {
         transformerManager.register(String.class, Long.class, registered);
 
         assertThat(transformerManager.transformAll(String.class, Long.class, list("1", "2")), is(list(1l, 2l)));
-        assertThat(transformerManager.transformAll(String.class, Number.class, list("1", "2")), is(list((Number) new Long(1), (Number) new Long(2))));
+        assertThat(transformerManager.transformAll(String.class, Number.class, list("1", "2")), is(list((Number) 1L, (Number) 2L)));
     }
 
     @Test
@@ -342,7 +337,7 @@ public class TransformerManagerTest {
         NumberToString registered = new NumberToString();
         transformerManager.register(Number.class, String.class, registered);
 
-        assertThat(transformerManager.transformAll(Number.class, String.class, Expressive.<Number>list(new Long(1l), new Integer(2))), is(list("1", "2")));
+        assertThat(transformerManager.transformAll(Number.class, String.class, Expressive.<Number>list(1l, 2)), is(list("1", "2")));
         assertThat(transformerManager.transformAll(Integer.class, String.class, list(1, 2)), is(list("1", "2")));
     }
 

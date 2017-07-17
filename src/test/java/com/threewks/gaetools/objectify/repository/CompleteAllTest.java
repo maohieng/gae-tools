@@ -29,21 +29,21 @@ import static org.junit.Assert.assertThat;
 public class CompleteAllTest {
     @Test
     public void shouldCompleteAsync() {
-        AsyncResult<String> async1 = new MockAsyncResult<String>("first");
+        AsyncResult<String> async1 = new MockAsyncResult<>("first");
         assertThat(CompleteAll.async(async1), is(Arrays.asList("first")));
     }
 
     @Test
     public void shouldCompleteAllAsync() {
-        AsyncResult<String> async1 = new MockAsyncResult<String>("first");
-        AsyncResult<String> async2 = new MockAsyncResult<String>("second");
+        AsyncResult<String> async1 = new MockAsyncResult<>("first");
+        AsyncResult<String> async2 = new MockAsyncResult<>("second");
         assertThat(CompleteAll.async(async1, async2), is(Arrays.asList("first", "second")));
     }
 
     @Test
     public void shouldCompleteAllAsyncWithMixedTypes() {
-        AsyncResult<String> async1 = new MockAsyncResult<String>("first");
-        AsyncResult<Long> async2 = new MockAsyncResult<Long>(1l);
+        AsyncResult<String> async1 = new MockAsyncResult<>("first");
+        AsyncResult<Long> async2 = new MockAsyncResult<>(1l);
         assertThat(CompleteAll.async(async1, async2), is(Arrays.asList("first", 1l)));
     }
 

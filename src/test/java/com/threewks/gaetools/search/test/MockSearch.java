@@ -52,7 +52,7 @@ public class MockSearch<T, K> implements Search<T, K> {
 
             @Override
             public Result<T, K> createSearchResult(MockSearch<T, K> searchRequest) {
-                return new MockResult<T, K>(expectedResults, expectedResultIds);
+                return new MockResult<>(expectedResults, expectedResultIds);
             }
 
         };
@@ -91,7 +91,7 @@ public class MockSearch<T, K> implements Search<T, K> {
 
     @Override
     public Search<T, K> order(String field, boolean ascending) {
-        List<OrderComponent> sort = new ArrayList<OrderComponent>(this.sort);
+        List<OrderComponent> sort = new ArrayList<>(this.sort);
         sort.add(OrderComponent.forField(field, ascending));
         return new MockSearch<>(executor, queryComponents, sort, accuracy, limit, offset);
     }

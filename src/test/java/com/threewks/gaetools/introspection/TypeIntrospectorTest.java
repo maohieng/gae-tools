@@ -43,7 +43,7 @@ public class TypeIntrospectorTest {
         assertThat(TypeIntrospector.isACollection(List.class), is(true));
         assertThat(TypeIntrospector.isACollection(Set.class), is(true));
 
-        ArrayList<String> s = new ArrayList<String>();
+        ArrayList<String> s = new ArrayList<>();
         List<String> s2 = s;
         Collection<String> s3 = s;
         assertThat(TypeIntrospector.isACollection(s.getClass()), is(true));

@@ -65,7 +65,7 @@ public class FieldAccessorTest {
 
         Field field = FieldPojo.class.getDeclaredField("field");
 
-        FieldAccessor<FieldAccessorTest, String> fieldAccessor = new FieldAccessor<FieldAccessorTest, String>(FieldAccessorTest.class, field, "encoded-name", "notAField", IndexType.Text);
+        FieldAccessor<FieldAccessorTest, String> fieldAccessor = new FieldAccessor<>(FieldAccessorTest.class, field, "encoded-name", "notAField", IndexType.Text);
         fieldAccessor.get(this);
     }
 

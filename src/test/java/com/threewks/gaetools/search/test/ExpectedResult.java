@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpectedResult<T, K> {
-    private List<K> expectedResultIds = new ArrayList<K>();
-    private List<T> expectedResults = new ArrayList<T>();
+    private List<K> expectedResultIds = new ArrayList<>();
+    private List<T> expectedResults = new ArrayList<>();
 
     public ExpectedResult(List<K> expectedResultIds, List<T> expectedResults) {
         super();
