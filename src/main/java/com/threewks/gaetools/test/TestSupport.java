@@ -17,7 +17,7 @@
  */
 package com.threewks.gaetools.test;
 
-import jodd.util.ReflectUtil;
+import jodd.util.ClassUtil;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -51,7 +51,7 @@ public class TestSupport {
     }
 
     private static Field getField(String fieldName, Class<?> class1) {
-        Field[] supportedFields = ReflectUtil.getSupportedFields(class1);
+        Field[] supportedFields = ClassUtil.getSupportedFields(class1);
         for (Field field : supportedFields) {
             if (field.getName().equals(fieldName)) {
                 return field;
@@ -69,7 +69,7 @@ public class TestSupport {
      */
     public static <T> Map<String, Object> extractState(T target) {
         try {
-            Field[] fields = ReflectUtil.getSupportedFields(target.getClass());
+            Field[] fields = ClassUtil.getSupportedFields(target.getClass());
             Map<String, Object> results = new HashMap<>();
             for (Field field : fields) {
                 field.setAccessible(true);

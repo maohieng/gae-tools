@@ -410,7 +410,7 @@ public abstract class BaseGaeSearchService<T, K> implements SearchExecutor<T, K,
                 T instance = type.newInstance();
                 for (Map.Entry<String, Object> entry : from.entrySet()) {
                     String field = metadata.getDecodedFieldName(entry.getKey());
-                    BeanUtil.setDeclaredPropertyForcedSilent(instance, field, entry.getValue());
+                    BeanUtil.declaredForcedSilent.setProperty(instance, field, entry.getValue());
                 }
                 return instance;
             } catch (Exception e) {

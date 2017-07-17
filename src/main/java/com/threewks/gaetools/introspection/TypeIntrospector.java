@@ -18,7 +18,7 @@
 package com.threewks.gaetools.introspection;
 
 import com.atomicleopard.expressive.Expressive;
-import jodd.util.ReflectUtil;
+import jodd.util.ClassUtil;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class TypeIntrospector {
      * @return the class type of the type in the collection, or null if it cannot be determined.
      */
     public static Class<?> getCollectionType(Type type) {
-        return ReflectUtil.getComponentType(type, 0);
+        return ClassUtil.getComponentType(type, 0);
     }
 
     /**
@@ -129,11 +129,11 @@ public class TypeIntrospector {
 
     @SuppressWarnings("unchecked")
     public static <T> Class<T> asClass(Type type) {
-        return ReflectUtil.getRawType(type);
+        return ClassUtil.getRawType(type);
     }
 
     public static boolean isGeneric(Type type) {
-        return ReflectUtil.getComponentType(type, 0) != null;
+        return ClassUtil.getComponentType(type, 0) != null;
     }
 
     private static Map<Class<?>, Class<?>> boxedTypes(Map<Class<?>, Class<?>> primitiveTypes2) {

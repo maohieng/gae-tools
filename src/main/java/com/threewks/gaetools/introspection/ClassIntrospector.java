@@ -21,7 +21,7 @@ import com.atomicleopard.expressive.EList;
 import com.atomicleopard.expressive.Expressive;
 import jodd.introspector.ClassDescriptor;
 import jodd.introspector.CtorDescriptor;
-import jodd.util.ReflectUtil;
+import jodd.util.ClassUtil;
 import org.apache.commons.lang3.ClassUtils;
 
 import java.lang.reflect.Constructor;
@@ -54,10 +54,10 @@ public class ClassIntrospector {
     }
 
     public <T> List<Method> listSetters(Class<T> type) {
-        Method[] methods = ReflectUtil.getSupportedMethods(type);
+        Method[] methods = ClassUtil.getSupportedMethods(type);
         List<Method> setters = new ArrayList<>();
         for (Method method : methods) {
-            if (ReflectUtil.getBeanPropertySetterName(method) != null) {
+            if (ClassUtil.getBeanPropertySetterName(method) != null) {
                 setters.add(method);
             }
         }
@@ -65,7 +65,7 @@ public class ClassIntrospector {
     }
 
     public <T> List<Field> listFields(Class<T> type) {
-        return Arrays.asList(ReflectUtil.getSupportedFields(type));
+        return Arrays.asList(ClassUtil.getSupportedFields(type));
     }
 
     public List<Class<?>> listImplementedTypes(Class<?> type) {
@@ -87,7 +87,7 @@ public class ClassIntrospector {
     // TODO - NAO - Isolate dependencies on ReflectUtil and other introspection magic to
     // just this package.
     public List<Method> listMethods(Class<?> type) {
-        return Arrays.asList(ReflectUtil.getSupportedMethods(type));
+        return Arrays.asList(ClassUtil.getSupportedMethods(type));
     }
 
     @SuppressWarnings("rawtypes")

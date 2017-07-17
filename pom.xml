@@ -23,8 +23,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <gae.version>1.9.54</gae.version>
-        <objectify.version>5.1.10</objectify.version>
-        <jodd.version>3.6.6</jodd.version>
+        <objectify.version>5.1.21</objectify.version>
+        <jodd.version>3.8.6</jodd.version>
     </properties>
 
     <dependencies>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
+            <version>3.6</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
