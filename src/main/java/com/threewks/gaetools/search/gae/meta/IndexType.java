@@ -45,5 +45,5 @@ public enum IndexType {
      */
     SmallDecimal,
     Date,
-    GeoPoint;
+    GeoPoint
 }

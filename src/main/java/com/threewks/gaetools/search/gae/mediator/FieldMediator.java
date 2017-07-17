@@ -27,7 +27,7 @@ import com.threewks.gaetools.transformer.TransformerManager;
  */
 public interface FieldMediator<T> {
 
-    public Class<T> getTargetType();
+    Class<T> getTargetType();
 
     /**
      * Normalise the given object to the type this {@link FieldMediator} operates on
@@ -36,7 +36,7 @@ public interface FieldMediator<T> {
      * @param value
      * @return
      */
-    public <In> T normalise(TransformerManager transformerManager, In value);
+    <In> T normalise(TransformerManager transformerManager, In value);
 
     /**
      * Set the normalised value into the given field
@@ -44,7 +44,7 @@ public interface FieldMediator<T> {
      * @param builder
      * @param value
      */
-    public void setValue(Field.Builder builder, T value);
+    void setValue(Field.Builder builder, T value);
 
     /**
      * Convert the given noramlised object to a string suitable for querying.
@@ -52,6 +52,6 @@ public interface FieldMediator<T> {
      * @param value
      * @return
      */
-    public String stringify(T value);
+    String stringify(T value);
 
 }

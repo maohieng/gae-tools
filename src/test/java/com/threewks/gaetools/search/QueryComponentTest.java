@@ -54,7 +54,7 @@ public class QueryComponentTest {
         assertThat(queryComponent.getQuery(), is(nullValue()));
         assertThat(queryComponent.isFieldedQuery(), is(true));
         assertThat(queryComponent.getField(), is("field"));
-        assertThat(queryComponent.getCollectionValue(), Matchers.<Object>hasItems("1", "2"));
+        assertThat(queryComponent.getCollectionValue(), Matchers.hasItems("1", "2"));
         assertThat(queryComponent.getValue(), is(nullValue()));
         assertThat(queryComponent.getIs(), is(nullValue()));
     }

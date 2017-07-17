@@ -25,15 +25,15 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 public class StringToInputStream implements ETransformer<String, InputStream> {
-    private String encoding = "UTF-8";
 
-    @Override
+	@Override
     public InputStream from(String from) {
         if (from == null) {
             return null;
         }
         try {
-            byte[] bytes = from.getBytes(encoding);
+			String encoding = "UTF-8";
+			byte[] bytes = from.getBytes(encoding);
             return new ByteArrayInputStream(bytes);
         } catch (UnsupportedEncodingException e) {
             throw new BaseException(e, "Failed to get byte data from string: %s", e.getMessage());

@@ -60,13 +60,12 @@ public class LongRepositoryTest {
 
     private LongRepository<LongTestEntity> repository;
     private LongRepository<LongTestEntity> noSearchrepository;
-    private SearchConfig searchConfig;
 
     @Before
     public void before() {
         TransformerManager transformerManager = ObjectifyModule.defaultTransformerManager();
         IndexTypeLookup indexTypeLookup = SearchModule.defaultIndexTypeLookup();
-        searchConfig = new SearchConfig(transformerManager, new FieldMediatorSet(), indexTypeLookup);
+        SearchConfig searchConfig = new SearchConfig(transformerManager, new FieldMediatorSet(), indexTypeLookup);
         repository = new LongRepository<>(LongTestEntity.class, searchConfig);
         noSearchrepository = new LongRepository<>(LongTestEntity.class, null);
     }
@@ -130,7 +129,7 @@ public class LongRepositoryTest {
         repository.putAsync(testEntity, testEntity2).complete();
 
         List<Long> search = repository.search().field("name", list("name", "name2")).run().getResultIds();
-        assertThat(search, hasItems(1l, 2l));
+        assertThat(search, hasItems(1L, 2L));
     }
 
     @Test
@@ -234,7 +233,7 @@ public class LongRepositoryTest {
 
         repository.deleteByKeyAsync(testEntity.getId(), testEntity2.getId()).complete();
 
-        assertThat(repository.get(testEntity.getId(), testEntity2.getId()), Matchers.<LongTestEntity>hasItems(nullValue(), nullValue()));
+        assertThat(repository.get(testEntity.getId(), testEntity2.getId()), Matchers.hasItems(nullValue(), nullValue()));
         assertThat(repository.search().field("id", list(testEntity.getId(), testEntity2.getId())).run().getResults().isEmpty(), is(true));
     }
 
@@ -251,7 +250,7 @@ public class LongRepositoryTest {
 
         repository.deleteAsync(testEntity, testEntity2).complete();
 
-        assertThat(repository.get(testEntity.getId(), testEntity2.getId()), Matchers.<LongTestEntity>hasItems(nullValue(), nullValue()));
+        assertThat(repository.get(testEntity.getId(), testEntity2.getId()), Matchers.hasItems(nullValue(), nullValue()));
         assertThat(repository.search().field("id", list(testEntity.getId(), testEntity2.getId())).run().getResults().isEmpty(), is(true));
     }
 
@@ -363,7 +362,7 @@ public class LongRepositoryTest {
 
         noSearchrepository.deleteByKeyAsync(testEntity.getId(), testEntity2.getId()).complete();
 
-        assertThat(noSearchrepository.get(testEntity.getId(), testEntity2.getId()), Matchers.<LongTestEntity>hasItems(nullValue(), nullValue()));
+        assertThat(noSearchrepository.get(testEntity.getId(), testEntity2.getId()), Matchers.hasItems(nullValue(), nullValue()));
     }
 
     @Test

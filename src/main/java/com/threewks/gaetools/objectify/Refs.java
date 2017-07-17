@@ -34,7 +34,7 @@ public class Refs {
     }
 
     public static <T> Collection<T> unref(Collection<Ref<T>> refs) {
-        return Expressive.isEmpty(refs) ? Collections.<T>emptyList() : ofy().load().refs(refs).values();
+        return Expressive.isEmpty(refs) ? Collections.emptyList() : ofy().load().refs(refs).values();
     }
 
     public static <T> Ref<T> ref(T instance) {
@@ -60,7 +60,7 @@ public class Refs {
     }
 
     public static <T> Key<T> key(com.google.appengine.api.datastore.Key key) {
-        return key == null ? null : Key.<T>create(key);
+        return key == null ? null : Key.create(key);
     }
 
     public static <T> T unkey(Key<T> key) {
@@ -68,7 +68,7 @@ public class Refs {
     }
 
     public static <T> Collection<T> unkey(Iterable<Key<T>> keys) {
-        return Expressive.isEmpty(keys) ? Collections.<T>emptyList() : ofy().load().keys(keys).values();
+        return Expressive.isEmpty(keys) ? Collections.emptyList() : ofy().load().keys(keys).values();
     }
 
 }

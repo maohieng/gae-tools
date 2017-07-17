@@ -34,7 +34,7 @@ public interface Repository<E, K> {
      * @param entity
      * @return the entity
      */
-    public E put(final E entity);
+    E put(final E entity);
 
     /**
      * Save the given entities.
@@ -43,7 +43,7 @@ public interface Repository<E, K> {
      * @return the list of saved entities
      */
     @SuppressWarnings("unchecked")
-    public List<E> put(E... entities);
+    List<E> put(E... entities);
 
     /**
      * Save the given entities.
@@ -51,7 +51,7 @@ public interface Repository<E, K> {
      * @param entities
      * @return the list of saved entities
      */
-    public List<E> put(final List<E> entities);
+    List<E> put(final List<E> entities);
 
     /**
      * Load the entity with the given id
@@ -59,7 +59,7 @@ public interface Repository<E, K> {
      * @param key
      * @return the entity, or null if no entity exists
      */
-    public E get(K key);
+    E get(K key);
 
     /**
      * Load the entities with the given ids
@@ -68,7 +68,7 @@ public interface Repository<E, K> {
      * @return a list containing an entry for each corresponding id, containing the entity or null if none exists
      */
     @SuppressWarnings("unchecked")
-    public List<E> get(K... keys);
+    List<E> get(K... keys);
 
     /**
      * Load the entities with the given ids
@@ -76,7 +76,7 @@ public interface Repository<E, K> {
      * @param keys
      * @return a list containing an entry for each corresponding id, containing the entity or null if none exists
      */
-    public List<E> get(Iterable<K> keys);
+    List<E> get(Iterable<K> keys);
 
     /**
      * List up to count entities.
@@ -85,7 +85,7 @@ public interface Repository<E, K> {
      * @param count
      * @return
      */
-    public List<E> list(int count);
+    List<E> list(int count);
 
     /**
      * Load all entities whose field has the value of the given object.
@@ -96,7 +96,7 @@ public interface Repository<E, K> {
      * @param value
      * @return
      */
-    public List<E> getByField(String field, Object value);
+    List<E> getByField(String field, Object value);
 
     /**
      * Load all entities who field has the values of any of the given objects.
@@ -107,19 +107,19 @@ public interface Repository<E, K> {
      * @param values
      * @return
      */
-    public List<E> getByField(String field, List<? extends Object> values);
+    List<E> getByField(String field, List<?> values);
 
     /**
      * @return a builder for a search operation
      */
-    public Search<E, K> search();
+    Search<E, K> search();
 
     /**
      * Delete the entity with the given id
      *
      * @param key
      */
-    public void deleteByKey(K key);
+    void deleteByKey(K key);
 
     /**
      * Delete the entities with the given ids
@@ -127,21 +127,21 @@ public interface Repository<E, K> {
      * @param keys
      */
     @SuppressWarnings("unchecked")
-    public void deleteByKey(K... keys);
+    void deleteByKey(K... keys);
 
     /**
      * Delete the entities with the given ids
      *
      * @param ids
      */
-    public void deleteByKey(Iterable<K> ids);
+    void deleteByKey(Iterable<K> ids);
 
     /**
      * Delete the given entity
      *
      * @param entity
      */
-    public void delete(E entity);
+    void delete(E entity);
 
     /**
      * Delete the given entities
@@ -149,14 +149,14 @@ public interface Repository<E, K> {
      * @param entities
      */
     @SuppressWarnings("unchecked")
-    public void delete(E... entities);
+    void delete(E... entities);
 
     /**
      * Delete the given entities
      *
      * @param entities
      */
-    public void delete(Iterable<E> entities);
+    void delete(Iterable<E> entities);
 
     /**
      * Reindexes all the entities matching the given list of keys. The given {@link ReindexOperation}, if present will
@@ -167,5 +167,5 @@ public interface Repository<E, K> {
      * @param reindexOperation
      * @return the overall count of re-indexed entities.
      */
-    public int reindex(List<K> keys, int batchSize, ReindexOperation<E> reindexOperation);
+    int reindex(List<K> keys, int batchSize, ReindexOperation<E> reindexOperation);
 }

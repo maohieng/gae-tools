@@ -34,7 +34,7 @@ public interface Search<T, K> {
      * @param query
      * @return
      */
-    public Search<T, K> query(CharSequence query);
+    Search<T, K> query(CharSequence query);
 
     /**
      * Defines a search operation on the given field to apply to the current search.
@@ -42,7 +42,7 @@ public interface Search<T, K> {
      * @param field
      * @return
      */
-    public <V> Search<T, K> field(String field, Is is, V value);
+    <V> Search<T, K> field(String field, Is is, V value);
 
     /**
      * Defines a search operation on the given field to match one of the given values
@@ -50,7 +50,7 @@ public interface Search<T, K> {
      * @param field
      * @return
      */
-    public <V> Search<T, K> field(String field, Collection<V> values);
+    <V> Search<T, K> field(String field, Collection<V> values);
 
     /**
      * Limits the number of results in the final {@link Result}
@@ -58,7 +58,7 @@ public interface Search<T, K> {
      * @param limit
      * @return
      */
-    public Search<T, K> limit(Integer limit);
+    Search<T, K> limit(Integer limit);
 
     /**
      * Adjusts the results in the final {@link Result} such that the given number of results are skipped over
@@ -67,7 +67,7 @@ public interface Search<T, K> {
      * @param offset
      * @return
      */
-    public Search<T, K> offset(Integer offset);
+    Search<T, K> offset(Integer offset);
 
     /**
      * Allows control of the accuracy of the number of matches on the response. If the number of
@@ -77,7 +77,7 @@ public interface Search<T, K> {
      * @return
      * @see Result#getMatchingRecordCount()
      */
-    public Search<T, K> accuracy(Integer accuracy);
+    Search<T, K> accuracy(Integer accuracy);
 
     /**
      * Defines a sort order on the given field to apply to the current search.
@@ -85,38 +85,38 @@ public interface Search<T, K> {
      * @param field
      * @return
      */
-    public Search<T, K> order(String field, boolean ascending);
+    Search<T, K> order(String field, boolean ascending);
 
     /**
      * Performs the search operation by combining all the previously specified search operations, sort orders, limits and offset.
      *
      * @return
      */
-    public Result<T, K> run();
+    Result<T, K> run();
 
     /**
      * @return the ordered series of query fragments that were specified on this search request
      */
-    public List<QueryComponent> query();
+    List<QueryComponent> query();
 
     /**
      * @return the ordered series of sort operations that were specified on this search request
      */
-    public List<OrderComponent> order();
+    List<OrderComponent> order();
 
     /**
      * @return the limit applied to this search request
      */
-    public Integer limit();
+    Integer limit();
 
     /**
      * @return the offset applied to this search request
      */
-    public Integer offset();
+    Integer offset();
 
     /**
      * @return the accuracy applied to this search request
      */
-    public Integer accuracy();
+    Integer accuracy();
 
 }

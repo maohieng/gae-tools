@@ -38,7 +38,7 @@ public interface TextSearchService<T, K> {
      * @param object the object to index.
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation index(T object);
+    IndexOperation index(T object);
 
     /**
      * Index the given objects using the fields annotated with {@link SearchId} and {@link SearchIndex}.
@@ -46,7 +46,7 @@ public interface TextSearchService<T, K> {
      * @param objects
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation index(Collection<T> objects);
+    IndexOperation index(Collection<T> objects);
 
     /**
      * Remove the object with the given id from the index
@@ -54,7 +54,7 @@ public interface TextSearchService<T, K> {
      * @param id
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation removeById(K id);
+    IndexOperation removeById(K id);
 
     /**
      * Remove the given object from the index
@@ -62,7 +62,7 @@ public interface TextSearchService<T, K> {
      * @param object
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation remove(T object);
+    IndexOperation remove(T object);
 
     /**
      * Remove the objects with the given ids from the index.
@@ -70,7 +70,7 @@ public interface TextSearchService<T, K> {
      * @param ids
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation removeById(Iterable<K> ids);
+    IndexOperation removeById(Iterable<K> ids);
 
     /**
      * Remove the given objects from the index
@@ -78,14 +78,14 @@ public interface TextSearchService<T, K> {
      * @param objects
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation remove(Iterable<T> objects);
+    IndexOperation remove(Iterable<T> objects);
 
     /**
      * Remove all objects from the index.
      *
      * @return the number of objects removed from the index.
      */
-    public int removeAll();
+    int removeAll();
 
     /**
      * Create a {@link Search} for the given type. This will return an object which provides a fluent
@@ -93,7 +93,7 @@ public interface TextSearchService<T, K> {
      *
      * @return a {@link Search} that can be used to search.
      */
-    public Search<T, K> search();
+    Search<T, K> search();
 
 
 }

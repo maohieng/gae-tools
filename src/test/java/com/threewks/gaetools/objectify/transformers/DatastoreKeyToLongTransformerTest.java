@@ -39,9 +39,9 @@ public class DatastoreKeyToLongTransformerTest {
 
     @Test
     public void shouldTransform() {
-        Key key = KeyFactory.createKey("kind", 4321l);
-        Key childKey = KeyFactory.createKey(key, "other-kind", 1234l);
-        assertThat(transformer.from(key), is(4321l));
-        assertThat(transformer.from(childKey), is(1234l));
+        Key key = KeyFactory.createKey("kind", 4321L);
+        Key childKey = KeyFactory.createKey(key, "other-kind", 1234L);
+        assertThat(transformer.from(key), is(4321L));
+        assertThat(transformer.from(childKey), is(1234L));
     }
 }

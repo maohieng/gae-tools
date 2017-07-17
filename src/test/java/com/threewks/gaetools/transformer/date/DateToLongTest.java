@@ -40,7 +40,7 @@ public class DateToLongTest {
 
     @Test
     public void shouldTransform() {
-        Date date = new Date(1234l);
-        assertThat(transformer.from(date), is(1234l));
+        Date date = new Date(1234L);
+        assertThat(transformer.from(date), is(1234L));
     }
 }

@@ -194,26 +194,19 @@ public class TypeIntrospectorTest {
         return null;
     }
 
-    ;
-
     @SuppressWarnings("unused")
     private Collection<String> collectionOfStrings() {
         return null;
     }
-
-    ;
 
     @SuppressWarnings("unused")
     private Set<String> setOfStrings() {
         return null;
     }
 
-    ;
-
     @SuppressWarnings("unused")
     private Iterable<String> iterableOfStrings() {
         return null;
     }
 
-    ;
 }

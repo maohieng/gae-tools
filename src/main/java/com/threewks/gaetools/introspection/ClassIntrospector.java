@@ -69,7 +69,7 @@ public class ClassIntrospector {
     }
 
     public List<Class<?>> listImplementedTypes(Class<?> type) {
-        EList<Class<?>> types = Expressive.<Class<?>>list(type);
+        EList<Class<?>> types = Expressive.list(type);
         types.addItems(ClassUtils.getAllSuperclasses(type));
         types.addItems(ClassUtils.getAllInterfaces(type));
         return types;

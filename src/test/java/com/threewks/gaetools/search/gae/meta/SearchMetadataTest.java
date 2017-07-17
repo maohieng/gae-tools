@@ -50,13 +50,13 @@ public class SearchMetadataTest {
     @Test
     public void shouldGetDataRelyingOnAnnotatedFields() {
         SearchMetadata<MetadataTestType, String> metadata = new SearchMetadata<>(MetadataTestType.class, indexTypeLookup);
-        MetadataTestType testType = new MetadataTestType("stringVal", 123, 456l, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
+        MetadataTestType testType = new MetadataTestType("stringVal", 123, 456L, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
         Map<String, Object> data = metadata.getData(testType);
         assertThat(data.size(), is(7));
 
         assertThat(data, hasEntry("stringVal", (Object) "stringVal"));
         assertThat(data, hasEntry("intVal", (Object) 123));
-        assertThat(data, hasEntry("longVal", (Object) 456l));
+        assertThat(data, hasEntry("longVal", (Object) 456L));
         assertThat(data, hasEntry("dateVal", (Object) new Date(123456789)));
         assertThat(data, hasEntry("boolVal", (Object) true));
         assertThat(data, hasEntry("bigdecVal", (Object) new BigDecimal("1.23")));
@@ -66,13 +66,13 @@ public class SearchMetadataTest {
     @Test
     public void shouldGetDataRelyingOnAnnotatedGetters() {
         SearchMetadata<MetadataTestJavabeanType, String> metadata = new SearchMetadata<>(MetadataTestJavabeanType.class, indexTypeLookup);
-        MetadataTestJavabeanType testType = new MetadataTestJavabeanType("stringVal", 123, 456l, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
+        MetadataTestJavabeanType testType = new MetadataTestJavabeanType("stringVal", 123, 456L, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
         Map<String, Object> data = metadata.getData(testType);
         assertThat(data.size(), is(7));
 
         assertThat(data, hasEntry("stringVal", (Object) "stringVal"));
         assertThat(data, hasEntry("intVal", (Object) 123));
-        assertThat(data, hasEntry("longVal", (Object) 456l));
+        assertThat(data, hasEntry("longVal", (Object) 456L));
         assertThat(data, hasEntry("dateVal", (Object) new Date(123456789)));
         assertThat(data, hasEntry("boolVal", (Object) true));
         assertThat(data, hasEntry("bigdecVal", (Object) new BigDecimal("1.23")));
@@ -82,7 +82,7 @@ public class SearchMetadataTest {
     @Test
     public void shouldProvideMetadataAboutTargetType() {
         SearchMetadata<MetadataTestType, String> metadata = new SearchMetadata<>(MetadataTestType.class, indexTypeLookup);
-        MetadataTestType testType = new MetadataTestType("stringVal", 123, 456l, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
+        MetadataTestType testType = new MetadataTestType("stringVal", 123, 456L, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
         assertThat(metadata.getType() == MetadataTestType.class, is(true));
         assertThat(metadata.getKeyType() == String.class, is(true));
         assertThat(metadata.getId(testType), is("stringVal"));
@@ -100,7 +100,7 @@ public class SearchMetadataTest {
     @Test
     public void shouldProvideMetadataAboutTargetJavabeanType() {
         SearchMetadata<MetadataTestJavabeanType, String> metadata = new SearchMetadata<>(MetadataTestJavabeanType.class, indexTypeLookup);
-        MetadataTestJavabeanType testType = new MetadataTestJavabeanType("stringVal", 123, 456l, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
+        MetadataTestJavabeanType testType = new MetadataTestJavabeanType("stringVal", 123, 456L, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
         assertThat(metadata.getType() == MetadataTestJavabeanType.class, is(true));
         assertThat(metadata.getKeyType() == String.class, is(true));
         assertThat(metadata.getId(testType), is("stringVal"));
@@ -305,13 +305,13 @@ public class SearchMetadataTest {
     public void shouldGetDataRelyingOnAnnotatedFieldsInSuperClass() throws Exception {
 
         SearchMetadata<ConcreteFieldPojo, String> metadata = new SearchMetadata<>(ConcreteFieldPojo.class, indexTypeLookup);
-        ConcreteFieldPojo concreteFieldPojo = new ConcreteFieldPojo("stringVal", 123, 456l, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
+        ConcreteFieldPojo concreteFieldPojo = new ConcreteFieldPojo("stringVal", 123, 456L, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
         Map<String, Object> data = metadata.getData(concreteFieldPojo);
         assertThat(data.size(), is(7));
 
         assertThat(data, hasEntry("stringVal", (Object) "stringVal"));
         assertThat(data, hasEntry("intVal", (Object) 123));
-        assertThat(data, hasEntry("longVal", (Object) 456l));
+        assertThat(data, hasEntry("longVal", (Object) 456L));
         assertThat(data, hasEntry("dateVal", (Object) new Date(123456789)));
         assertThat(data, hasEntry("boolVal", (Object) true));
         assertThat(data, hasEntry("bigdecVal", (Object) new BigDecimal("1.23")));
@@ -321,13 +321,13 @@ public class SearchMetadataTest {
     @Test
     public void shouldGetDataRelyingOnAnnotatedGettersInSuperClass() {
         SearchMetadata<ConcreteMethodBean, String> metadata = new SearchMetadata<>(ConcreteMethodBean.class, indexTypeLookup);
-        ConcreteMethodBean concreteMethodBean = new ConcreteMethodBean("stringVal", 123, 456l, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
+        ConcreteMethodBean concreteMethodBean = new ConcreteMethodBean("stringVal", 123, 456L, new Date(123456789), true, new BigDecimal("1.23"), new GeoPoint(1.23, 4.56));
         Map<String, Object> data = metadata.getData(concreteMethodBean);
         assertThat(data.size(), is(7));
 
         assertThat(data, hasEntry("stringVal", (Object) "stringVal"));
         assertThat(data, hasEntry("intVal", (Object) 123));
-        assertThat(data, hasEntry("longVal", (Object) 456l));
+        assertThat(data, hasEntry("longVal", (Object) 456L));
         assertThat(data, hasEntry("dateVal", (Object) new Date(123456789)));
         assertThat(data, hasEntry("boolVal", (Object) true));
         assertThat(data, hasEntry("bigdecVal", (Object) new BigDecimal("1.23")));

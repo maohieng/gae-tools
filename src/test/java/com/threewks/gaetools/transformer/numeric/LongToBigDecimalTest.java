@@ -31,9 +31,9 @@ public class LongToBigDecimalTest {
     @Test
     public void shouldTransform() {
         assertThat(transformer.from(null), is(nullValue()));
-        assertThat(transformer.from(0l), is(new BigDecimal(0)));
-        assertThat(transformer.from(1l), is(new BigDecimal(1)));
-        assertThat(transformer.from(10l), is(new BigDecimal(10)));
+        assertThat(transformer.from(0L), is(new BigDecimal(0)));
+        assertThat(transformer.from(1L), is(new BigDecimal(1)));
+        assertThat(transformer.from(10L), is(new BigDecimal(10)));
         assertThat(transformer.from(Long.MAX_VALUE), is(new BigDecimal("9223372036854775807")));
         assertThat(transformer.from(Long.MIN_VALUE), is(new BigDecimal("-9223372036854775808")));
     }

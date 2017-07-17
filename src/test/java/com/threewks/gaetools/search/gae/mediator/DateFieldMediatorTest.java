@@ -47,7 +47,7 @@ public class DateFieldMediatorTest {
         Date expected = dt.withZone(DateTimeZone.UTC).toDate();
         Builder builder = Field.newBuilder();
         mediator.setValue(builder, dt);
-        assertThat(TestSupport.<Date>getField(builder, "date"), is(expected));
+        assertThat(TestSupport.getField(builder, "date"), is(expected));
     }
 
     @Test

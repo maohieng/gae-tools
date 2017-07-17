@@ -24,5 +24,5 @@ package com.threewks.gaetools.search.gae.naming;
  * @see UniqueIndexNamingStrategy
  */
 public interface IndexNamingStrategy {
-    public String getName(Class<?> type);
+    String getName(Class<?> type);
 }

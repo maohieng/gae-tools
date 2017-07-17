@@ -44,7 +44,7 @@ public class NumberToIntegerTest {
         assertThat(transformer.from(1234.0), is(1234));
         assertThat(transformer.from(1234.0f), is(1234));
         assertThat(transformer.from(10), is(10));
-        assertThat(transformer.from(10l), is(10));
+        assertThat(transformer.from(10L), is(10));
         assertThat(transformer.from((int) 11), is(11));
     }
 }

@@ -33,7 +33,7 @@ public enum Is {
 
     private String toString;
 
-    private Is(String toString) {
+    Is(String toString) {
         this.toString = toString;
     }
 

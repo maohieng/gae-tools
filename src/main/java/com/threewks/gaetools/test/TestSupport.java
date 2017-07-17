@@ -27,7 +27,7 @@ import java.util.Map;
 public class TestSupport {
     public static <T> T setField(T targetObject, String fieldName, Object fieldValue) {
         if (targetObject != null) {
-            Class<? extends Object> class1 = getClass(targetObject);
+            Class<?> class1 = getClass(targetObject);
             try {
                 Field field = getField(fieldName, class1);
                 field.setAccessible(true);
@@ -50,7 +50,7 @@ public class TestSupport {
         }
     }
 
-    private static Field getField(String fieldName, Class<? extends Object> class1) {
+    private static Field getField(String fieldName, Class<?> class1) {
         Field[] supportedFields = ReflectUtil.getSupportedFields(class1);
         for (Field field : supportedFields) {
             if (field.getName().equals(fieldName)) {
@@ -81,8 +81,8 @@ public class TestSupport {
         }
     }
 
-    private static <T> Class<? extends Object> getClass(T targetObject) {
-        Class<? extends Object> class1 = targetObject.getClass();
+    private static <T> Class<?> getClass(T targetObject) {
+        Class<?> class1 = targetObject.getClass();
         return class1;
     }
 }

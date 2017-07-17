@@ -29,9 +29,9 @@ public class LongToStringTest {
     @Test
     public void shouldTransform() {
         assertThat(transformer.from(null), is(nullValue()));
-        assertThat(transformer.from(0l), is("0"));
-        assertThat(transformer.from(-0l), is("0"));
-        assertThat(transformer.from(1234l), is("1234"));
+        assertThat(transformer.from(0L), is("0"));
+        assertThat(transformer.from(-0L), is("0"));
+        assertThat(transformer.from(1234L), is("1234"));
         assertThat(transformer.from(Long.MAX_VALUE), is("9223372036854775807"));
         assertThat(transformer.from(Long.MIN_VALUE), is("-9223372036854775808"));
     }

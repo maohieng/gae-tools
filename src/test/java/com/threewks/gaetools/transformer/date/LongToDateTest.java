@@ -41,7 +41,7 @@ public class LongToDateTest {
     @Test
     public void shouldTransform() {
         long now = System.currentTimeMillis();
-        assertThat(transformer.from(1234l), is(new Date(1234)));
+        assertThat(transformer.from(1234L), is(new Date(1234)));
         assertThat(transformer.from(now), is(new Date(now)));
     }
 }

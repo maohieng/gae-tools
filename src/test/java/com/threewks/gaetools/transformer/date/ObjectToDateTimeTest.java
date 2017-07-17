@@ -43,9 +43,9 @@ public class ObjectToDateTimeTest {
     @Test
     public void shouldTransform() {
         long now = System.currentTimeMillis();
-        assertThat(transformer.from(1234l), is(new DateTime(1234)));
+        assertThat(transformer.from(1234L), is(new DateTime(1234)));
         assertThat(transformer.from(new DateTime(now)), is(new DateTime(now)));
         assertThat(transformer.from(new Date(now)), is(new DateTime(now)));
-        assertThat(transformer.from("2014-06-14T12:34:56.123+10:00").compareTo(new DateTime(2014, 06, 14, 12, 34, 56, 123).withZoneRetainFields(DateTimeZone.forOffsetHours(10))), is(0));
+        assertThat(transformer.from("2014-06-14T12:34:56.123+10:00").compareTo(new DateTime(2014, 6, 14, 12, 34, 56, 123).withZoneRetainFields(DateTimeZone.forOffsetHours(10))), is(0));
     }
 }

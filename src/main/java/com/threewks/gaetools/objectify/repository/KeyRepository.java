@@ -23,7 +23,7 @@ import com.threewks.gaetools.search.gae.SearchConfig;
 
 public class KeyRepository<E> extends AbstractRepository<E, Key<E>> {
     public KeyRepository(Class<E> entityType, SearchConfig searchConfig) {
-        super(entityType, KeyRepository.<E>noopTransformer(), KeyRepository.<E>noopTransformer(), searchConfig);
+        super(entityType, KeyRepository.noopTransformer(), KeyRepository.noopTransformer(), searchConfig);
     }
 
     static <E> ETransformer<Key<E>, Key<E>> noopTransformer() {

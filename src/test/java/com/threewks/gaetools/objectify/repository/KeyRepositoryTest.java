@@ -60,13 +60,12 @@ public class KeyRepositoryTest {
 
     private KeyRepository<KeyTestEntity> repository;
     private KeyRepository<KeyTestEntity> noSearchrepository;
-    private SearchConfig searchConfig;
 
     @Before
     public void before() {
         TransformerManager transformerManager = ObjectifyModule.defaultTransformerManager();
         IndexTypeLookup indexTypeLookup = SearchModule.defaultIndexTypeLookup();
-        searchConfig = new SearchConfig(transformerManager, new FieldMediatorSet(), indexTypeLookup);
+        SearchConfig searchConfig = new SearchConfig(transformerManager, new FieldMediatorSet(), indexTypeLookup);
         repository = new KeyRepository<>(KeyTestEntity.class, searchConfig);
         noSearchrepository = new KeyRepository<>(KeyTestEntity.class, null);
     }
@@ -236,7 +235,7 @@ public class KeyRepositoryTest {
 
         repository.deleteByKeyAsync(testEntity.getKey(), testEntity2.getKey()).complete();
 
-        assertThat(repository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.<KeyTestEntity>hasItems(nullValue(), nullValue()));
+        assertThat(repository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.hasItems(nullValue(), nullValue()));
         assertThat(repository.search().field("key", list(testEntity.getKey(), testEntity2.getKey())).run().getResults().isEmpty(), is(true));
     }
 
@@ -253,7 +252,7 @@ public class KeyRepositoryTest {
 
         repository.deleteAsync(testEntity, testEntity2).complete();
 
-        assertThat(repository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.<KeyTestEntity>hasItems(nullValue(), nullValue()));
+        assertThat(repository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.hasItems(nullValue(), nullValue()));
         assertThat(repository.search().field("key", list(testEntity.getKey(), testEntity2.getKey())).run().getResults().isEmpty(), is(true));
     }
 
@@ -366,7 +365,7 @@ public class KeyRepositoryTest {
 
         noSearchrepository.deleteByKeyAsync(testEntity.getKey(), testEntity2.getKey()).complete();
 
-        assertThat(noSearchrepository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.<KeyTestEntity>hasItems(nullValue(), nullValue()));
+        assertThat(noSearchrepository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.hasItems(nullValue(), nullValue()));
     }
 
     @Test

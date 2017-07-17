@@ -31,19 +31,19 @@ public class NumberToAtomicLongTest {
     @Test
     public void shouldTransform() {
         assertThat(transformer.from(null), is(nullValue()));
-        assertThat(transformer.from(BigDecimal.ZERO).longValue(), is(0l));
-        assertThat(transformer.from(BigDecimal.ONE).longValue(), is(1l));
-        assertThat(transformer.from(BigDecimal.TEN).longValue(), is(10l));
-        assertThat(transformer.from(new BigDecimal(1234)).longValue(), is(1234l));
-        assertThat(transformer.from(new BigDecimal("1234.0000001")).longValue(), is(1234l));
-        assertThat(transformer.from(new BigDecimal("0.000000000000000000000000000000000012")).longValue(), is(0l));
-        assertThat(transformer.from(new BigDecimal("-0.000000000000000000000000000000000012")).longValue(), is(0l));
-        assertThat(transformer.from(0).longValue(), is(0l));
-        assertThat(transformer.from(1).longValue(), is(1l));
-        assertThat(transformer.from(10).longValue(), is(10l));
-        assertThat(transformer.from(1234.0).longValue(), is(1234l));
-        assertThat(transformer.from(1234.0f).longValue(), is(1234l));
-        assertThat(transformer.from(10).longValue(), is(10l));
-        assertThat(transformer.from((int) 11).longValue(), is(11l));
+        assertThat(transformer.from(BigDecimal.ZERO).longValue(), is(0L));
+        assertThat(transformer.from(BigDecimal.ONE).longValue(), is(1L));
+        assertThat(transformer.from(BigDecimal.TEN).longValue(), is(10L));
+        assertThat(transformer.from(new BigDecimal(1234)).longValue(), is(1234L));
+        assertThat(transformer.from(new BigDecimal("1234.0000001")).longValue(), is(1234L));
+        assertThat(transformer.from(new BigDecimal("0.000000000000000000000000000000000012")).longValue(), is(0L));
+        assertThat(transformer.from(new BigDecimal("-0.000000000000000000000000000000000012")).longValue(), is(0L));
+        assertThat(transformer.from(0).longValue(), is(0L));
+        assertThat(transformer.from(1).longValue(), is(1L));
+        assertThat(transformer.from(10).longValue(), is(10L));
+        assertThat(transformer.from(1234.0).longValue(), is(1234L));
+        assertThat(transformer.from(1234.0f).longValue(), is(1234L));
+        assertThat(transformer.from(10).longValue(), is(10L));
+        assertThat(transformer.from((int) 11).longValue(), is(11L));
     }
 }

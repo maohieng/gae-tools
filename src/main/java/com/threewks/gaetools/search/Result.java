@@ -27,7 +27,7 @@ public interface Result<T, K> {
      * @return
      * @throws SearchException
      */
-    public List<T> getResults() throws SearchException;
+    List<T> getResults() throws SearchException;
 
     /**
      * Return the set of keys for the matching results;
@@ -35,22 +35,22 @@ public interface Result<T, K> {
      * @return
      * @throws SearchException
      */
-    public List<K> getResultIds() throws SearchException;
+    List<K> getResultIds() throws SearchException;
 
     /**
      * The number of total records matching the query (potentially an estimated number based on {@link Search#accuracy()})
      *
      * @return
      */
-    public long getMatchingRecordCount();
+    long getMatchingRecordCount();
 
     /**
      * The number of records return in this result
      *
      * @return
      */
-    public long getReturnedRecordCount();
+    long getReturnedRecordCount();
 
-    public String cursor();
+    String cursor();
 
 }

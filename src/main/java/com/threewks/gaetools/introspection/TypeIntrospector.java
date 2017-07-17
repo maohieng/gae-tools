@@ -159,7 +159,7 @@ public class TypeIntrospector {
     }
 
     private static Set<Class<?>> nonJavabeanClasses(Map<Class<?>, Class<?>> primitiveTypes) {
-        Set<Class<?>> set = Expressive.<Class<?>>set(Object.class, String.class);
+        Set<Class<?>> set = Expressive.set(Object.class, String.class);
         for (Map.Entry<Class<?>, Class<?>> entry : primitiveTypes.entrySet()) {
             set.add(entry.getKey());
             set.add(entry.getValue());

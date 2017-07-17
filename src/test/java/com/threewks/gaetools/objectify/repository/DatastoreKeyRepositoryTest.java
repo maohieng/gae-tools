@@ -58,13 +58,12 @@ public class DatastoreKeyRepositoryTest {
 
     private DatastoreKeyRepository<DatastoreKeyTestEntity> repository;
     private DatastoreKeyRepository<DatastoreKeyTestEntity> noSearchrepository;
-    private SearchConfig searchConfig;
 
     @Before
     public void before() {
         TransformerManager transformerManager = ObjectifyModule.defaultTransformerManager();
         IndexTypeLookup indexTypeLookup = SearchModule.defaultIndexTypeLookup();
-        searchConfig = new SearchConfig(transformerManager, new FieldMediatorSet(), indexTypeLookup);
+        SearchConfig searchConfig = new SearchConfig(transformerManager, new FieldMediatorSet(), indexTypeLookup);
         repository = new DatastoreKeyRepository<>(DatastoreKeyTestEntity.class, searchConfig);
         noSearchrepository = new DatastoreKeyRepository<>(DatastoreKeyTestEntity.class, null);
     }
@@ -232,7 +231,7 @@ public class DatastoreKeyRepositoryTest {
 
         repository.deleteByKeyAsync(testEntity.getKey(), testEntity2.getKey()).complete();
 
-        assertThat(repository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.<DatastoreKeyTestEntity>hasItems(nullValue(), nullValue()));
+        assertThat(repository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.hasItems(nullValue(), nullValue()));
         assertThat(repository.search().field("key", list(testEntity.getKey(), testEntity2.getKey())).run().getResults().isEmpty(), is(true));
     }
 
@@ -249,7 +248,7 @@ public class DatastoreKeyRepositoryTest {
 
         repository.deleteAsync(testEntity, testEntity2).complete();
 
-        assertThat(repository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.<DatastoreKeyTestEntity>hasItems(nullValue(), nullValue()));
+        assertThat(repository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.hasItems(nullValue(), nullValue()));
         assertThat(repository.search().field("key", list(testEntity.getKey(), testEntity2.getKey())).run().getResults().isEmpty(), is(true));
     }
 
@@ -361,7 +360,7 @@ public class DatastoreKeyRepositoryTest {
 
         noSearchrepository.deleteByKeyAsync(testEntity.getKey(), testEntity2.getKey()).complete();
 
-        assertThat(noSearchrepository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.<DatastoreKeyTestEntity>hasItems(nullValue(), nullValue()));
+        assertThat(noSearchrepository.get(testEntity.getKey(), testEntity2.getKey()), Matchers.hasItems(nullValue(), nullValue()));
     }
 
     @Test

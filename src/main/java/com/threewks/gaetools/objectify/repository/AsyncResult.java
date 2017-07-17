@@ -18,5 +18,5 @@
 package com.threewks.gaetools.objectify.repository;
 
 public interface AsyncResult<T> {
-    public T complete();
+    T complete();
 }

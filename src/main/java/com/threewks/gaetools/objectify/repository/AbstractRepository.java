@@ -188,7 +188,7 @@ public abstract class AbstractRepository<E, K> implements AsyncRepository<E, K> 
     }
 
     @Override
-    public List<E> getByField(String field, List<? extends Object> values) {
+    public List<E> getByField(String field, List<?> values) {
         return ofy().load().type(entityType).filter(field + " in", values).list();
     }
 
@@ -376,8 +376,6 @@ public abstract class AbstractRepository<E, K> implements AsyncRepository<E, K> 
         public List<E> getResults(java.util.List<ScoredDocument> results) {
             return loadInternal(searchService.getResultsAsIds(results));
         }
-
-        ;
 
         @Override
         public com.threewks.gaetools.search.Result<E, K> createSearchResult(SearchImpl<E, K> searchRequest) {

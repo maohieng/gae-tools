@@ -24,13 +24,13 @@ package com.threewks.gaetools.search.gae.meta;
  * @param <V>
  */
 public interface Accessor<T, V> {
-    public Class<V> getType();
+    Class<V> getType();
 
-    public V get(T t);
+    V get(T t);
 
-    public IndexType getIndexType();
+    IndexType getIndexType();
 
-    public String getName();
+    String getName();
 
-    public String getEncodedName();
+    String getEncodedName();
 }

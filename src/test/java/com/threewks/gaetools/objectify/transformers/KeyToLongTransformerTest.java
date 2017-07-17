@@ -42,9 +42,9 @@ public class KeyToLongTransformerTest {
 
     @Test
     public void shouldTransform() {
-        Key<LongTestEntity> key = Key.create(LongTestEntity.class, 4321l);
-        Key<LongTestEntity> childKey = Key.create(key, LongTestEntity.class, 1234l);
-        assertThat(transformer.from(key), is(4321l));
-        assertThat(transformer.from(childKey), is(1234l));
+        Key<LongTestEntity> key = Key.create(LongTestEntity.class, 4321L);
+        Key<LongTestEntity> childKey = Key.create(key, LongTestEntity.class, 1234L);
+        assertThat(transformer.from(key), is(4321L));
+        assertThat(transformer.from(childKey), is(1234L));
     }
 }

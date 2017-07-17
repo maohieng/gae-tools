@@ -44,7 +44,7 @@ public class NumberToAtomicIntegerTest {
         assertThat(transformer.from(1234.0).intValue(), is(1234));
         assertThat(transformer.from(1234.0f).intValue(), is(1234));
         assertThat(transformer.from(10).intValue(), is(10));
-        assertThat(transformer.from(10l).intValue(), is(10));
+        assertThat(transformer.from(10L).intValue(), is(10));
         assertThat(transformer.from((int) 11).intValue(), is(11));
     }
 }

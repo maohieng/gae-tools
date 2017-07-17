@@ -46,19 +46,16 @@ public class SearchImplTest {
     @Rule
     public SetupAppengine setupAppengine = new SetupAppengine();
 
-    private LongRepository<LongTestEntity> repository;
     private SearchImpl<LongTestEntity, Long> searchImpl;
     private Search<LongTestEntity, Long> search;
-    private com.threewks.gaetools.search.gae.SearchImpl<LongTestEntity, Key<LongTestEntity>> searchDelegate;
-    private GaeSearchService<LongTestEntity, Key<LongTestEntity>> searchService;
 
     @SuppressWarnings("unchecked")
     @Before
     public void before() {
-        repository = mock(LongRepository.class);
-        searchService = new GaeSearchService<>(LongTestEntity.class, new SearchConfig(TransformerManager.createWithDefaults(), new FieldMediatorSet(),
+        LongRepository<LongTestEntity> repository = mock(LongRepository.class);
+        GaeSearchService<LongTestEntity, Key<LongTestEntity>> searchService = new GaeSearchService<>(LongTestEntity.class, new SearchConfig(TransformerManager.createWithDefaults(), new FieldMediatorSet(),
                 new IndexTypeLookup()));
-        searchDelegate = searchService.search();
+        com.threewks.gaetools.search.gae.SearchImpl<LongTestEntity, Key<LongTestEntity>> searchDelegate = searchService.search();
         searchImpl = new SearchImpl<>(repository, searchDelegate);
         search = searchImpl;
     }

@@ -59,19 +59,19 @@ public class ClassIntrospectorTest {
         assertThat(types, is(Arrays.asList(TestCA.class, TestC.class, Object.class, TestBA.class, TestB.class, TestAA.class, TestA.class)));
     }
 
-    static interface TestA {
+    interface TestA {
 
     }
 
-    static interface TestB {
+    interface TestB {
 
     }
 
-    static interface TestAA extends TestA {
+    interface TestAA extends TestA {
 
     }
 
-    static interface TestBA extends TestB {
+    interface TestBA extends TestB {
 
     }
 

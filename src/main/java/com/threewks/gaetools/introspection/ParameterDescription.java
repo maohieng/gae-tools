@@ -44,7 +44,7 @@ public class ParameterDescription {
      */
     public boolean isA(Class<?> is) {
         Class<?> clazz = classType();
-        return clazz == null ? false : clazz.isAssignableFrom(is);
+        return clazz != null && clazz.isAssignableFrom(is);
     }
 
     /**

@@ -27,7 +27,7 @@ import java.util.List;
  * @param <K> The key type of the entity
  */
 public interface AsyncRepository<E, K> extends Repository<E, K> {
-    public AsyncResult<E> putAsync(final E entity);
+    AsyncResult<E> putAsync(final E entity);
 
     /**
      * Save the given entities.
@@ -36,7 +36,7 @@ public interface AsyncRepository<E, K> extends Repository<E, K> {
      * @return an async result to complete the save operation
      */
     @SuppressWarnings("unchecked")
-    public AsyncResult<List<E>> putAsync(E... entities);
+    AsyncResult<List<E>> putAsync(E... entities);
 
     /**
      * Save the given entities.
@@ -44,7 +44,7 @@ public interface AsyncRepository<E, K> extends Repository<E, K> {
      * @param entities
      * @return an async result to complete the save operation
      */
-    public AsyncResult<List<E>> putAsync(final List<E> entities);
+    AsyncResult<List<E>> putAsync(final List<E> entities);
 
     /**
      * Delete the entity with the given id
@@ -52,7 +52,7 @@ public interface AsyncRepository<E, K> extends Repository<E, K> {
      * @param key
      * @return an async operation used to complete the delete operation
      */
-    public AsyncResult<Void> deleteByKeyAsync(K key);
+    AsyncResult<Void> deleteByKeyAsync(K key);
 
     /**
      * Delete the entities with the given ids
@@ -61,7 +61,7 @@ public interface AsyncRepository<E, K> extends Repository<E, K> {
      * @return an async operation used to complete the delete operation
      */
     @SuppressWarnings("unchecked")
-    public AsyncResult<Void> deleteByKeyAsync(K... keys);
+    AsyncResult<Void> deleteByKeyAsync(K... keys);
 
     /**
      * Delete the entities with the given ids
@@ -69,7 +69,7 @@ public interface AsyncRepository<E, K> extends Repository<E, K> {
      * @param ids
      * @return an async operation used to complete the delete operation
      */
-    public AsyncResult<Void> deleteByKeyAsync(Iterable<K> ids);
+    AsyncResult<Void> deleteByKeyAsync(Iterable<K> ids);
 
     /**
      * Delete the given entity
@@ -77,7 +77,7 @@ public interface AsyncRepository<E, K> extends Repository<E, K> {
      * @param entity
      * @return an async operation used to complete the delete operation
      */
-    public AsyncResult<Void> deleteAsync(E entity);
+    AsyncResult<Void> deleteAsync(E entity);
 
     /**
      * Delete the given entities
@@ -86,7 +86,7 @@ public interface AsyncRepository<E, K> extends Repository<E, K> {
      * @return an async operation used to complete the delete operation
      */
     @SuppressWarnings("unchecked")
-    public AsyncResult<Void> deleteAsync(E... entities);
+    AsyncResult<Void> deleteAsync(E... entities);
 
     /**
      * Delete the given entities
@@ -94,5 +94,5 @@ public interface AsyncRepository<E, K> extends Repository<E, K> {
      * @param entities
      * @return an async operation used to complete the delete operation
      */
-    public AsyncResult<Void> deleteAsync(Iterable<E> entities);
+    AsyncResult<Void> deleteAsync(Iterable<E> entities);
 }

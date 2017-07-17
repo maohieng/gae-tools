@@ -39,7 +39,7 @@ public interface IdTextSearchService<T, K> {
      * @param id     to use when indexing the object
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation index(T object, K id);
+    IndexOperation index(T object, K id);
 
     /**
      * Index the given objects with the ids provided as keys
@@ -47,7 +47,7 @@ public interface IdTextSearchService<T, K> {
      * @param objects
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation index(Map<K, T> objects);
+    IndexOperation index(Map<K, T> objects);
 
     /**
      * Remove the object previously indexed with the given id
@@ -55,7 +55,7 @@ public interface IdTextSearchService<T, K> {
      * @param id
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation removeById(K id);
+    IndexOperation removeById(K id);
 
     /**
      * Remove the objects previously indexed with the given ids
@@ -63,14 +63,14 @@ public interface IdTextSearchService<T, K> {
      * @param ids
      * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
      */
-    public IndexOperation removeById(Iterable<K> ids);
+    IndexOperation removeById(Iterable<K> ids);
 
     /**
      * Remove all objects from the index.
      *
      * @return the number of objects removed from the index.
      */
-    public int removeAll();
+    int removeAll();
 
     /**
      * Create a {@link Search} for the given type. This will return an object which provides a fluent
@@ -78,5 +78,5 @@ public interface IdTextSearchService<T, K> {
      *
      * @return a {@link Search} that can be used to search.
      */
-    public Search<T, K> search();
+    Search<T, K> search();
 }

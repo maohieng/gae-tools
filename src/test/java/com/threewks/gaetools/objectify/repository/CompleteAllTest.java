@@ -43,8 +43,8 @@ public class CompleteAllTest {
     @Test
     public void shouldCompleteAllAsyncWithMixedTypes() {
         AsyncResult<String> async1 = new MockAsyncResult<>("first");
-        AsyncResult<Long> async2 = new MockAsyncResult<>(1l);
-        assertThat(CompleteAll.async(async1, async2), is(Arrays.asList("first", 1l)));
+        AsyncResult<Long> async2 = new MockAsyncResult<>(1L);
+        assertThat(CompleteAll.async(async1, async2), is(Arrays.asList("first", 1L)));
     }
 
     @Test

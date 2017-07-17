@@ -211,7 +211,7 @@ public class TransformerManagerTest {
 
         ETransformer<? super Long, ? extends DateTime> longToDateTime = transformerManager.getBestTransformer(Long.class, DateTime.class);
         assertThat(longToDateTime, is(notNullValue()));
-        assertThat(longToDateTime.from(123456l).compareTo(new DateTime(123456)), is(0));
+        assertThat(longToDateTime.from(123456L).compareTo(new DateTime(123456)), is(0));
     }
 
     @Test
@@ -228,7 +228,7 @@ public class TransformerManagerTest {
 
         ETransformer<? super Long, ? extends ReadableInstant> longToDateTime = transformerManager.getBestTransformer(Long.class, ReadableInstant.class);
         assertThat(longToDateTime, is(notNullValue()));
-        assertThat(longToDateTime.from(123456l).compareTo(new DateTime(123456)), is(0));
+        assertThat(longToDateTime.from(123456L).compareTo(new DateTime(123456)), is(0));
     }
 
     @Test
@@ -328,7 +328,7 @@ public class TransformerManagerTest {
         StringToLong registered = new StringToLong();
         transformerManager.register(String.class, Long.class, registered);
 
-        assertThat(transformerManager.transformAll(String.class, Long.class, list("1", "2")), is(list(1l, 2l)));
+        assertThat(transformerManager.transformAll(String.class, Long.class, list("1", "2")), is(list(1L, 2L)));
         assertThat(transformerManager.transformAll(String.class, Number.class, list("1", "2")), is(list((Number) 1L, (Number) 2L)));
     }
 
@@ -337,7 +337,7 @@ public class TransformerManagerTest {
         NumberToString registered = new NumberToString();
         transformerManager.register(Number.class, String.class, registered);
 
-        assertThat(transformerManager.transformAll(Number.class, String.class, Expressive.<Number>list(1l, 2)), is(list("1", "2")));
+        assertThat(transformerManager.transformAll(Number.class, String.class, Expressive.list(1L, 2)), is(list("1", "2")));
         assertThat(transformerManager.transformAll(Integer.class, String.class, list(1, 2)), is(list("1", "2")));
     }
 
@@ -378,6 +378,7 @@ public class TransformerManagerTest {
         assertThat(copy.getTransformer(Long.class, String.class), is((ETransformer<Long, String>) transformer2));
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void shouldRegisterDefaultTransformers() {
         transformerManager = TransformerManager.createWithDefaults();
