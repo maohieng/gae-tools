@@ -29,82 +29,82 @@ import java.util.Collection;
 import java.util.List;
 
 public class SearchImpl<E, K> implements Search<E, K> {
-	protected com.threewks.gaetools.search.Search<E, Key<E>> searchRequest;
-	protected AbstractRepository<E, K> repository;
+    protected com.threewks.gaetools.search.Search<E, Key<E>> searchRequest;
+    protected AbstractRepository<E, K> repository;
 
-	protected SearchImpl(AbstractRepository<E, K> repository, com.threewks.gaetools.search.Search<E, Key<E>> searchRequest) {
-		this.searchRequest = searchRequest;
-		this.repository = repository;
-	}
+    protected SearchImpl(AbstractRepository<E, K> repository, com.threewks.gaetools.search.Search<E, Key<E>> searchRequest) {
+        this.searchRequest = searchRequest;
+        this.repository = repository;
+    }
 
-	public com.threewks.gaetools.search.Search<E, Key<E>> getSearchRequest() {
-		return searchRequest;
-	}
+    public com.threewks.gaetools.search.Search<E, Key<E>> getSearchRequest() {
+        return searchRequest;
+    }
 
-	@Override
-	public Search<E, K> query(CharSequence query) {
-		return new SearchImpl<>(repository, searchRequest.query(query));
-	}
+    @Override
+    public Search<E, K> query(CharSequence query) {
+        return new SearchImpl<>(repository, searchRequest.query(query));
+    }
 
-	@Override
-	public <V> Search<E, K> field(String field, Is is, V value) {
-		return new SearchImpl<E, K>(repository, searchRequest.field(field, is, value));
-	}
+    @Override
+    public <V> Search<E, K> field(String field, Is is, V value) {
+        return new SearchImpl<>(repository, searchRequest.field(field, is, value));
+    }
 
-	@Override
-	public <V> Search<E, K> field(String field, Collection<V> values) {
-		return new SearchImpl<E, K>(repository, searchRequest.field(field, values));
-	}
+    @Override
+    public <V> Search<E, K> field(String field, Collection<V> values) {
+        return new SearchImpl<>(repository, searchRequest.field(field, values));
+    }
 
-	@Override
-	public Search<E, K> limit(Integer limit) {
-		return new SearchImpl<>(repository, searchRequest.limit(limit));
-	}
+    @Override
+    public Search<E, K> limit(Integer limit) {
+        return new SearchImpl<>(repository, searchRequest.limit(limit));
+    }
 
-	@Override
-	public Search<E, K> offset(Integer offset) {
-		return new SearchImpl<>(repository, searchRequest.offset(offset));
-	}
+    @Override
+    public Search<E, K> offset(Integer offset) {
+        return new SearchImpl<>(repository, searchRequest.offset(offset));
+    }
 
-	@Override
-	public Search<E, K> accuracy(Integer accuracy) {
-		return new SearchImpl<>(repository, searchRequest.accuracy(accuracy));
-	}
+    @Override
+    public Search<E, K> accuracy(Integer accuracy) {
+        return new SearchImpl<>(repository, searchRequest.accuracy(accuracy));
+    }
 
-	@Override
-	public Search<E, K> order(String field, boolean ascending) {
-		return new SearchImpl<>(repository, searchRequest.order(field, ascending));
-	}
+    @Override
+    public Search<E, K> order(String field, boolean ascending) {
+        return new SearchImpl<>(repository, searchRequest.order(field, ascending));
+    }
 
-	@Override
-	public Result<E, K> run() {
-		SearchExecutor<E, K, SearchImpl<E, K>> searchExecutor = repository.getSearchExecutor();
-		return searchExecutor.createSearchResult(this);
-	}
+    @Override
+    public Result<E, K> run() {
+        SearchExecutor<E, K, SearchImpl<E, K>> searchExecutor = repository.getSearchExecutor();
+        return searchExecutor.createSearchResult(this);
+    }
 
-	@Override
-	public List<QueryComponent> query() {
-		return searchRequest.query();
-	}
+    @Override
+    public List<QueryComponent> query() {
+        return searchRequest.query();
+    }
 
-	@Override
-	public List<OrderComponent> order() {
-		return searchRequest.order();
-	}
+    @Override
+    public List<OrderComponent> order() {
+        return searchRequest.order();
+    }
 
-	@Override
-	public Integer limit() {
-		return searchRequest.limit();
-	}
+    @Override
+    public Integer limit() {
+        return searchRequest.limit();
+    }
 
-	@Override
-	public Integer offset() {
-		return searchRequest.offset();
-	}
+    @Override
+    public Integer offset() {
+        return searchRequest.offset();
+    }
 
-	@Override
-	public Integer accuracy() {
-		return searchRequest.accuracy();
-	}
+    @Override
+    public Integer accuracy() {
+        return searchRequest.accuracy();
+    }
 
 }

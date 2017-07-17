@@ -21,29 +21,29 @@ package com.threewks.gaetools.search.gae.meta;
  * Controls how fields are mapping into the full text search index.
  */
 public enum IndexType {
-	Automatic,
-	Identifier,
-	Text,
-	/**
-	 * Html or html fragment content
-	 */
-	Html,
-	/**
-	 * Big decimals are numbers which may be outside the range of an int
-	 * 
-	 * @see Integer#MIN_VALUE
-	 * @see Integer#MAX_VALUE
-	 */
-	BigDecimal,
-	/**
-	 * Small decimals are numbers guaranteed to be inside the range of an int.
-	 * They can be any numeric amount (int, float, BigDecimal etc) as long as they
-	 * can be constrained between the min and max of an int
-	 * 
-	 * @see Integer#MIN_VALUE
-	 * @see Integer#MAX_VALUE
-	 */
-	SmallDecimal,
-	Date,
-	GeoPoint;
+    Automatic,
+    Identifier,
+    Text,
+    /**
+     * Html or html fragment content
+     */
+    Html,
+    /**
+     * Big decimals are numbers which may be outside the range of an int
+     *
+     * @see Integer#MIN_VALUE
+     * @see Integer#MAX_VALUE
+     */
+    BigDecimal,
+    /**
+     * Small decimals are numbers guaranteed to be inside the range of an int.
+     * They can be any numeric amount (int, float, BigDecimal etc) as long as they
+     * can be constrained between the min and max of an int
+     *
+     * @see Integer#MIN_VALUE
+     * @see Integer#MAX_VALUE
+     */
+    SmallDecimal,
+    Date,
+    GeoPoint;
 }

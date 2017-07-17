@@ -19,18 +19,18 @@ package com.threewks.gaetools.search.gae.meta;
 
 /**
  * Abstracts obtaining data from a type.
- * 
+ *
  * @param <T>
  * @param <V>
  */
 public interface Accessor<T, V> {
-	public Class<V> getType();
+    public Class<V> getType();
 
-	public V get(T t);
+    public V get(T t);
 
-	public IndexType getIndexType();
+    public IndexType getIndexType();
 
-	public String getName();
+    public String getName();
 
-	public String getEncodedName();
+    public String getEncodedName();
 }

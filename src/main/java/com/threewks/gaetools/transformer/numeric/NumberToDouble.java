@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class NumberToDouble implements ETransformer<Number, Double> {
 
-	@Override
-	public Double from(Number from) {
-		return from == null ? null : from.doubleValue();
-	}
+    @Override
+    public Double from(Number from) {
+        return from == null ? null : from.doubleValue();
+    }
 
 }

@@ -22,9 +22,9 @@ import com.atomicleopard.expressive.ETransformer;
 @SuppressWarnings("rawtypes")
 public class EnumToString implements ETransformer<Enum, String> {
 
-	@Override
-	public String from(Enum from) {
-		return from == null ? null : from.name();
-	}
+    @Override
+    public String from(Enum from) {
+        return from == null ? null : from.name();
+    }
 
 }

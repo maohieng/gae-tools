@@ -28,10 +28,10 @@ import java.util.List;
  * construct and then execute a query.
  */
 public interface SearchExecutor<T, K, S extends Search<T, K>> {
-	public List<T> getResults(List<ScoredDocument> results);
+    public List<T> getResults(List<ScoredDocument> results);
 
-	public List<K> getResultsAsIds(List<ScoredDocument> results);
+    public List<K> getResultsAsIds(List<ScoredDocument> results);
 
-	public Result<T, K> createSearchResult(S searchRequest);
+    public Result<T, K> createSearchResult(S searchRequest);
 
 }

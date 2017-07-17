@@ -23,9 +23,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 public class DatastoreKeyToStringTransformer implements ETransformer<Key, String> {
 
-	@Override
-	public String from(Key from) {
-		return from == null ? null : KeyFactory.keyToString(from);
-	}
+    @Override
+    public String from(Key from) {
+        return from == null ? null : KeyFactory.keyToString(from);
+    }
 
 }

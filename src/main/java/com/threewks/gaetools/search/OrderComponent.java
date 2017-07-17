@@ -30,70 +30,70 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * </ul>
  */
 public class OrderComponent {
-	private String field;
-	private boolean ascending;
+    private String field;
+    private boolean ascending;
 
-	/**
-	 * Create an {@link OrderComponent} for the given field.
-	 * 
-	 * @param field
-	 * @param ascending true if the order is 'Ascending', false if it is 'Descending'
-	 * @return
-	 */
-	public static OrderComponent forField(String field, boolean ascending) {
-		return new OrderComponent(field, ascending);
-	}
+    /**
+     * Create an {@link OrderComponent} for the given field.
+     *
+     * @param field
+     * @param ascending true if the order is 'Ascending', false if it is 'Descending'
+     * @return
+     */
+    public static OrderComponent forField(String field, boolean ascending) {
+        return new OrderComponent(field, ascending);
+    }
 
-	/**
-	 * Create an ascending {@link OrderComponent} for the given field
-	 * 
-	 * @param field
-	 * @return
-	 */
-	public static OrderComponent forFieldAscending(String field) {
-		return new OrderComponent(field, true);
-	}
+    /**
+     * Create an ascending {@link OrderComponent} for the given field
+     *
+     * @param field
+     * @return
+     */
+    public static OrderComponent forFieldAscending(String field) {
+        return new OrderComponent(field, true);
+    }
 
-	/**
-	 * Create an descending {@link OrderComponent} for the given field
-	 * 
-	 * @param field
-	 * @return
-	 */
-	public static OrderComponent forFieldDescending(String field) {
-		return new OrderComponent(field, false);
-	}
+    /**
+     * Create an descending {@link OrderComponent} for the given field
+     *
+     * @param field
+     * @return
+     */
+    public static OrderComponent forFieldDescending(String field) {
+        return new OrderComponent(field, false);
+    }
 
-	private OrderComponent(String field, boolean ascending) {
-		super();
-		this.field = field;
-		this.ascending = ascending;
-	}
+    private OrderComponent(String field, boolean ascending) {
+        super();
+        this.field = field;
+        this.ascending = ascending;
+    }
 
-	public String getField() {
-		return field;
-	}
+    public String getField() {
+        return field;
+    }
 
-	public boolean isAscending() {
-		return ascending;
-	}
+    public boolean isAscending() {
+        return ascending;
+    }
 
-	public boolean isDescending() {
-		return !ascending;
-	}
+    public boolean isDescending() {
+        return !ascending;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
 
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 
-	@Override
-	public String toString() {
-		return String.format("%s %s", field, ascending ? "Asc" : "Desc");
-	}
+    @Override
+    public String toString() {
+        return String.format("%s %s", field, ascending ? "Asc" : "Desc");
+    }
 }

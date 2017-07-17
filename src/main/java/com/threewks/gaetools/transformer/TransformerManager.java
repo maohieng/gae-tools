@@ -103,251 +103,253 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class TransformerManager {
-	private Triplets<Class<?>, Class<?>, ETransformer<?, ?>> transformers = new Triplets<Class<?>, Class<?>, ETransformer<?, ?>>(new ConcurrentHashMap<Pair<Class<?>, Class<?>>, ETransformer<?, ?>>());
-	private Triplets<Class<?>, Class<?>, ETransformer<?, ?>> transformerCache = new Triplets<Class<?>, Class<?>, ETransformer<?, ?>>(
-			new ConcurrentHashMap<Pair<Class<?>, Class<?>>, ETransformer<?, ?>>());
-	private ClassIntrospector classIntrospector = new ClassIntrospector();
+    private Triplets<Class<?>, Class<?>, ETransformer<?, ?>> transformers = new Triplets<>(new ConcurrentHashMap<>());
+    private Triplets<Class<?>, Class<?>, ETransformer<?, ?>> transformerCache = new Triplets<>(
+            new ConcurrentHashMap<>());
+    private ClassIntrospector classIntrospector = new ClassIntrospector();
 
-	private TransformerManager() {
-	}
+    private TransformerManager() {
+    }
 
-	public <From, To> To transform(Class<From> fromType, Class<To> toType, From from) {
-		ETransformer<? super From, ? extends To> transformer = getBestTransformer(fromType, toType);
-		if (transformer == null) {
-			throw new TransformerException("No transformation available from '%s' to '%s'", fromType.getName(), toType.getName());
-		}
-		return transformer.from(from);
-	}
+    public <From, To> To transform(Class<From> fromType, Class<To> toType, From from) {
+        ETransformer<? super From, ? extends To> transformer = getBestTransformer(fromType, toType);
+        if (transformer == null) {
+            throw new TransformerException("No transformation available from '%s' to '%s'", fromType.getName(), toType.getName());
+        }
+        return transformer.from(from);
+    }
 
-	@SuppressWarnings("unchecked")
-	public <From, To> EList<To> transformAll(Class<From> fromType, Class<To> toType, Iterable<From> from) {
-		ETransformer<From, To> transformer = (ETransformer<From, To>) getBestTransformer(fromType, toType);
-		if (transformer == null) {
-			throw new TransformerException("No transformation available from '%s' to '%s'", fromType.getName(), toType.getName());
-		}
-		return Expressive.Transformers.transformAllUsing(transformer).from(from);
-	}
+    @SuppressWarnings("unchecked")
+    public <From, To> EList<To> transformAll(Class<From> fromType, Class<To> toType, Iterable<From> from) {
+        ETransformer<From, To> transformer = (ETransformer<From, To>) getBestTransformer(fromType, toType);
+        if (transformer == null) {
+            throw new TransformerException("No transformation available from '%s' to '%s'", fromType.getName(), toType.getName());
+        }
+        return Expressive.Transformers.transformAllUsing(transformer).from(from);
+    }
 
-	public <From, To> void register(Class<From> fromType, Class<To> toType, ETransformer<From, To> transformer) {
-		this.transformers.put(fromType, toType, transformer);
-		// There is a race condition between clearing the cache and registration of the unboxed types
-		// Generally this should not be an issue
-		clearCache();
-		Class<?> unboxedFrom = TypeIntrospector.unbox(fromType);
-		Class<?> unboxedTo = TypeIntrospector.unbox(toType);
-		if (unboxedFrom != null) {
-			this.transformers.put(unboxedFrom, toType, transformer);
-		}
-		if (unboxedTo != null) {
-			this.transformers.put(fromType, unboxedTo, transformer);
-		}
-		if (unboxedTo != null && unboxedFrom != null) {
-			this.transformers.put(unboxedFrom, unboxedTo, transformer);
-		}
-	}
+    public <From, To> void register(Class<From> fromType, Class<To> toType, ETransformer<From, To> transformer) {
+        this.transformers.put(fromType, toType, transformer);
+        // There is a race condition between clearing the cache and registration of the unboxed types
+        // Generally this should not be an issue
+        clearCache();
+        Class<?> unboxedFrom = TypeIntrospector.unbox(fromType);
+        Class<?> unboxedTo = TypeIntrospector.unbox(toType);
+        if (unboxedFrom != null) {
+            this.transformers.put(unboxedFrom, toType, transformer);
+        }
+        if (unboxedTo != null) {
+            this.transformers.put(fromType, unboxedTo, transformer);
+        }
+        if (unboxedTo != null && unboxedFrom != null) {
+            this.transformers.put(unboxedFrom, unboxedTo, transformer);
+        }
+    }
 
-	public <From, To> void unregister(Class<From> fromType, Class<To> toType) {
-		this.transformers.remove(fromType, toType);
-		clearCache();
-	}
+    public <From, To> void unregister(Class<From> fromType, Class<To> toType) {
+        this.transformers.remove(fromType, toType);
+        clearCache();
+    }
 
-	@SuppressWarnings("unchecked")
-	public <From, To> ETransformer<From, To> getTransformer(Class<From> fromType, Class<To> toType) {
-		if (TypeIntrospector.isABasicType(fromType)) {
-			fromType = (Class<From>) TypeIntrospector.box(fromType);
-		}
-		if (TypeIntrospector.isABasicType(toType)) {
-			toType = (Class<To>) TypeIntrospector.box(toType);
-		}
-		if (fromType == toType) {
-			return NoopTransformerInstance;
-		}
+    @SuppressWarnings("unchecked")
+    public <From, To> ETransformer<From, To> getTransformer(Class<From> fromType, Class<To> toType) {
+        if (TypeIntrospector.isABasicType(fromType)) {
+            fromType = (Class<From>) TypeIntrospector.box(fromType);
+        }
+        if (TypeIntrospector.isABasicType(toType)) {
+            toType = (Class<To>) TypeIntrospector.box(toType);
+        }
+        if (fromType == toType) {
+            return NoopTransformerInstance;
+        }
 
-		ETransformer<From, To> convertor = (ETransformer<From, To>) transformers.get(fromType, toType);
-		// We prefer registered converters over a noop transformer for super types
-		if (convertor == null && toType.isAssignableFrom(fromType)) {
-			return NoopTransformerInstance;
-		}
-		if (convertor == null && toType.isEnum()) {
-			convertor = createEnumTransformer(toType);
-		}
-		return convertor;
-	}
+        ETransformer<From, To> convertor = (ETransformer<From, To>) transformers.get(fromType, toType);
+        // We prefer registered converters over a noop transformer for super types
+        if (convertor == null && toType.isAssignableFrom(fromType)) {
+            return NoopTransformerInstance;
+        }
+        if (convertor == null && toType.isEnum()) {
+            convertor = createEnumTransformer(toType);
+        }
+        return convertor;
+    }
 
-	@SuppressWarnings("unchecked")
-	public <From, To> ETransformer<? super From, ? extends To> getBestTransformer(Class<From> fromType, Class<To> toType) {
-		if (TypeIntrospector.isABasicType(fromType)) {
-			fromType = (Class<From>) TypeIntrospector.box(fromType);
-		}
-		if (TypeIntrospector.isABasicType(toType)) {
-			toType = (Class<To>) TypeIntrospector.box(toType);
-		}
-		ETransformer<? super From, ? extends To> transformer = getTransformer(fromType, toType);
-		if (transformer != null) {
-			return transformer;
-		}
-		transformer = getFromCache(fromType, toType);
-		if (transformer != null) {
-			return transformer;
-		}
+    @SuppressWarnings("unchecked")
+    public <From, To> ETransformer<? super From, ? extends To> getBestTransformer(Class<From> fromType, Class<To> toType) {
+        if (TypeIntrospector.isABasicType(fromType)) {
+            fromType = (Class<From>) TypeIntrospector.box(fromType);
+        }
+        if (TypeIntrospector.isABasicType(toType)) {
+            toType = (Class<To>) TypeIntrospector.box(toType);
+        }
+        ETransformer<? super From, ? extends To> transformer = getTransformer(fromType, toType);
+        if (transformer != null) {
+            return transformer;
+        }
+        transformer = getFromCache(fromType, toType);
+        if (transformer != null) {
+            return transformer;
+        }
 
-		List<Class<?>> fromTypes = classIntrospector.listImplementedTypes(fromType);
-		for (Class<?> f : fromTypes) {
-			for (Pair<Class<?>, Class<?>> entry : transformers.keySet()) {
-				Class<?> t = entry.getB();
-				if (toType.isAssignableFrom(t)) {
-					transformer = (ETransformer<? super From, ? extends To>) getTransformer(f, t);
-					if (transformer != null) {
-						addToCache(fromType, toType, transformer);
-						return transformer;
-					}
-				}
-			}
-		}
-		return null;
-	}
+        List<Class<?>> fromTypes = classIntrospector.listImplementedTypes(fromType);
+        for (Class<?> f : fromTypes) {
+            for (Pair<Class<?>, Class<?>> entry : transformers.keySet()) {
+                Class<?> t = entry.getB();
+                if (toType.isAssignableFrom(t)) {
+                    transformer = (ETransformer<? super From, ? extends To>) getTransformer(f, t);
+                    if (transformer != null) {
+                        addToCache(fromType, toType, transformer);
+                        return transformer;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * Return a transformer which can transform from the given 'from' type to the given 'to' type.
-	 * If no transformer can be found, throws a {@link TransformerException}
-	 * 
-	 * @param fromType
-	 * @param toType
-	 * @return
-	 */
-	public <From, To> ETransformer<From, To> getTransformerSafe(Class<From> fromType, Class<To> toType) {
-		ETransformer<From, To> transformer = getTransformer(fromType, toType);
-		if (transformer == null) {
-			throw new TransformerException("No ETransformer<%s, %s> registered in this %s", fromType.getName(), toType.getName(), this.getClass().getSimpleName());
-		}
-		return transformer;
-	}
+    /**
+     * Return a transformer which can transform from the given 'from' type to the given 'to' type.
+     * If no transformer can be found, throws a {@link TransformerException}
+     *
+     * @param fromType
+     * @param toType
+     * @return
+     */
+    public <From, To> ETransformer<From, To> getTransformerSafe(Class<From> fromType, Class<To> toType) {
+        ETransformer<From, To> transformer = getTransformer(fromType, toType);
+        if (transformer == null) {
+            throw new TransformerException("No ETransformer<%s, %s> registered in this %s", fromType.getName(), toType.getName(), this.getClass().getSimpleName());
+        }
+        return transformer;
+    }
 
-	public TransformerManager copy() {
-		TransformerManager transformerManager = new TransformerManager();
-		transformerManager.transformers.putAll(this.transformers);
-		return transformerManager;
-	}
+    public TransformerManager copy() {
+        TransformerManager transformerManager = new TransformerManager();
+        transformerManager.transformers.putAll(this.transformers);
+        return transformerManager;
+    }
 
-	protected <From, To> void addToCache(Class<From> fromType, Class<To> toType, ETransformer<? super From, ? extends To> transformer) {
-		transformerCache.put(fromType, toType, transformer);
-	}
+    protected <From, To> void addToCache(Class<From> fromType, Class<To> toType, ETransformer<? super From, ? extends To> transformer) {
+        transformerCache.put(fromType, toType, transformer);
+    }
 
-	protected <From, To> void clearCache() {
-		// TODO - this is very heavy handed - removing just those relevant entries
-		// would be more effective
-		transformerCache.clear();
-	}
+    protected <From, To> void clearCache() {
+        // TODO - this is very heavy handed - removing just those relevant entries
+        // would be more effective
+        transformerCache.clear();
+    }
 
-	@SuppressWarnings("unchecked")
-	protected <From, To> ETransformer<? super From, ? extends To> getFromCache(Class<From> fromType, Class<To> toType) {
-		return (ETransformer<? super From, ? extends To>) transformerCache.get(fromType, toType);
-	}
+    @SuppressWarnings("unchecked")
+    protected <From, To> ETransformer<? super From, ? extends To> getFromCache(Class<From> fromType, Class<To> toType) {
+        return (ETransformer<? super From, ? extends To>) transformerCache.get(fromType, toType);
+    }
 
-	public static TransformerManager createEmpty() {
-		return new TransformerManager();
-	}
+    public static TransformerManager createEmpty() {
+        return new TransformerManager();
+    }
 
-	public static TransformerManager createWithDefaults() {
-		TransformerManager transformerManager = createEmpty();
+    public static TransformerManager createWithDefaults() {
+        TransformerManager transformerManager = createEmpty();
 
-		// numeric types
-		transformerManager.register(String.class, Byte.class, new StringToByte());
-		transformerManager.register(String.class, Integer.class, new StringToInteger());
-		transformerManager.register(String.class, Long.class, new StringToLong());
-		transformerManager.register(String.class, Short.class, new StringToShort());
-		transformerManager.register(String.class, Float.class, new StringToFloat());
-		transformerManager.register(String.class, Double.class, new StringToDouble());
-		transformerManager.register(String.class, BigDecimal.class, new StringToBigDecimal());
-		transformerManager.register(String.class, BigInteger.class, new StringToBigInteger());
-		transformerManager.register(String.class, Number.class, new StringToNumber());
-		transformerManager.register(Byte.class, String.class, new ByteToString());
-		transformerManager.register(Long.class, String.class, new LongToString());
-		transformerManager.register(Long.class, BigDecimal.class, new LongToBigDecimal());
-		transformerManager.register(Integer.class, String.class, new IntegerToString());
-		transformerManager.register(Integer.class, BigDecimal.class, new IntegerToBigDecimal());
-		transformerManager.register(Short.class, String.class, new ShortToString());
-		transformerManager.register(Double.class, String.class, new DoubleToString());
-		transformerManager.register(Double.class, BigDecimal.class, new DoubleToBigDecimal());
-		transformerManager.register(Float.class, String.class, new FloatToString());
-		transformerManager.register(Float.class, BigDecimal.class, new FloatToBigDecimal());
-		transformerManager.register(BigDecimal.class, String.class, new BigDecimalToString());
-		transformerManager.register(BigInteger.class, String.class, new BigIntegerToString());
-		transformerManager.register(Number.class, String.class, new NumberToString());
-		transformerManager.register(Number.class, Float.class, new NumberToFloat());
-		transformerManager.register(Number.class, Double.class, new NumberToDouble());
-		transformerManager.register(Number.class, Integer.class, new NumberToInteger());
-		transformerManager.register(Number.class, Long.class, new NumberToLong());
-		transformerManager.register(Number.class, Short.class, new NumberToShort());
-		transformerManager.register(Number.class, BigInteger.class, new NumberToBigInteger());
-		transformerManager.register(Number.class, BigDecimal.class, new NumberToBigDecimal());
-		transformerManager.register(Number.class, AtomicInteger.class, new NumberToAtomicInteger());
-		transformerManager.register(Number.class, AtomicLong.class, new NumberToAtomicLong());
+        // numeric types
+        transformerManager.register(String.class, Byte.class, new StringToByte());
+        transformerManager.register(String.class, Integer.class, new StringToInteger());
+        transformerManager.register(String.class, Long.class, new StringToLong());
+        transformerManager.register(String.class, Short.class, new StringToShort());
+        transformerManager.register(String.class, Float.class, new StringToFloat());
+        transformerManager.register(String.class, Double.class, new StringToDouble());
+        transformerManager.register(String.class, BigDecimal.class, new StringToBigDecimal());
+        transformerManager.register(String.class, BigInteger.class, new StringToBigInteger());
+        transformerManager.register(String.class, Number.class, new StringToNumber());
+        transformerManager.register(Byte.class, String.class, new ByteToString());
+        transformerManager.register(Long.class, String.class, new LongToString());
+        transformerManager.register(Long.class, BigDecimal.class, new LongToBigDecimal());
+        transformerManager.register(Integer.class, String.class, new IntegerToString());
+        transformerManager.register(Integer.class, BigDecimal.class, new IntegerToBigDecimal());
+        transformerManager.register(Short.class, String.class, new ShortToString());
+        transformerManager.register(Double.class, String.class, new DoubleToString());
+        transformerManager.register(Double.class, BigDecimal.class, new DoubleToBigDecimal());
+        transformerManager.register(Float.class, String.class, new FloatToString());
+        transformerManager.register(Float.class, BigDecimal.class, new FloatToBigDecimal());
+        transformerManager.register(BigDecimal.class, String.class, new BigDecimalToString());
+        transformerManager.register(BigInteger.class, String.class, new BigIntegerToString());
+        transformerManager.register(Number.class, String.class, new NumberToString());
+        transformerManager.register(Number.class, Float.class, new NumberToFloat());
+        transformerManager.register(Number.class, Double.class, new NumberToDouble());
+        transformerManager.register(Number.class, Integer.class, new NumberToInteger());
+        transformerManager.register(Number.class, Long.class, new NumberToLong());
+        transformerManager.register(Number.class, Short.class, new NumberToShort());
+        transformerManager.register(Number.class, BigInteger.class, new NumberToBigInteger());
+        transformerManager.register(Number.class, BigDecimal.class, new NumberToBigDecimal());
+        transformerManager.register(Number.class, AtomicInteger.class, new NumberToAtomicInteger());
+        transformerManager.register(Number.class, AtomicLong.class, new NumberToAtomicLong());
 
-		// string/character types
-		transformerManager.register(Character.class, String.class, new CharToString());
-		transformerManager.register(String.class, Character.class, new StringToChar());
+        // string/character types
+        transformerManager.register(Character.class, String.class, new CharToString());
+        transformerManager.register(String.class, Character.class, new StringToChar());
 
-		// date types
-		transformerManager.register(String.class, DateTime.class, new StringToDateTime());
-		transformerManager.register(String.class, Date.class, new StringToDate());
-		transformerManager.register(String.class, ReadableInstant.class, new StringToReadableInstant());
-		transformerManager.register(DateTime.class, String.class, new DateTimeToString());
-		transformerManager.register(DateTime.class, Long.class, new DateTimeToLong());
-		transformerManager.register(DateTime.class, BigDecimal.class, new DateTimeToBigDecimal());
-		transformerManager.register(DateTime.class, Date.class, new DateTimeToDate());
-		transformerManager.register(Date.class, String.class, new DateToString());
-		transformerManager.register(Date.class, DateTime.class, new DateToDateTime());
-		transformerManager.register(Date.class, Long.class, new DateToLong());
-		transformerManager.register(ReadableInstant.class, String.class, new ReadableInstantToString());
-		transformerManager.register(ReadableInstant.class, Long.class, new ReadableInstantToLong());
-		transformerManager.register(ReadableInstant.class, Date.class, new ReadableInstantToDate());
-		transformerManager.register(Object.class, DateTime.class, new ObjectToDateTime());
-		transformerManager.register(Long.class, DateTime.class, new LongToDateTime());
-		transformerManager.register(BigDecimal.class, DateTime.class, new BigDecimalToDateTime());
-		transformerManager.register(Long.class, Date.class, new LongToDate());
+        // date types
+        transformerManager.register(String.class, DateTime.class, new StringToDateTime());
+        transformerManager.register(String.class, Date.class, new StringToDate());
+        transformerManager.register(String.class, ReadableInstant.class, new StringToReadableInstant());
+        transformerManager.register(DateTime.class, String.class, new DateTimeToString());
+        transformerManager.register(DateTime.class, Long.class, new DateTimeToLong());
+        transformerManager.register(DateTime.class, BigDecimal.class, new DateTimeToBigDecimal());
+        transformerManager.register(DateTime.class, Date.class, new DateTimeToDate());
+        transformerManager.register(Date.class, String.class, new DateToString());
+        transformerManager.register(Date.class, DateTime.class, new DateToDateTime());
+        transformerManager.register(Date.class, Long.class, new DateToLong());
+        transformerManager.register(ReadableInstant.class, String.class, new ReadableInstantToString());
+        transformerManager.register(ReadableInstant.class, Long.class, new ReadableInstantToLong());
+        transformerManager.register(ReadableInstant.class, Date.class, new ReadableInstantToDate());
+        transformerManager.register(Object.class, DateTime.class, new ObjectToDateTime());
+        transformerManager.register(Long.class, DateTime.class, new LongToDateTime());
+        transformerManager.register(BigDecimal.class, DateTime.class, new BigDecimalToDateTime());
+        transformerManager.register(Long.class, Date.class, new LongToDate());
 
-		// discrete types
-		transformerManager.register(Boolean.class, String.class, new BooleanToString());
-		transformerManager.register(Enum.class, String.class, new EnumToString());
-		transformerManager.register(String.class, Boolean.class, new StringToBoolean());
+        // discrete types
+        transformerManager.register(Boolean.class, String.class, new BooleanToString());
+        transformerManager.register(Enum.class, String.class, new EnumToString());
+        transformerManager.register(String.class, Boolean.class, new StringToBoolean());
 
-		// url types
-		transformerManager.register(URL.class, String.class, new UrlToString());
-		transformerManager.register(URI.class, String.class, new UriToString());
-		transformerManager.register(String.class, URL.class, new StringToUrl());
-		transformerManager.register(String.class, URI.class, new StringToUri());
+        // url types
+        transformerManager.register(URL.class, String.class, new UrlToString());
+        transformerManager.register(URI.class, String.class, new UriToString());
+        transformerManager.register(String.class, URL.class, new StringToUrl());
+        transformerManager.register(String.class, URI.class, new StringToUri());
 
-		// uuids
-		transformerManager.register(UUID.class, String.class, new UUIDToString());
-		transformerManager.register(String.class, UUID.class, new StringToUUID());
+        // uuids
+        transformerManager.register(UUID.class, String.class, new UUIDToString());
+        transformerManager.register(String.class, UUID.class, new StringToUUID());
 
-		// data types
-		transformerManager.register(byte[].class, InputStream.class, new ByteArrayToInputStream());
-		transformerManager.register(String.class, InputStream.class, new StringToInputStream());
-		transformerManager.register(InputStream.class, byte[].class, new InputStreamToByteArray());
+        // data types
+        transformerManager.register(byte[].class, InputStream.class, new ByteArrayToInputStream());
+        transformerManager.register(String.class, InputStream.class, new StringToInputStream());
+        transformerManager.register(InputStream.class, byte[].class, new InputStreamToByteArray());
 
-		return transformerManager;
-	}
+        return transformerManager;
+    }
 
-	/**
-	 * We handle enums as a special case transformation, a more flexible strategy using TransformerFactories might be a better
-	 * idea
-	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private <From, To> ETransformer<From, To> createEnumTransformer(Class<To> toType) {
-		return new ObjectToEnum(toType);
-	}
+    /**
+     * We handle enums as a special case transformation, a more flexible strategy using TransformerFactories might be a better
+     * idea
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private <From, To> ETransformer<From, To> createEnumTransformer(Class<To> toType) {
+        return new ObjectToEnum(toType);
+    }
 
-	@SuppressWarnings("rawtypes")
-	protected static final NoopTransformer NoopTransformerInstance = new NoopTransformer();
+    @SuppressWarnings("rawtypes")
+    protected static final NoopTransformer NoopTransformerInstance = new NoopTransformer();
 
-	@SuppressWarnings("unchecked")
-	protected static final class NoopTransformer<From, To> implements ETransformer<From, To> {
-		@Override
-		public To from(From from) {
-			return (To) from;
-		}
-	};
+    @SuppressWarnings("unchecked")
+    protected static final class NoopTransformer<From, To> implements ETransformer<From, To> {
+        @Override
+        public To from(From from) {
+            return (To) from;
+        }
+    }
+
+    ;
 
 }

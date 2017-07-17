@@ -23,9 +23,9 @@ import com.google.appengine.api.search.GeoPoint;
 
 public class GeoPointToGeoPtTransformer implements ETransformer<GeoPoint, GeoPt> {
 
-	@Override
-	public GeoPt from(GeoPoint from) {
-		return from == null ? null : new GeoPt((float) from.getLatitude(), (float) from.getLongitude());
-	}
+    @Override
+    public GeoPt from(GeoPoint from) {
+        return from == null ? null : new GeoPt((float) from.getLatitude(), (float) from.getLongitude());
+    }
 
 }

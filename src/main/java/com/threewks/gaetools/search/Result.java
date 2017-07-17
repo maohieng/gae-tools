@@ -20,37 +20,37 @@ package com.threewks.gaetools.search;
 import java.util.List;
 
 public interface Result<T, K> {
-	/**
-	 * Return the set of results as a hydrated object. The ability to do this is implementation dependent
-	 * (i.e. whether you get a fully hydrated object, partially hydrated object, or if it just won't work).
-	 * 
-	 * @return
-	 * @throws SearchException
-	 */
-	public List<T> getResults() throws SearchException;
+    /**
+     * Return the set of results as a hydrated object. The ability to do this is implementation dependent
+     * (i.e. whether you get a fully hydrated object, partially hydrated object, or if it just won't work).
+     *
+     * @return
+     * @throws SearchException
+     */
+    public List<T> getResults() throws SearchException;
 
-	/**
-	 * Return the set of keys for the matching results;
-	 * 
-	 * @return
-	 * @throws SearchException
-	 */
-	public List<K> getResultIds() throws SearchException;
+    /**
+     * Return the set of keys for the matching results;
+     *
+     * @return
+     * @throws SearchException
+     */
+    public List<K> getResultIds() throws SearchException;
 
-	/**
-	 * The number of total records matching the query (potentially an estimated number based on {@link Search#accuracy()})
-	 * 
-	 * @return
-	 */
-	public long getMatchingRecordCount();
+    /**
+     * The number of total records matching the query (potentially an estimated number based on {@link Search#accuracy()})
+     *
+     * @return
+     */
+    public long getMatchingRecordCount();
 
-	/**
-	 * The number of records return in this result
-	 * 
-	 * @return
-	 */
-	public long getReturnedRecordCount();
+    /**
+     * The number of records return in this result
+     *
+     * @return
+     */
+    public long getReturnedRecordCount();
 
-	public String cursor();
+    public String cursor();
 
 }

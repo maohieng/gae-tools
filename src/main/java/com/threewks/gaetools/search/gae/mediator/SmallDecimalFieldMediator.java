@@ -22,29 +22,29 @@ import com.google.appengine.api.search.checkers.SearchApiLimits;
 import com.threewks.gaetools.transformer.TransformerManager;
 
 public class SmallDecimalFieldMediator implements FieldMediator<Double> {
-	private static final double Min = SearchApiLimits.MINIMUM_NUMBER_VALUE;
-	private static final double Max = SearchApiLimits.MAXIMUM_NUMBER_VALUE;
+    private static final double Min = SearchApiLimits.MINIMUM_NUMBER_VALUE;
+    private static final double Max = SearchApiLimits.MAXIMUM_NUMBER_VALUE;
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <In> Double normalise(TransformerManager transformerManager, In value) {
-		Class<In> valueClass = (Class<In>) value.getClass();
-		double transform = transformerManager.transform(valueClass, Double.class, value);
-		return Math.max(Math.min(Max, transform), Min);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <In> Double normalise(TransformerManager transformerManager, In value) {
+        Class<In> valueClass = (Class<In>) value.getClass();
+        double transform = transformerManager.transform(valueClass, Double.class, value);
+        return Math.max(Math.min(Max, transform), Min);
+    }
 
-	@Override
-	public void setValue(Builder builder, Double value) {
-		builder.setNumber(value);
-	}
+    @Override
+    public void setValue(Builder builder, Double value) {
+        builder.setNumber(value);
+    }
 
-	@Override
-	public String stringify(Double value) {
-		return value.toString();
-	}
+    @Override
+    public String stringify(Double value) {
+        return value.toString();
+    }
 
-	@Override
-	public Class<Double> getTargetType() {
-		return Double.class;
-	}
+    @Override
+    public Class<Double> getTargetType() {
+        return Double.class;
+    }
 }

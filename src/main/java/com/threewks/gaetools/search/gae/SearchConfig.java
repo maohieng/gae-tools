@@ -26,25 +26,25 @@ import com.threewks.gaetools.transformer.TransformerManager;
  * Each of the parameters are injection points that allow the addition of extra types and behaviours.
  */
 public class SearchConfig {
-	private TransformerManager transformerManager;
-	private FieldMediatorSet fieldMediators;
-	private IndexTypeLookup indexTypeLookup;
+    private TransformerManager transformerManager;
+    private FieldMediatorSet fieldMediators;
+    private IndexTypeLookup indexTypeLookup;
 
-	public SearchConfig(TransformerManager transformerManager, FieldMediatorSet fieldMediators, IndexTypeLookup indexTypeLookup) {
-		this.transformerManager = transformerManager;
-		this.fieldMediators = fieldMediators;
-		this.indexTypeLookup = indexTypeLookup;
-	}
+    public SearchConfig(TransformerManager transformerManager, FieldMediatorSet fieldMediators, IndexTypeLookup indexTypeLookup) {
+        this.transformerManager = transformerManager;
+        this.fieldMediators = fieldMediators;
+        this.indexTypeLookup = indexTypeLookup;
+    }
 
-	public TransformerManager getTransformerManager() {
-		return transformerManager;
-	}
+    public TransformerManager getTransformerManager() {
+        return transformerManager;
+    }
 
-	public FieldMediatorSet getFieldMediators() {
-		return fieldMediators;
-	}
+    public FieldMediatorSet getFieldMediators() {
+        return fieldMediators;
+    }
 
-	public IndexTypeLookup getIndexTypeLookup() {
-		return indexTypeLookup;
-	}
+    public IndexTypeLookup getIndexTypeLookup() {
+        return indexTypeLookup;
+    }
 }

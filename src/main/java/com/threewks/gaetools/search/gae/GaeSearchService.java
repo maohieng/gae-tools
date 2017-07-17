@@ -30,82 +30,82 @@ import java.util.List;
 
 /**
  * An implementation of {@link TextSearchService} which uses Appengine's Full Text Search Api
- * 
+ *
  * @param <T>
  * @param <K>
  */
 public class GaeSearchService<T, K> extends BaseGaeSearchService<T, K> implements TextSearchService<T, K>, SearchExecutor<T, K, SearchImpl<T, K>> {
 
-	/**
-	 * Create a {@link GaeSearchService} for the given type using the {@link DefaultIndexNamingStrategy}.
-	 * 
-	 * @param type the type this search service will index
-	 * @param searchConfig
-	 */
-	public GaeSearchService(Class<T> type, SearchConfig searchConfig) {
-		this(type, searchConfig, new DefaultIndexNamingStrategy());
-	}
+    /**
+     * Create a {@link GaeSearchService} for the given type using the {@link DefaultIndexNamingStrategy}.
+     *
+     * @param type         the type this search service will index
+     * @param searchConfig
+     */
+    public GaeSearchService(Class<T> type, SearchConfig searchConfig) {
+        this(type, searchConfig, new DefaultIndexNamingStrategy());
+    }
 
-	/**
-	 * Create a {@link GaeSearchService} for the given type using the given {@link IndexNamingStrategy}.
-	 * 
-	 * @param type
-	 * @param searchConfig
-	 * @param indexNamingStrategy
-	 */
-	public GaeSearchService(Class<T> type, SearchConfig searchConfig, IndexNamingStrategy indexNamingStrategy) {
-		super(type, searchConfig, indexNamingStrategy);
-		if (!metadata.hasIndexableFields()) {
-			throw new SearchException("Unable to create %s - the type %s has no indexable fields ", this.getClass().getSimpleName(), type.getSimpleName());
-		}
-	}
+    /**
+     * Create a {@link GaeSearchService} for the given type using the given {@link IndexNamingStrategy}.
+     *
+     * @param type
+     * @param searchConfig
+     * @param indexNamingStrategy
+     */
+    public GaeSearchService(Class<T> type, SearchConfig searchConfig, IndexNamingStrategy indexNamingStrategy) {
+        super(type, searchConfig, indexNamingStrategy);
+        if (!metadata.hasIndexableFields()) {
+            throw new SearchException("Unable to create %s - the type %s has no indexable fields ", this.getClass().getSimpleName(), type.getSimpleName());
+        }
+    }
 
-	@Override
-	public IndexOperation index(T object) {
-		K id = metadata.getId(object);
-		return super.index(object, id);
-	}
+    @Override
+    public IndexOperation index(T object) {
+        K id = metadata.getId(object);
+        return super.index(object, id);
+    }
 
-	@Override
-	public IndexOperation index(Collection<T> objects) {
-		return super.index(objects);
-	}
+    @Override
+    public IndexOperation index(Collection<T> objects) {
+        return super.index(objects);
+    }
 
-	@Override
-	public IndexOperation removeById(K id) {
-		return super.removeById(id);
-	}
+    @Override
+    public IndexOperation removeById(K id) {
+        return super.removeById(id);
+    }
 
-	@Override
-	public IndexOperation removeById(Iterable<K> ids) {
-		return super.removeById(ids);
-	}
+    @Override
+    public IndexOperation removeById(Iterable<K> ids) {
+        return super.removeById(ids);
+    }
 
-	@Override
-	public IndexOperation remove(T object) {
-		K id = metadata.getId(object);
-		return super.removeById(id);
-	}
+    @Override
+    public IndexOperation remove(T object) {
+        K id = metadata.getId(object);
+        return super.removeById(id);
+    }
 
-	@Override
-	public IndexOperation remove(Iterable<T> objects) {
-		if (Expressive.isEmpty(objects)) {
-			return new IndexOperation(null);
-		}
-		List<K> ids = new ArrayList<>();
-		for (T object : objects) {
-			ids.add(metadata.getId(object));
-		}
-		return super.removeById(ids);
-	}
+    @Override
+    public IndexOperation remove(Iterable<T> objects) {
+        if (Expressive.isEmpty(objects)) {
+            return new IndexOperation(null);
+        }
+        List<K> ids = new ArrayList<>();
+        for (T object : objects) {
+            ids.add(metadata.getId(object));
+        }
+        return super.removeById(ids);
+    }
 
-	@Override
-	public int removeAll() {
-		return super.removeAll();
-	}
+    @Override
+    public int removeAll() {
+        return super.removeAll();
+    }
 
-	@Override
-	public SearchImpl<T, K> search() {
-		return super.search();
-	}
+    @Override
+    public SearchImpl<T, K> search() {
+        return super.search();
+    }
 }

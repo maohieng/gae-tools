@@ -22,9 +22,9 @@ import com.google.appengine.api.datastore.Key;
 
 public class DatastoreKeyToLongTransformer implements ETransformer<Key, Long> {
 
-	@Override
-	public Long from(Key from) {
-		return from == null ? null : from.getId();
-	}
+    @Override
+    public Long from(Key from) {
+        return from == null ? null : from.getId();
+    }
 
 }

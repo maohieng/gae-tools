@@ -22,36 +22,36 @@ import com.threewks.gaetools.transformer.TransformerManager;
 
 /**
  * A {@link FieldMediator} is used to transform between a java type and field type in the low level full text search api.
- * 
+ *
  * @param <T>
  */
 public interface FieldMediator<T> {
-	
-	public Class<T> getTargetType();
-	
-	/**
-	 * Normalise the given object to the type this {@link FieldMediator} operates on
-	 * 
-	 * @param transformerManager
-	 * @param value
-	 * @return
-	 */
-	public <In> T normalise(TransformerManager transformerManager, In value);
 
-	/**
-	 * Set the normalised value into the given field
-	 * 
-	 * @param builder
-	 * @param value
-	 */
-	public void setValue(Field.Builder builder, T value);
+    public Class<T> getTargetType();
 
-	/**
-	 * Convert the given noramlised object to a string suitable for querying.
-	 * 
-	 * @param value
-	 * @return
-	 */
-	public String stringify(T value);
+    /**
+     * Normalise the given object to the type this {@link FieldMediator} operates on
+     *
+     * @param transformerManager
+     * @param value
+     * @return
+     */
+    public <In> T normalise(TransformerManager transformerManager, In value);
+
+    /**
+     * Set the normalised value into the given field
+     *
+     * @param builder
+     * @param value
+     */
+    public void setValue(Field.Builder builder, T value);
+
+    /**
+     * Convert the given noramlised object to a string suitable for querying.
+     *
+     * @param value
+     * @return
+     */
+    public String stringify(T value);
 
 }

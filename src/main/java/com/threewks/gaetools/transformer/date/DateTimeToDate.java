@@ -24,9 +24,9 @@ import java.util.Date;
 
 public class DateTimeToDate implements ETransformer<DateTime, Date> {
 
-	@Override
-	public Date from(DateTime from) {
-		return from == null ? null : from.toDate();
-	}
+    @Override
+    public Date from(DateTime from) {
+        return from == null ? null : from.toDate();
+    }
 
 }

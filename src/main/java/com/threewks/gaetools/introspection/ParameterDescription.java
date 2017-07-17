@@ -27,77 +27,77 @@ import java.lang.reflect.Type;
  * Provides information about a method parameter.
  */
 public class ParameterDescription {
-	private String name;
-	private Type type;
+    private String name;
+    private Type type;
 
-	public ParameterDescription(String name, Type type) {
-		super();
-		this.name = name;
-		this.type = type;
-	}
+    public ParameterDescription(String name, Type type) {
+        super();
+        this.name = name;
+        this.type = type;
+    }
 
-	/**
-	 * Returns true if this parameter is of the given type.
-	 * 
-	 * @param is
-	 * @return
-	 */
-	public boolean isA(Class<?> is) {
-		Class<?> clazz = classType();
-		return clazz == null ? false : clazz.isAssignableFrom(is);
-	}
+    /**
+     * Returns true if this parameter is of the given type.
+     *
+     * @param is
+     * @return
+     */
+    public boolean isA(Class<?> is) {
+        Class<?> clazz = classType();
+        return clazz == null ? false : clazz.isAssignableFrom(is);
+    }
 
-	/**
-	 * Returns the type of the the generic argument at the given index, or null if this is not a
-	 * parameter of generic type.
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public Type getGenericType(int index) {
-		ParameterizedType pt = Cast.as(type, ParameterizedType.class);
-		if (pt != null) {
-			Type[] generics = pt.getActualTypeArguments();
-			if (index < 0) {
-				index = generics.length + index;
-			}
-			if (index < generics.length) {
-				return generics[index];
-			}
-		}
-		return null;
-	}
+    /**
+     * Returns the type of the the generic argument at the given index, or null if this is not a
+     * parameter of generic type.
+     *
+     * @param index
+     * @return
+     */
+    public Type getGenericType(int index) {
+        ParameterizedType pt = Cast.as(type, ParameterizedType.class);
+        if (pt != null) {
+            Type[] generics = pt.getActualTypeArguments();
+            if (index < 0) {
+                index = generics.length + index;
+            }
+            if (index < generics.length) {
+                return generics[index];
+            }
+        }
+        return null;
+    }
 
-	public Type getArrayType() {
-		Class<?> clazz = Cast.as(type, Class.class);
-		if (clazz != null) {
-			return clazz.getComponentType();
-		}
-		GenericArrayType gat = Cast.as(type, GenericArrayType.class);
-		if (gat != null) {
-			return gat.getGenericComponentType();
-		}
-		return null;
-	}
+    public Type getArrayType() {
+        Class<?> clazz = Cast.as(type, Class.class);
+        if (clazz != null) {
+            return clazz.getComponentType();
+        }
+        GenericArrayType gat = Cast.as(type, GenericArrayType.class);
+        if (gat != null) {
+            return gat.getGenericComponentType();
+        }
+        return null;
+    }
 
-	public boolean isGeneric() {
-		return TypeIntrospector.isGeneric(type);
-	}
+    public boolean isGeneric() {
+        return TypeIntrospector.isGeneric(type);
+    }
 
-	public String name() {
-		return name;
-	}
+    public String name() {
+        return name;
+    }
 
-	public Class<?> classType() {
-		return TypeIntrospector.asClass(type);
-	}
+    public Class<?> classType() {
+        return TypeIntrospector.asClass(type);
+    }
 
-	public Type type() {
-		return type;
-	}
+    public Type type() {
+        return type;
+    }
 
-	@Override
-	public String toString() {
-		return String.format("%s %s", type, name);
-	}
+    @Override
+    public String toString() {
+        return String.format("%s %s", type, name);
+    }
 }

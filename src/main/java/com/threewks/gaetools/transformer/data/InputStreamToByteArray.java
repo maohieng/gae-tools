@@ -24,9 +24,9 @@ import java.io.InputStream;
 
 public class InputStreamToByteArray implements ETransformer<InputStream, byte[]> {
 
-	@Override
-	public byte[] from(InputStream from) {
-		return from == null ? null : Streams.readBytes(from);
-	}
+    @Override
+    public byte[] from(InputStream from) {
+        return from == null ? null : Streams.readBytes(from);
+    }
 
 }

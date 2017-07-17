@@ -20,13 +20,13 @@ package com.threewks.gaetools.search;
 import com.threewks.gaetools.exception.BaseException;
 
 public class SearchException extends BaseException {
-	private static final long serialVersionUID = -6319595990228146559L;
+    private static final long serialVersionUID = -6319595990228146559L;
 
-	public SearchException(String format, Object... formatArgs) {
-		super(format, formatArgs);
-	}
+    public SearchException(String format, Object... formatArgs) {
+        super(format, formatArgs);
+    }
 
-	public SearchException(Throwable cause, String format, Object... formatArgs) {
-		super(cause, format, formatArgs);
-	}
+    public SearchException(Throwable cause, String format, Object... formatArgs) {
+        super(cause, format, formatArgs);
+    }
 }

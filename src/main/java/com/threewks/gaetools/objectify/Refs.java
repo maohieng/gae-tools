@@ -29,46 +29,46 @@ import java.util.List;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class Refs {
-	public static <T> T unref(Ref<T> ref) {
-		return ref == null ? null : ref.get();
-	}
+    public static <T> T unref(Ref<T> ref) {
+        return ref == null ? null : ref.get();
+    }
 
-	public static <T> Collection<T> unref(Collection<Ref<T>> refs) {
-		return Expressive.isEmpty(refs) ? Collections.<T> emptyList() : ofy().load().refs(refs).values();
-	}
+    public static <T> Collection<T> unref(Collection<Ref<T>> refs) {
+        return Expressive.isEmpty(refs) ? Collections.<T>emptyList() : ofy().load().refs(refs).values();
+    }
 
-	public static <T> Ref<T> ref(T instance) {
-		return instance == null ? null : Ref.create(instance);
-	}
+    public static <T> Ref<T> ref(T instance) {
+        return instance == null ? null : Ref.create(instance);
+    }
 
-	public static <T> List<Ref<T>> ref(Iterable<T> instances) {
-		List<Ref<T>> result = new ArrayList<>();
-		if (instances != null) {
-			for (T t : instances) {
-				result.add(Refs.ref(t));
-			}
-		}
-		return result;
-	}
+    public static <T> List<Ref<T>> ref(Iterable<T> instances) {
+        List<Ref<T>> result = new ArrayList<>();
+        if (instances != null) {
+            for (T t : instances) {
+                result.add(Refs.ref(t));
+            }
+        }
+        return result;
+    }
 
-	public static <T> Ref<T> ref(Key<T> key) {
-		return key == null ? null : Ref.create(key);
-	}
+    public static <T> Ref<T> ref(Key<T> key) {
+        return key == null ? null : Ref.create(key);
+    }
 
-	public static <T> Key<T> key(T instance) {
-		return instance == null ? null : Key.create(instance);
-	}
+    public static <T> Key<T> key(T instance) {
+        return instance == null ? null : Key.create(instance);
+    }
 
-	public static <T> Key<T> key(com.google.appengine.api.datastore.Key key) {
-		return key == null ? null : Key.<T> create(key);
-	}
+    public static <T> Key<T> key(com.google.appengine.api.datastore.Key key) {
+        return key == null ? null : Key.<T>create(key);
+    }
 
-	public static <T> T unkey(Key<T> key) {
-		return key == null ? null : ofy().load().key(key).now();
-	}
+    public static <T> T unkey(Key<T> key) {
+        return key == null ? null : ofy().load().key(key).now();
+    }
 
-	public static <T> Collection<T> unkey(Iterable<Key<T>> keys) {
-		return Expressive.isEmpty(keys) ? Collections.<T> emptyList() : ofy().load().keys(keys).values();
-	}
+    public static <T> Collection<T> unkey(Iterable<Key<T>> keys) {
+        return Expressive.isEmpty(keys) ? Collections.<T>emptyList() : ofy().load().keys(keys).values();
+    }
 
 }

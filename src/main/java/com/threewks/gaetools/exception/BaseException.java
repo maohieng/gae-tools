@@ -18,22 +18,22 @@
 package com.threewks.gaetools.exception;
 
 public class BaseException extends RuntimeException {
-	private static final long serialVersionUID = 2489531688803100876L;
+    private static final long serialVersionUID = 2489531688803100876L;
 
-	public BaseException() {
-		super();
-	}
+    public BaseException() {
+        super();
+    }
 
-	public BaseException(Throwable cause, String format, Object... formatArgs) {
-		super(formatArgs.length == 0 ? format : String.format(format, formatArgs), cause);
-	}
+    public BaseException(Throwable cause, String format, Object... formatArgs) {
+        super(formatArgs.length == 0 ? format : String.format(format, formatArgs), cause);
+    }
 
-	public BaseException(String format, Object... formatArgs) {
-		super(formatArgs.length == 0 ? format : String.format(format, formatArgs));
-	}
+    public BaseException(String format, Object... formatArgs) {
+        super(formatArgs.length == 0 ? format : String.format(format, formatArgs));
+    }
 
-	public BaseException(Throwable cause) {
-		super(cause);
-	}
+    public BaseException(Throwable cause) {
+        super(cause);
+    }
 
 }

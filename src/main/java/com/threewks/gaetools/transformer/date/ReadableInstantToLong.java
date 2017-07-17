@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 import org.joda.time.ReadableInstant;
 
 public class ReadableInstantToLong implements ETransformer<ReadableInstant, Long> {
-	@Override
-	public Long from(ReadableInstant from) {
-		return from == null ? null : from.getMillis();
-	}
+    @Override
+    public Long from(ReadableInstant from) {
+        return from == null ? null : from.getMillis();
+    }
 
 }

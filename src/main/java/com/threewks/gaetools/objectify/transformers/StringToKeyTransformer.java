@@ -22,9 +22,9 @@ import com.googlecode.objectify.Key;
 
 @SuppressWarnings("rawtypes")
 public class StringToKeyTransformer implements ETransformer<String, Key> {
-	@Override
-	public Key from(String from) {
-		return from == null ? null : Key.create(from);
-	}
+    @Override
+    public Key from(String from) {
+        return from == null ? null : Key.create(from);
+    }
 
 }

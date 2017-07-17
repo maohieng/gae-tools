@@ -6,18 +6,21 @@ import com.threewks.gaetools.search.gae.mediator.FieldMediatorSet;
 import com.threewks.gaetools.search.gae.meta.IndexType;
 import com.threewks.gaetools.search.gae.meta.IndexTypeLookup;
 
-public class SearchModule {
+public final class SearchModule {
 
-	public static IndexTypeLookup defaultIndexTypeLookup() {
-		IndexTypeLookup indexTypeLookup = new IndexTypeLookup();
-		indexTypeLookup.addMapping(Key.class, IndexType.Identifier);
-		indexTypeLookup.addMapping(com.google.appengine.api.datastore.Key.class, IndexType.Identifier);
-		indexTypeLookup.addMapping(GeoPt.class, IndexType.GeoPoint);
-		return indexTypeLookup;
-	}
+    private SearchModule() {
+    }
 
-	public static FieldMediatorSet defaultFieldMediatorSet() {
-		return new FieldMediatorSet();
-	}
+    public static IndexTypeLookup defaultIndexTypeLookup() {
+        IndexTypeLookup indexTypeLookup = new IndexTypeLookup();
+        indexTypeLookup.addMapping(Key.class, IndexType.Identifier);
+        indexTypeLookup.addMapping(com.google.appengine.api.datastore.Key.class, IndexType.Identifier);
+        indexTypeLookup.addMapping(GeoPt.class, IndexType.GeoPoint);
+        return indexTypeLookup;
+    }
+
+    public static FieldMediatorSet defaultFieldMediatorSet() {
+        return new FieldMediatorSet();
+    }
 
 }

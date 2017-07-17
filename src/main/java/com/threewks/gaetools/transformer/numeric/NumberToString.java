@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class NumberToString implements ETransformer<Number, String> {
 
-	@Override
-	public String from(Number from) {
-		return from == null ? null : from.toString();
-	}
+    @Override
+    public String from(Number from) {
+        return from == null ? null : from.toString();
+    }
 
 }

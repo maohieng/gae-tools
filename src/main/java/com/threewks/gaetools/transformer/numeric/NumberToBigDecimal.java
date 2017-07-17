@@ -23,9 +23,9 @@ import java.math.BigDecimal;
 
 public class NumberToBigDecimal implements ETransformer<Number, BigDecimal> {
 
-	@Override
-	public BigDecimal from(Number from) {
-		return from == null ? null : new BigDecimal(from.toString());
-	}
+    @Override
+    public BigDecimal from(Number from) {
+        return from == null ? null : new BigDecimal(from.toString());
+    }
 
 }

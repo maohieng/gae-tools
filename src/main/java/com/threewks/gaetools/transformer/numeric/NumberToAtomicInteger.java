@@ -23,9 +23,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class NumberToAtomicInteger implements ETransformer<Number, AtomicInteger> {
 
-	@Override
-	public AtomicInteger from(Number from) {
-		return from == null ? null : new AtomicInteger(from.intValue());
-	}
+    @Override
+    public AtomicInteger from(Number from) {
+        return from == null ? null : new AtomicInteger(from.intValue());
+    }
 
 }

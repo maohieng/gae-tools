@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class StringToLong implements ETransformer<String, Long> {
 
-	@Override
-	public Long from(String from) {
-		return from == null ? null : Long.parseLong(from);
-	}
+    @Override
+    public Long from(String from) {
+        return from == null ? null : Long.parseLong(from);
+    }
 
 }

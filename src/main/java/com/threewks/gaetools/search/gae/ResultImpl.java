@@ -29,81 +29,79 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class ResultImpl<T, K> implements Result<T, K> {
-	private Future<Results<ScoredDocument>> searchAsync;
-	private Results<ScoredDocument> results;
-	private Integer offset;
-	private List<ScoredDocument> resultsList;
-	private SearchExecutor<T, K, ?> searchExecutor;
+    private Future<Results<ScoredDocument>> searchAsync;
+    private Results<ScoredDocument> results;
+    private Integer offset;
+    private List<ScoredDocument> resultsList;
+    private SearchExecutor<T, K, ?> searchExecutor;
 
-	public ResultImpl(SearchExecutor<T, K, ?> searchExecutor, Future<Results<ScoredDocument>> searchAsync, Integer offset) {
-		this.searchExecutor = searchExecutor;
-		this.searchAsync = searchAsync;
-		this.offset = offset;
-	}
+    public ResultImpl(SearchExecutor<T, K, ?> searchExecutor, Future<Results<ScoredDocument>> searchAsync, Integer offset) {
+        this.searchExecutor = searchExecutor;
+        this.searchAsync = searchAsync;
+        this.offset = offset;
+    }
 
-	/**
-	 * TODO: The implementation of this only works in trivial situations. Further work will be done here
-	 * in the future to allow the usage of the SearchService to store an entire document.
-	 */
-	@Override
-	public List<T> getResults() throws SearchException {
-		return searchExecutor.getResults(resultsList());
-	}
+    /**
+     * TODO: The implementation of this only works in trivial situations. Further work will be done here
+     * in the future to allow the usage of the SearchService to store an entire document.
+     */
+    @Override
+    public List<T> getResults() throws SearchException {
+        return searchExecutor.getResults(resultsList());
+    }
 
-	@Override
-	public List<K> getResultIds() throws SearchException {
-		return searchExecutor.getResultsAsIds(resultsList());
-	}
+    @Override
+    public List<K> getResultIds() throws SearchException {
+        return searchExecutor.getResultsAsIds(resultsList());
+    }
 
-	@Override
-	public long getMatchingRecordCount() {
-		Results<ScoredDocument> results = results();
-		return results.getNumberFound();
-	}
+    @Override
+    public long getMatchingRecordCount() {
+        Results<ScoredDocument> results = results();
+        return results.getNumberFound();
+    }
 
-	@Override
-	public long getReturnedRecordCount() {
-		Results<ScoredDocument> results = results();
-		return Math.max(0, results.getNumberReturned() - offset());
-	}
+    @Override
+    public long getReturnedRecordCount() {
+        Results<ScoredDocument> results = results();
+        return Math.max(0, results.getNumberReturned() - offset());
+    }
 
-	@Override
-	public String cursor() {
-		Cursor cursor = results.getCursor();
-		return cursor == null ? null : cursor.toWebSafeString();
-	}
+    @Override
+    public String cursor() {
+        Cursor cursor = results.getCursor();
+        return cursor == null ? null : cursor.toWebSafeString();
+    }
 
-	/**
-	 * When applying an offset to a query in the Google Search service, you can no longer order by fields.
-	 * To get around this, we apply the offset manually to the searched result set.
-	 * 
-	 * @return
-	 */
-	private List<ScoredDocument> resultsList() {
-		if (this.resultsList == null) {
-			Results<ScoredDocument> results = results();
-			List<ScoredDocument> resultsList = new ArrayList<ScoredDocument>(results.getResults());
-			int end = resultsList.size();
-			int start = Math.min(offset(), end);
-			this.resultsList = resultsList.subList(start, end);
-		}
-		return resultsList;
-	}
+    /**
+     * When applying an offset to a query in the Google Search service, you can no longer order by fields.
+     * To get around this, we apply the offset manually to the searched result set.
+     *
+     * @return
+     */
+    private List<ScoredDocument> resultsList() {
+        if (this.resultsList == null) {
+            Results<ScoredDocument> results = results();
+            List<ScoredDocument> resultsList = new ArrayList<>(results.getResults());
+            int end = resultsList.size();
+            int start = Math.min(offset(), end);
+            this.resultsList = resultsList.subList(start, end);
+        }
+        return resultsList;
+    }
 
-	private Results<ScoredDocument> results() {
-		if (results == null) {
-			try {
-				results = searchAsync.get();
-			} catch (InterruptedException e) {
-				throw new SearchException(e, "Failed to retrieve search results: %s", e.getMessage());
-			} catch (ExecutionException e) {
-				throw new SearchException(e, "Failed to retrieve search results: %s", e.getMessage());
-			}
-		}
-		return results;
-	}
+    private Results<ScoredDocument> results() {
+        if (results == null) {
+            try {
+                results = searchAsync.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new SearchException(e, "Failed to retrieve search results: %s", e.getMessage());
+            }
+        }
+        return results;
+    }
 
-	private int offset() {
-		return offset == null ? 0 : offset;
-	}
+    private int offset() {
+        return offset == null ? 0 : offset;
+    }
 }

@@ -23,9 +23,9 @@ import java.net.URI;
 
 public class UriToString implements ETransformer<URI, String> {
 
-	@Override
-	public String from(URI from) {
-		return from == null ? null : from.toString();
-	}
+    @Override
+    public String from(URI from) {
+        return from == null ? null : from.toString();
+    }
 
 }

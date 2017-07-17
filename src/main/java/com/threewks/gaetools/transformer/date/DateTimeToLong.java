@@ -22,9 +22,9 @@ import org.joda.time.DateTime;
 
 public class DateTimeToLong implements ETransformer<DateTime, Long> {
 
-	@Override
-	public Long from(DateTime from) {
-		return from == null ? null : from.getMillis();
-	}
+    @Override
+    public Long from(DateTime from) {
+        return from == null ? null : from.getMillis();
+    }
 
 }

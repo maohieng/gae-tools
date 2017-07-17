@@ -25,27 +25,27 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 public class DateFieldMediator implements FieldMediator<DateTime> {
-	private DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+    private DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <In> DateTime normalise(TransformerManager transformerManager, In value) {
-		Class<In> valueClass = (Class<In>) value.getClass();
-		return transformerManager.transform(valueClass, DateTime.class, value);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <In> DateTime normalise(TransformerManager transformerManager, In value) {
+        Class<In> valueClass = (Class<In>) value.getClass();
+        return transformerManager.transform(valueClass, DateTime.class, value);
+    }
 
-	@Override
-	public void setValue(Builder builder, DateTime value) {
-		builder.setDate(value.withZone(DateTimeZone.UTC).toDate());
-	}
+    @Override
+    public void setValue(Builder builder, DateTime value) {
+        builder.setDate(value.withZone(DateTimeZone.UTC).toDate());
+    }
 
-	@Override
-	public String stringify(DateTime value) {
-		return formatter.print(value.withZone(DateTimeZone.UTC));
-	}
-	
-	@Override
-	public Class<DateTime> getTargetType() {
-		return DateTime.class;
-	}
+    @Override
+    public String stringify(DateTime value) {
+        return formatter.print(value.withZone(DateTimeZone.UTC));
+    }
+
+    @Override
+    public Class<DateTime> getTargetType() {
+        return DateTime.class;
+    }
 }

@@ -23,9 +23,9 @@ import java.math.BigInteger;
 
 public class StringToBigInteger implements ETransformer<String, BigInteger> {
 
-	@Override
-	public BigInteger from(String from) {
-		return from == null ? null : new BigInteger(from);
-	}
+    @Override
+    public BigInteger from(String from) {
+        return from == null ? null : new BigInteger(from);
+    }
 
 }

@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class NumberToShort implements ETransformer<Number, Short> {
 
-	@Override
-	public Short from(Number from) {
-		return from == null ? null : from.shortValue();
-	}
+    @Override
+    public Short from(Number from) {
+        return from == null ? null : from.shortValue();
+    }
 
 }

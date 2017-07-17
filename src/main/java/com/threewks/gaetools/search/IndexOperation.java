@@ -22,19 +22,19 @@ import java.util.concurrent.Future;
 
 public class IndexOperation {
 
-	private Future<?> future;
+    private Future<?> future;
 
-	public IndexOperation(Future<?> future) {
-		this.future = future;
-	}
+    public IndexOperation(Future<?> future) {
+        this.future = future;
+    }
 
-	public void complete() {
-		if (future != null) {
-			try {
-				future.get();
-			} catch (ExecutionException | InterruptedException e) {
-				throw new SearchException(e, "Failed to complete search index operation: %s", e.getMessage());
-			}
-		}
-	}
+    public void complete() {
+        if (future != null) {
+            try {
+                future.get();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new SearchException(e, "Failed to complete search index operation: %s", e.getMessage());
+            }
+        }
+    }
 }

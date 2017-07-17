@@ -23,25 +23,25 @@ import com.threewks.gaetools.transformer.TransformerManager;
 
 public class GeoPointFieldMediator implements FieldMediator<GeoPoint> {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <In> GeoPoint normalise(TransformerManager transformerManager, In value) {
-		Class<In> valueClass = (Class<In>) value.getClass();
-		return transformerManager.transform(valueClass, GeoPoint.class, value);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <In> GeoPoint normalise(TransformerManager transformerManager, In value) {
+        Class<In> valueClass = (Class<In>) value.getClass();
+        return transformerManager.transform(valueClass, GeoPoint.class, value);
+    }
 
-	@Override
-	public void setValue(Builder builder, GeoPoint value) {
-		builder.setGeoPoint(value);
-	}
+    @Override
+    public void setValue(Builder builder, GeoPoint value) {
+        builder.setGeoPoint(value);
+    }
 
-	@Override
-	public String stringify(GeoPoint value) {
-		return String.format("geopoint(%f, %f)", value.getLatitude(), value.getLongitude());
-	}
+    @Override
+    public String stringify(GeoPoint value) {
+        return String.format("geopoint(%f, %f)", value.getLatitude(), value.getLongitude());
+    }
 
-	@Override
-	public Class<GeoPoint> getTargetType() {
-		return GeoPoint.class;
-	}
+    @Override
+    public Class<GeoPoint> getTargetType() {
+        return GeoPoint.class;
+    }
 }

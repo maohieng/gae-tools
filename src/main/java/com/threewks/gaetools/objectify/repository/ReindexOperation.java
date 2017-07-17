@@ -21,15 +21,15 @@ import java.util.List;
 
 /**
  * Allows the re-index operation to modify the entities provided before they are re-indexed.
- * 
+ * <p>
  * Note that all entities that are returned from apply will be saved and re-indexed.
  * This means that the re-index operation can also be use to filter out articles not matching
  * an adhoc criteria.
  */
 public interface ReindexOperation<E> {
-	/**
-	 * @param batch the batch of articles to be updated.
-	 * @return a list of the articles which are to be updated - re-indexing will not occur on articles not in the result list
-	 */
-	List<E> apply(List<E> batch);
+    /**
+     * @param batch the batch of articles to be updated.
+     * @return a list of the articles which are to be updated - re-indexing will not occur on articles not in the result list
+     */
+    List<E> apply(List<E> batch);
 }

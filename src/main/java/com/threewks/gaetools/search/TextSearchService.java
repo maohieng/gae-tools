@@ -26,74 +26,74 @@ import java.util.Collection;
  * Implementations of this service use {@link SearchId} and {@link SearchIndex} annotations to determine
  * what fields of the target object to index. If you need to provide an external id, rather than
  * relying on internal object data use the {@link IdTextSearchService} instead.
- * 
+ *
  * @see GaeSearchService
  */
 public interface TextSearchService<T, K> {
 
-	/**
-	 * Index the given object using the fields annotated with {@link SearchId} and {@link SearchIndex}, replacing
-	 * any previously indexed data
-	 * 
-	 * @param object the object to index.
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation index(T object);
+    /**
+     * Index the given object using the fields annotated with {@link SearchId} and {@link SearchIndex}, replacing
+     * any previously indexed data
+     *
+     * @param object the object to index.
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation index(T object);
 
-	/**
-	 * Index the given objects using the fields annotated with {@link SearchId} and {@link SearchIndex}.
-	 * 
-	 * @param objects
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation index(Collection<T> objects);
+    /**
+     * Index the given objects using the fields annotated with {@link SearchId} and {@link SearchIndex}.
+     *
+     * @param objects
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation index(Collection<T> objects);
 
-	/**
-	 * Remove the object with the given id from the index
-	 * 
-	 * @param id
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation removeById(K id);
+    /**
+     * Remove the object with the given id from the index
+     *
+     * @param id
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation removeById(K id);
 
-	/**
-	 * Remove the given object from the index
-	 * 
-	 * @param object
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation remove(T object);
+    /**
+     * Remove the given object from the index
+     *
+     * @param object
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation remove(T object);
 
-	/**
-	 * Remove the objects with the given ids from the index.
-	 * 
-	 * @param ids
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation removeById(Iterable<K> ids);
+    /**
+     * Remove the objects with the given ids from the index.
+     *
+     * @param ids
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation removeById(Iterable<K> ids);
 
-	/**
-	 * Remove the given objects from the index
-	 * 
-	 * @param objects
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation remove(Iterable<T> objects);
+    /**
+     * Remove the given objects from the index
+     *
+     * @param objects
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation remove(Iterable<T> objects);
 
-	/**
-	 * Remove all objects from the index.
-	 * 
-	 * @return the number of objects removed from the index.
-	 */
-	public int removeAll();
+    /**
+     * Remove all objects from the index.
+     *
+     * @return the number of objects removed from the index.
+     */
+    public int removeAll();
 
-	/**
-	 * Create a {@link Search} for the given type. This will return an object which provides a fluent
-	 * interface for customising a search
-	 * 
-	 * @return a {@link Search} that can be used to search.
-	 */
-	public Search<T, K> search();
-	
-	
+    /**
+     * Create a {@link Search} for the given type. This will return an object which provides a fluent
+     * interface for customising a search
+     *
+     * @return a {@link Search} that can be used to search.
+     */
+    public Search<T, K> search();
+
+
 }

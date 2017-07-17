@@ -22,21 +22,23 @@ package com.threewks.gaetools.search;
  * The interpretation of these is dependent on the implementation and data type the field was indexed as.
  */
 public enum Is {
-	EqualTo("="),
-	GreaterThan(">"),
-	GreaterThanOrEqualTo(">="),
-	Is("is"),
-	LessThanOrEqualTo("<="),
-	LessThan("<"),
-	Near("near"),
-	Like("like");
-	
-	private String toString;
-	private Is(String toString){
-		this.toString = toString;
-	}
-	@Override
-	public String toString() {
-		return toString;
-	}
+    EqualTo("="),
+    GreaterThan(">"),
+    GreaterThanOrEqualTo(">="),
+    Is("is"),
+    LessThanOrEqualTo("<="),
+    LessThan("<"),
+    Near("near"),
+    Like("like");
+
+    private String toString;
+
+    private Is(String toString) {
+        this.toString = toString;
+    }
+
+    @Override
+    public String toString() {
+        return toString;
+    }
 }

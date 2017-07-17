@@ -23,9 +23,9 @@ import java.util.Date;
 
 public class DateToLong implements ETransformer<Date, Long> {
 
-	@Override
-	public Long from(Date from) {
-		return from == null ? null : from.getTime();
-	}
+    @Override
+    public Long from(Date from) {
+        return from == null ? null : from.getTime();
+    }
 
 }

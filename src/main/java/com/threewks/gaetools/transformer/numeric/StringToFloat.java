@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class StringToFloat implements ETransformer<String, Float> {
 
-	@Override
-	public Float from(String from) {
-		return from == null ? null : Float.parseFloat(from);
-	}
+    @Override
+    public Float from(String from) {
+        return from == null ? null : Float.parseFloat(from);
+    }
 
 }

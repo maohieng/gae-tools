@@ -23,9 +23,9 @@ import org.joda.time.ReadableInstant;
 import java.util.Date;
 
 public class ReadableInstantToDate implements ETransformer<ReadableInstant, Date> {
-	@Override
-	public Date from(ReadableInstant from) {
-		return from == null ? null : from.toInstant().toDate();
-	}
+    @Override
+    public Date from(ReadableInstant from) {
+        return from == null ? null : from.toInstant().toDate();
+    }
 
 }

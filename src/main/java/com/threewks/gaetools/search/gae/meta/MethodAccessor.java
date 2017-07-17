@@ -23,58 +23,58 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MethodAccessor<T, V> implements Accessor<T, V> {
-	private Class<T> type;
-	private String name;
-	private String encodedName;
-	private String methodName;
-	private Class<V> methodType;
-	private Method method;
-	private IndexType indexType;
+    private Class<T> type;
+    private String name;
+    private String encodedName;
+    private String methodName;
+    private Class<V> methodType;
+    private Method method;
+    private IndexType indexType;
 
-	@SuppressWarnings("unchecked")
-	public MethodAccessor(Class<T> type, Method method, String name, String encodedName, IndexType indexType) {
-		try {
-			this.type = type;
-			this.method = method;
-			this.method.setAccessible(true);
-			this.methodType = (Class<V>) this.method.getReturnType();
-			this.name = name;
-			this.encodedName = encodedName;
-			this.methodName = method.getName();
-			this.indexType = indexType;
-		} catch (SecurityException e) {
-			throw new SearchException(e, "Unable to access method '%s.%s': %s", type.getSimpleName(), methodName, e.getMessage());
-		}
-	}
+    @SuppressWarnings("unchecked")
+    public MethodAccessor(Class<T> type, Method method, String name, String encodedName, IndexType indexType) {
+        try {
+            this.type = type;
+            this.method = method;
+            this.method.setAccessible(true);
+            this.methodType = (Class<V>) this.method.getReturnType();
+            this.name = name;
+            this.encodedName = encodedName;
+            this.methodName = method.getName();
+            this.indexType = indexType;
+        } catch (SecurityException e) {
+            throw new SearchException(e, "Unable to access method '%s.%s': %s", type.getSimpleName(), methodName, e.getMessage());
+        }
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public String getEncodedName() {
-		return encodedName;
-	}
+    @Override
+    public String getEncodedName() {
+        return encodedName;
+    }
 
-	@Override
-	public Class<V> getType() {
-		return methodType;
-	}
+    @Override
+    public Class<V> getType() {
+        return methodType;
+    }
 
-	@Override
-	public IndexType getIndexType() {
-		return indexType;
-	}
+    @Override
+    public IndexType getIndexType() {
+        return indexType;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public V get(T t) {
-		try {
-			return (V) method.invoke(t);
-		} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-			throw new SearchException(e, "Failed to call method '%s.%s': %s", type.getSimpleName(), methodName, e.getMessage());
-		}
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public V get(T t) {
+        try {
+            return (V) method.invoke(t);
+        } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+            throw new SearchException(e, "Failed to call method '%s.%s': %s", type.getSimpleName(), methodName, e.getMessage());
+        }
+    }
 
 }

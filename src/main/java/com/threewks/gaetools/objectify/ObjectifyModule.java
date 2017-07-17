@@ -12,24 +12,27 @@ import com.threewks.gaetools.objectify.transformers.StringToDatastoreKeyTransfor
 import com.threewks.gaetools.objectify.transformers.StringToKeyTransformer;
 import com.threewks.gaetools.transformer.TransformerManager;
 
-public class ObjectifyModule {
+public final class ObjectifyModule {
 
-	public static TransformerManager defaultTransformerManager() {
-		TransformerManager transformerManager = TransformerManager.createWithDefaults();
-		transformerManager.register(Key.class, String.class, new KeyToStringTransformer());
-		transformerManager.register(Key.class, Long.class, new KeyToLongTransformer());
-		transformerManager.register(String.class, Key.class, new StringToKeyTransformer());
-		transformerManager.register(com.google.appengine.api.datastore.Key.class, String.class, new DatastoreKeyToStringTransformer());
-		transformerManager.register(com.google.appengine.api.datastore.Key.class, Long.class, new DatastoreKeyToLongTransformer());
-		transformerManager.register(String.class, com.google.appengine.api.datastore.Key.class, new StringToDatastoreKeyTransformer());
-		return transformerManager;
-	}
+    private ObjectifyModule() {
+    }
 
-	public static void addDefaultTranslators() {
-		// register Objectify converter to convert between java.uil.Date and org.joda.time.DateTime
-		ObjectifyFactory objectifyFactory = ObjectifyService.factory();
-		JodaTimeTranslators.add(objectifyFactory);
-		objectifyFactory.getTranslators().add(new UUIDTranslatorFactory());
-	}
+    public static TransformerManager defaultTransformerManager() {
+        TransformerManager transformerManager = TransformerManager.createWithDefaults();
+        transformerManager.register(Key.class, String.class, new KeyToStringTransformer());
+        transformerManager.register(Key.class, Long.class, new KeyToLongTransformer());
+        transformerManager.register(String.class, Key.class, new StringToKeyTransformer());
+        transformerManager.register(com.google.appengine.api.datastore.Key.class, String.class, new DatastoreKeyToStringTransformer());
+        transformerManager.register(com.google.appengine.api.datastore.Key.class, Long.class, new DatastoreKeyToLongTransformer());
+        transformerManager.register(String.class, com.google.appengine.api.datastore.Key.class, new StringToDatastoreKeyTransformer());
+        return transformerManager;
+    }
+
+    public static void addDefaultTranslators() {
+        // register Objectify converter to convert between java.uil.Date and org.joda.time.DateTime
+        ObjectifyFactory objectifyFactory = ObjectifyService.factory();
+        JodaTimeTranslators.add(objectifyFactory);
+        objectifyFactory.getTranslators().add(new UUIDTranslatorFactory());
+    }
 
 }

@@ -29,22 +29,22 @@ import com.googlecode.objectify.impl.translate.ValueTranslatorFactory;
 import java.util.UUID;
 
 public class UUIDTranslatorFactory extends ValueTranslatorFactory<UUID, String> {
-	public UUIDTranslatorFactory() {
-		super(UUID.class);
-	}
+    public UUIDTranslatorFactory() {
+        super(UUID.class);
+    }
 
-	@Override
-	protected ValueTranslator<UUID, String> createValueTranslator(TypeKey<UUID> tk, CreateContext ctx, Path path) {
-		return new ValueTranslator<UUID, String>(String.class) {
-			@Override
-			protected UUID loadValue(String value, LoadContext ctx, Path path) throws SkipException {
-				return UUID.fromString(value);
-			}
+    @Override
+    protected ValueTranslator<UUID, String> createValueTranslator(TypeKey<UUID> tk, CreateContext ctx, Path path) {
+        return new ValueTranslator<UUID, String>(String.class) {
+            @Override
+            protected UUID loadValue(String value, LoadContext ctx, Path path) throws SkipException {
+                return UUID.fromString(value);
+            }
 
-			@Override
-			protected String saveValue(UUID value, boolean index, SaveContext ctx, Path path) throws SkipException {
-				return value.toString();
-			}
-		};
-	}
+            @Override
+            protected String saveValue(UUID value, boolean index, SaveContext ctx, Path path) throws SkipException {
+                return value.toString();
+            }
+        };
+    }
 }

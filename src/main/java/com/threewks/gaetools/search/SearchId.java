@@ -24,11 +24,11 @@ import java.lang.annotation.Target;
 
 /**
  * Marks a field or getter method as the identifying property in the text search index.
- * 
+ * <p>
  * That is, this field will be mapped as the 'pk' of the entity in the search index.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.FIELD })
+@Target({ElementType.METHOD, ElementType.FIELD})
 public @interface SearchId {
 
 }

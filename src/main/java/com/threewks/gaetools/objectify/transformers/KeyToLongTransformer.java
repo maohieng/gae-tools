@@ -23,9 +23,9 @@ import com.googlecode.objectify.Key;
 @SuppressWarnings("rawtypes")
 public class KeyToLongTransformer implements ETransformer<Key, Long> {
 
-	@Override
-	public Long from(Key from) {
-		return from == null ? null : from.getId();
-	}
+    @Override
+    public Long from(Key from) {
+        return from == null ? null : from.getId();
+    }
 
 }

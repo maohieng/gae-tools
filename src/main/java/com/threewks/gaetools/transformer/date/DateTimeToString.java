@@ -23,11 +23,11 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 public class DateTimeToString implements ETransformer<DateTime, String> {
-	private static final DateTimeFormatter IsoFormat = ISODateTimeFormat.dateTime();
+    private static final DateTimeFormatter IsoFormat = ISODateTimeFormat.dateTime();
 
-	@Override
-	public String from(DateTime from) {
-		return from == null ? null : IsoFormat.print(from);
-	}
+    @Override
+    public String from(DateTime from) {
+        return from == null ? null : IsoFormat.print(from);
+    }
 
 }

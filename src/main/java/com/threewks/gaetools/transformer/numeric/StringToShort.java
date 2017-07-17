@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class StringToShort implements ETransformer<String, Short> {
 
-	@Override
-	public Short from(String from) {
-		return from == null ? null : Short.parseShort(from);
-	}
+    @Override
+    public Short from(String from) {
+        return from == null ? null : Short.parseShort(from);
+    }
 
 }

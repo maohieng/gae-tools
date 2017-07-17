@@ -20,14 +20,14 @@ package com.threewks.gaetools.objectify.repository;
 import com.threewks.gaetools.exception.BaseException;
 
 public class RepositoryException extends BaseException {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public RepositoryException(String format, Object... formatArgs) {
-		super(format, formatArgs);
-	}
+    public RepositoryException(String format, Object... formatArgs) {
+        super(format, formatArgs);
+    }
 
-	public RepositoryException(Throwable cause, String format, Object... formatArgs) {
-		super(cause, format, formatArgs);
-	}
+    public RepositoryException(Throwable cause, String format, Object... formatArgs) {
+        super(cause, format, formatArgs);
+    }
 
 }

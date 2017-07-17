@@ -22,9 +22,9 @@ import com.atomicleopard.expressive.ETransformer;
 import java.util.UUID;
 
 public class UUIDToString implements ETransformer<UUID, String> {
-	@Override
-	public String from(UUID value) {
-		return value == null ? null : value.toString();
-	}
+    @Override
+    public String from(UUID value) {
+        return value == null ? null : value.toString();
+    }
 
 }

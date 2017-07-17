@@ -22,27 +22,27 @@ import com.threewks.gaetools.transformer.TransformerManager;
 
 public class AtomFieldMediator implements FieldMediator<String> {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <In> String normalise(TransformerManager transformerManager, In value) {
-		Class<In> valueClass = (Class<In>) value.getClass();
-		return transformerManager.transform(valueClass, String.class, value);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <In> String normalise(TransformerManager transformerManager, In value) {
+        Class<In> valueClass = (Class<In>) value.getClass();
+        return transformerManager.transform(valueClass, String.class, value);
+    }
 
-	@Override
-	public void setValue(Builder builder, String value) {
-		builder.setAtom(value);
+    @Override
+    public void setValue(Builder builder, String value) {
+        builder.setAtom(value);
 
-	}
+    }
 
-	@Override
-	public String stringify(String value) {
-		return FieldMediatorSet.quote.from(value);
-	}
-	
-	@Override
-	public Class<String> getTargetType() {
-		return String.class;
-	}
+    @Override
+    public String stringify(String value) {
+        return FieldMediatorSet.quote.from(value);
+    }
+
+    @Override
+    public Class<String> getTargetType() {
+        return String.class;
+    }
 
 }

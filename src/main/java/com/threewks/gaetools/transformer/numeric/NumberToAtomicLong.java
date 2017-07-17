@@ -23,9 +23,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class NumberToAtomicLong implements ETransformer<Number, AtomicLong> {
 
-	@Override
-	public AtomicLong from(Number from) {
-		return from == null ? null : new AtomicLong(from.longValue());
-	}
+    @Override
+    public AtomicLong from(Number from) {
+        return from == null ? null : new AtomicLong(from.longValue());
+    }
 
 }

@@ -24,9 +24,9 @@ import java.math.BigDecimal;
 
 public class DateTimeToBigDecimal implements ETransformer<DateTime, BigDecimal> {
 
-	@Override
-	public BigDecimal from(DateTime from) {
-		return from == null ? null : new BigDecimal(from.getMillis());
-	}
+    @Override
+    public BigDecimal from(DateTime from) {
+        return from == null ? null : new BigDecimal(from.getMillis());
+    }
 
 }

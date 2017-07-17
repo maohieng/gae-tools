@@ -23,9 +23,9 @@ package com.threewks.gaetools.search.gae.naming;
  */
 public class UniqueIndexNamingStrategy implements IndexNamingStrategy {
 
-	@Override
-	public String getName(Class<?> type) {
-		return type.getName();
-	}
+    @Override
+    public String getName(Class<?> type) {
+        return type.getName();
+    }
 
 }

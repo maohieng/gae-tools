@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class NumberToInteger implements ETransformer<Number, Integer> {
 
-	@Override
-	public Integer from(Number from) {
-		return from == null ? null : from.intValue();
-	}
+    @Override
+    public Integer from(Number from) {
+        return from == null ? null : from.intValue();
+    }
 
 }

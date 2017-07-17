@@ -25,13 +25,13 @@ import java.net.URISyntaxException;
 
 public class StringToUri implements ETransformer<String, URI> {
 
-	@Override
-	public URI from(String from) {
-		try {
-			return from == null ? null : new URI(from);
-		} catch (URISyntaxException e) {
-			throw new TransformerException(e, "Could not transform from '%s' to a URI: %s", from, e.getMessage());
-		}
-	}
+    @Override
+    public URI from(String from) {
+        try {
+            return from == null ? null : new URI(from);
+        } catch (URISyntaxException e) {
+            throw new TransformerException(e, "Could not transform from '%s' to a URI: %s", from, e.getMessage());
+        }
+    }
 
 }

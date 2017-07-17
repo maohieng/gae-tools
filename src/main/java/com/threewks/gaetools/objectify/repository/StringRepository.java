@@ -22,25 +22,15 @@ import com.googlecode.objectify.Key;
 import com.threewks.gaetools.search.gae.SearchConfig;
 
 public class StringRepository<E> extends AbstractRepository<E, String> {
-	public StringRepository(final Class<E> entityType, SearchConfig searchConfig) {
-		super(entityType, fromString(entityType), toString(entityType), searchConfig);
-	}
+    public StringRepository(final Class<E> entityType, SearchConfig searchConfig) {
+        super(entityType, fromString(entityType), toString(entityType), searchConfig);
+    }
 
-	static <E> ETransformer<String, Key<E>> fromString(final Class<E> type) {
-		return new ETransformer<String, Key<E>>() {
-			@Override
-			public Key<E> from(String from) {
-				return Key.create(type, from);
-			}
-		};
-	}
+    static <E> ETransformer<String, Key<E>> fromString(final Class<E> type) {
+        return from -> Key.create(type, from);
+    }
 
-	static <E> ETransformer<Key<E>, String> toString(final Class<E> type) {
-		return new ETransformer<Key<E>, String>() {
-			@Override
-			public String from(Key<E> from) {
-				return from.getName();
-			}
-		};
-	}
+    static <E> ETransformer<Key<E>, String> toString(final Class<E> type) {
+        return Key::getName;
+    }
 }

@@ -25,13 +25,13 @@ import java.net.URL;
 
 public class StringToUrl implements ETransformer<String, URL> {
 
-	@Override
-	public URL from(String from) {
-		try {
-			return from == null ? null : new URL(from);
-		} catch (MalformedURLException e) {
-			throw new TransformerException(e, "Could not transform from '%s' to a URL: %s", from, e.getMessage());
-		}
-	}
+    @Override
+    public URL from(String from) {
+        try {
+            return from == null ? null : new URL(from);
+        } catch (MalformedURLException e) {
+            throw new TransformerException(e, "Could not transform from '%s' to a URL: %s", from, e.getMessage());
+        }
+    }
 
 }

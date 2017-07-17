@@ -22,25 +22,15 @@ import com.google.appengine.api.datastore.Key;
 import com.threewks.gaetools.search.gae.SearchConfig;
 
 public class DatastoreKeyRepository<E> extends AbstractRepository<E, Key> {
-	public DatastoreKeyRepository(final Class<E> entityType, SearchConfig searchConfig) {
-		super(entityType, fromKey(entityType), toKey(entityType), searchConfig);
-	}
+    public DatastoreKeyRepository(final Class<E> entityType, SearchConfig searchConfig) {
+        super(entityType, fromKey(entityType), toKey(entityType), searchConfig);
+    }
 
-	static <E> ETransformer<Key, com.googlecode.objectify.Key<E>> fromKey(final Class<E> type) {
-		return new ETransformer<Key, com.googlecode.objectify.Key<E>>() {
-			@Override
-			public com.googlecode.objectify.Key<E> from(Key from) {
-				return com.googlecode.objectify.Key.create(from);
-			}
-		};
-	}
+    static <E> ETransformer<Key, com.googlecode.objectify.Key<E>> fromKey(final Class<E> type) {
+        return com.googlecode.objectify.Key::create;
+    }
 
-	static <E> ETransformer<com.googlecode.objectify.Key<E>, Key> toKey(final Class<E> type) {
-		return new ETransformer<com.googlecode.objectify.Key<E>, Key>() {
-			@Override
-			public Key from(com.googlecode.objectify.Key<E> from) {
-				return from.getRaw();
-			}
-		};
-	}
+    static <E> ETransformer<com.googlecode.objectify.Key<E>, Key> toKey(final Class<E> type) {
+        return com.googlecode.objectify.Key::getRaw;
+    }
 }

@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class NumberToLong implements ETransformer<Number, Long> {
 
-	@Override
-	public Long from(Number from) {
-		return from == null ? null : from.longValue();
-	}
+    @Override
+    public Long from(Number from) {
+        return from == null ? null : from.longValue();
+    }
 
 }

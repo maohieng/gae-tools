@@ -22,10 +22,10 @@ import org.apache.commons.lang3.StringUtils;
 
 public class StringToBoolean implements ETransformer<String, Boolean> {
 
-	@Override
-	public Boolean from(String from) {
-		from = StringUtils.trim(from);
-		return from == null ? null : Boolean.valueOf(from);
-	}
+    @Override
+    public Boolean from(String from) {
+        from = StringUtils.trim(from);
+        return from == null ? null : Boolean.valueOf(from);
+    }
 
 }

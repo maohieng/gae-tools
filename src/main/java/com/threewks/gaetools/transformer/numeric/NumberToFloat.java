@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class NumberToFloat implements ETransformer<Number, Float> {
 
-	@Override
-	public Float from(Number from) {
-		return from == null ? null : from.floatValue();
-	}
+    @Override
+    public Float from(Number from) {
+        return from == null ? null : from.floatValue();
+    }
 
 }

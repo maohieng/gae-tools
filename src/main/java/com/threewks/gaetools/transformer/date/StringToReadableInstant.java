@@ -23,11 +23,11 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 public class StringToReadableInstant implements ETransformer<String, ReadableInstant> {
-	private static final DateTimeFormatter LenientIsoParser = ISODateTimeFormat.dateOptionalTimeParser();
+    private static final DateTimeFormatter LenientIsoParser = ISODateTimeFormat.dateOptionalTimeParser();
 
-	@Override
-	public ReadableInstant from(String from) {
-		return from == null ? null : LenientIsoParser.parseDateTime(from);
-	}
+    @Override
+    public ReadableInstant from(String from) {
+        return from == null ? null : LenientIsoParser.parseDateTime(from);
+    }
 
 }

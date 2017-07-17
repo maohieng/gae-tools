@@ -26,14 +26,14 @@ import java.lang.annotation.Target;
 
 /**
  * Marks a field or getter as being searchable in the full text search index.
- * 
+ * <p>
  * You can specify the name of the 'column' using {@link #value()}.
  * You can control how it is indexed (and as such queryable) using {@link #as()}
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.FIELD })
+@Target({ElementType.METHOD, ElementType.FIELD})
 public @interface SearchIndex {
-	String value() default "";
+    String value() default "";
 
-	IndexType as() default IndexType.Automatic;
+    IndexType as() default IndexType.Automatic;
 }

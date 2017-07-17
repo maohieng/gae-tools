@@ -19,10 +19,10 @@ package com.threewks.gaetools.search.gae.naming;
 
 /**
  * Used to determine what the name for an index should be based on the class type.
- * 
+ *
  * @see DefaultIndexNamingStrategy
  * @see UniqueIndexNamingStrategy
  */
 public interface IndexNamingStrategy {
-	public String getName(Class<?> type);
+    public String getName(Class<?> type);
 }

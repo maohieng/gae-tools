@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class ByteToString implements ETransformer<Byte, String> {
 
-	@Override
-	public String from(Byte from) {
-		return from == null ? null : Byte.toString(from);
-	}
+    @Override
+    public String from(Byte from) {
+        return from == null ? null : Byte.toString(from);
+    }
 
 }

@@ -23,149 +23,149 @@ import java.util.List;
 
 /**
  * A base interface for the <a href="http://martinfowler.com/eaaCatalog/repository.html">Repository</a> pattern.
- * 
+ *
  * @param <E> The entity type
  * @param <K> The key type of the entity
  */
 public interface Repository<E, K> {
-	/**
-	 * Save the given entity
-	 * 
-	 * @param entity
-	 * @return the entity
-	 */
-	public E put(final E entity);
+    /**
+     * Save the given entity
+     *
+     * @param entity
+     * @return the entity
+     */
+    public E put(final E entity);
 
-	/**
-	 * Save the given entities.
-	 * 
-	 * @param entities
-	 * @return the list of saved entities
-	 */
-	@SuppressWarnings("unchecked")
-	public List<E> put(E... entities);
+    /**
+     * Save the given entities.
+     *
+     * @param entities
+     * @return the list of saved entities
+     */
+    @SuppressWarnings("unchecked")
+    public List<E> put(E... entities);
 
-	/**
-	 * Save the given entities.
-	 * 
-	 * @param entities
-	 * @return the list of saved entities
-	 */
-	public List<E> put(final List<E> entities);
+    /**
+     * Save the given entities.
+     *
+     * @param entities
+     * @return the list of saved entities
+     */
+    public List<E> put(final List<E> entities);
 
-	/**
-	 * Load the entity with the given id
-	 * 
-	 * @param key
-	 * @return the entity, or null if no entity exists
-	 */
-	public E get(K key);
+    /**
+     * Load the entity with the given id
+     *
+     * @param key
+     * @return the entity, or null if no entity exists
+     */
+    public E get(K key);
 
-	/**
-	 * Load the entities with the given ids
-	 * 
-	 * @param keys
-	 * @return a list containing an entry for each corresponding id, containing the entity or null if none exists
-	 */
-	@SuppressWarnings("unchecked")
-	public List<E> get(K... keys);
+    /**
+     * Load the entities with the given ids
+     *
+     * @param keys
+     * @return a list containing an entry for each corresponding id, containing the entity or null if none exists
+     */
+    @SuppressWarnings("unchecked")
+    public List<E> get(K... keys);
 
-	/**
-	 * Load the entities with the given ids
-	 * 
-	 * @param keys
-	 * @return a list containing an entry for each corresponding id, containing the entity or null if none exists
-	 */
-	public List<E> get(Iterable<K> keys);
+    /**
+     * Load the entities with the given ids
+     *
+     * @param keys
+     * @return a list containing an entry for each corresponding id, containing the entity or null if none exists
+     */
+    public List<E> get(Iterable<K> keys);
 
-	/**
-	 * List up to count entities.
-	 * This will load all entities into memory, so should only be used where the number of entities is constrained.
-	 * 
-	 * @param count
-	 * @return
-	 */
-	public List<E> list(int count);
+    /**
+     * List up to count entities.
+     * This will load all entities into memory, so should only be used where the number of entities is constrained.
+     *
+     * @param count
+     * @return
+     */
+    public List<E> list(int count);
 
-	/**
-	 * Load all entities whose field has the value of the given object.
-	 * Note that the given field must be indexed for anything to be returned.
-	 * This will load all entities into memory, so should only be used where the number of entities is constrained.
-	 * 
-	 * @param field
-	 * @param value
-	 * @return
-	 */
-	public List<E> getByField(String field, Object value);
+    /**
+     * Load all entities whose field has the value of the given object.
+     * Note that the given field must be indexed for anything to be returned.
+     * This will load all entities into memory, so should only be used where the number of entities is constrained.
+     *
+     * @param field
+     * @param value
+     * @return
+     */
+    public List<E> getByField(String field, Object value);
 
-	/**
-	 * Load all entities who field has the values of any of the given objects.
-	 * Note that the given field must be indexed for anything to be returned.
-	 * This will load all entities into memory, so should only be used where the number of entities is constrained.
-	 * 
-	 * @param field
-	 * @param values
-	 * @return
-	 */
-	public List<E> getByField(String field, List<? extends Object> values);
+    /**
+     * Load all entities who field has the values of any of the given objects.
+     * Note that the given field must be indexed for anything to be returned.
+     * This will load all entities into memory, so should only be used where the number of entities is constrained.
+     *
+     * @param field
+     * @param values
+     * @return
+     */
+    public List<E> getByField(String field, List<? extends Object> values);
 
-	/**
-	 * @return a builder for a search operation
-	 */
-	public Search<E, K> search();
+    /**
+     * @return a builder for a search operation
+     */
+    public Search<E, K> search();
 
-	/**
-	 * Delete the entity with the given id
-	 * 
-	 * @param key
-	 */
-	public void deleteByKey(K key);
+    /**
+     * Delete the entity with the given id
+     *
+     * @param key
+     */
+    public void deleteByKey(K key);
 
-	/**
-	 * Delete the entities with the given ids
-	 * 
-	 * @param keys
-	 */
-	@SuppressWarnings("unchecked")
-	public void deleteByKey(K... keys);
+    /**
+     * Delete the entities with the given ids
+     *
+     * @param keys
+     */
+    @SuppressWarnings("unchecked")
+    public void deleteByKey(K... keys);
 
-	/**
-	 * Delete the entities with the given ids
-	 * 
-	 * @param ids
-	 */
-	public void deleteByKey(Iterable<K> ids);
+    /**
+     * Delete the entities with the given ids
+     *
+     * @param ids
+     */
+    public void deleteByKey(Iterable<K> ids);
 
-	/**
-	 * Delete the given entity
-	 * 
-	 * @param entity
-	 */
-	public void delete(E entity);
+    /**
+     * Delete the given entity
+     *
+     * @param entity
+     */
+    public void delete(E entity);
 
-	/**
-	 * Delete the given entities
-	 * 
-	 * @param entities
-	 */
-	@SuppressWarnings("unchecked")
-	public void delete(E... entities);
+    /**
+     * Delete the given entities
+     *
+     * @param entities
+     */
+    @SuppressWarnings("unchecked")
+    public void delete(E... entities);
 
-	/**
-	 * Delete the given entities
-	 * 
-	 * @param entities
-	 */
-	public void delete(Iterable<E> entities);
+    /**
+     * Delete the given entities
+     *
+     * @param entities
+     */
+    public void delete(Iterable<E> entities);
 
-	/**
-	 * Reindexes all the entities matching the given list of keys. The given {@link ReindexOperation}, if present will
-	 * be applied to each batch of entities.
-	 *
-	 * @param keys
-	 * @param batchSize
-	 * @param reindexOperation
-	 * @return the overall count of re-indexed entities.
-	 */
-	public int reindex(List<K> keys, int batchSize, ReindexOperation<E> reindexOperation);
+    /**
+     * Reindexes all the entities matching the given list of keys. The given {@link ReindexOperation}, if present will
+     * be applied to each batch of entities.
+     *
+     * @param keys
+     * @param batchSize
+     * @param reindexOperation
+     * @return the overall count of re-indexed entities.
+     */
+    public int reindex(List<K> keys, int batchSize, ReindexOperation<E> reindexOperation);
 }

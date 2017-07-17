@@ -25,58 +25,58 @@ import java.util.Map;
  * The {@link IdTextSearchService} provides a java class based abstraction over a document search service.
  * Implementations of this service use {@link SearchIndex} annotations to determine
  * what fields of the target object to index, and a provided id as the unique identifier.
- * 
+ * <p>
  * If you want to provide an id from one of the object's internal fields, use the {@link TextSearchService} instead.
- * 
+ *
  * @see IdGaeSearchService
  */
 public interface IdTextSearchService<T, K> {
 
-	/**
-	 * Index the given object with the given id. This will replace any previous data indexed with the given id
-	 * 
-	 * @param object the object to index.
-	 * @param id to use when indexing the object
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation index(T object, K id);
+    /**
+     * Index the given object with the given id. This will replace any previous data indexed with the given id
+     *
+     * @param object the object to index.
+     * @param id     to use when indexing the object
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation index(T object, K id);
 
-	/**
-	 * Index the given objects with the ids provided as keys
-	 * 
-	 * @param objects
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation index(Map<K, T> objects);
+    /**
+     * Index the given objects with the ids provided as keys
+     *
+     * @param objects
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation index(Map<K, T> objects);
 
-	/**
-	 * Remove the object previously indexed with the given id
-	 * 
-	 * @param id
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation removeById(K id);
+    /**
+     * Remove the object previously indexed with the given id
+     *
+     * @param id
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation removeById(K id);
 
-	/**
-	 * Remove the objects previously indexed with the given ids
-	 * 
-	 * @param ids
-	 * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
-	 */
-	public IndexOperation removeById(Iterable<K> ids);
+    /**
+     * Remove the objects previously indexed with the given ids
+     *
+     * @param ids
+     * @return an asynchronous result wrapper. Call {@link IndexOperation#complete()} to complete the operation.
+     */
+    public IndexOperation removeById(Iterable<K> ids);
 
-	/**
-	 * Remove all objects from the index.
-	 * 
-	 * @return the number of objects removed from the index.
-	 */
-	public int removeAll();
+    /**
+     * Remove all objects from the index.
+     *
+     * @return the number of objects removed from the index.
+     */
+    public int removeAll();
 
-	/**
-	 * Create a {@link Search} for the given type. This will return an object which provides a fluent
-	 * interface for customising a search
-	 * 
-	 * @return a {@link Search} that can be used to search.
-	 */
-	public Search<T, K> search();
+    /**
+     * Create a {@link Search} for the given type. This will return an object which provides a fluent
+     * interface for customising a search
+     *
+     * @return a {@link Search} that can be used to search.
+     */
+    public Search<T, K> search();
 }

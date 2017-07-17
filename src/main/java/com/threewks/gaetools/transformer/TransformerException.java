@@ -20,13 +20,13 @@ package com.threewks.gaetools.transformer;
 import com.threewks.gaetools.exception.BaseException;
 
 public class TransformerException extends BaseException {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public TransformerException(String format, Object... formatArgs) {
-		super(format, formatArgs);
-	}
+    public TransformerException(String format, Object... formatArgs) {
+        super(format, formatArgs);
+    }
 
-	public TransformerException(Throwable cause, String format, Object... formatArgs) {
-		super(cause, format, formatArgs);
-	}
+    public TransformerException(Throwable cause, String format, Object... formatArgs) {
+        super(cause, format, formatArgs);
+    }
 }

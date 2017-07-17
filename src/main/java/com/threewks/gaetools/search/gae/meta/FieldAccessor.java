@@ -22,58 +22,58 @@ import com.threewks.gaetools.search.SearchException;
 import java.lang.reflect.Field;
 
 public class FieldAccessor<T, V> implements Accessor<T, V> {
-	private Class<T> type;
-	private String name;
-	private String encodedName;
-	private String fieldName;
-	private Class<V> fieldType;
-	private Field field;
-	private IndexType indexType;
+    private Class<T> type;
+    private String name;
+    private String encodedName;
+    private String fieldName;
+    private Class<V> fieldType;
+    private Field field;
+    private IndexType indexType;
 
-	@SuppressWarnings("unchecked")
-	public FieldAccessor(Class<T> type, Field field, String name, String encodedName, IndexType indexType) {
-		try {
-			this.type = type;
-			this.field = field;
-			this.field.setAccessible(true);
-			this.fieldType = (Class<V>) this.field.getType();
-			this.name = name;
-			this.encodedName = encodedName;
-			this.fieldName = field.getName();
-			this.indexType = indexType;
-		} catch (SecurityException e) {
-			throw new SearchException(e, "Unable to access field '%s.%s': %s", type.getSimpleName(), fieldName, e.getMessage());
-		}
-	}
+    @SuppressWarnings("unchecked")
+    public FieldAccessor(Class<T> type, Field field, String name, String encodedName, IndexType indexType) {
+        try {
+            this.type = type;
+            this.field = field;
+            this.field.setAccessible(true);
+            this.fieldType = (Class<V>) this.field.getType();
+            this.name = name;
+            this.encodedName = encodedName;
+            this.fieldName = field.getName();
+            this.indexType = indexType;
+        } catch (SecurityException e) {
+            throw new SearchException(e, "Unable to access field '%s.%s': %s", type.getSimpleName(), fieldName, e.getMessage());
+        }
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public String getEncodedName() {
-		return encodedName;
-	}
+    @Override
+    public String getEncodedName() {
+        return encodedName;
+    }
 
-	@Override
-	public Class<V> getType() {
-		return fieldType;
-	}
+    @Override
+    public Class<V> getType() {
+        return fieldType;
+    }
 
-	@Override
-	public IndexType getIndexType() {
-		return indexType;
-	}
+    @Override
+    public IndexType getIndexType() {
+        return indexType;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public V get(T t) {
-		try {
-			return (V) field.get(t);
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			throw new SearchException(e, "Failed to access field '%s.%s': %s", type.getSimpleName(), fieldName, e.getMessage());
-		}
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public V get(T t) {
+        try {
+            return (V) field.get(t);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            throw new SearchException(e, "Failed to access field '%s.%s': %s", type.getSimpleName(), fieldName, e.getMessage());
+        }
+    }
 
 }

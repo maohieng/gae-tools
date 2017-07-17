@@ -27,68 +27,67 @@ import java.util.Map;
 
 /**
  * An implementation of the {@link IdTextSearchService} which uses Appengine's Full Text Search API.
- * 
- * @author nick
- * 
+ *
  * @param <T>
  * @param <K>
+ * @author nick
  */
 public class IdGaeSearchService<T, K> extends BaseGaeSearchService<T, K> implements IdTextSearchService<T, K>, SearchExecutor<T, K, SearchImpl<T, K>> {
-	/**
-	 * Create an {@link IdGaeSearchService} for the given type and the given id type. This will use the {@link DefaultIndexNamingStrategy}.
-	 * 
-	 * @param type
-	 * @param keyType
-	 * @param searchConfig
-	 */
-	public IdGaeSearchService(Class<T> type, Class<K> keyType, SearchConfig searchConfig) {
-		this(type, keyType, searchConfig, new DefaultIndexNamingStrategy());
-	}
+    /**
+     * Create an {@link IdGaeSearchService} for the given type and the given id type. This will use the {@link DefaultIndexNamingStrategy}.
+     *
+     * @param type
+     * @param keyType
+     * @param searchConfig
+     */
+    public IdGaeSearchService(Class<T> type, Class<K> keyType, SearchConfig searchConfig) {
+        this(type, keyType, searchConfig, new DefaultIndexNamingStrategy());
+    }
 
-	/**
-	 * Create an {@link IdGaeSearchService} for the given type and the given id type using the given {@link IndexNamingStrategy}/
-	 * 
-	 * @param type
-	 * @param keyType
-	 * @param searchConfig
-	 * @param indexNamingStrategy
-	 */
-	public IdGaeSearchService(Class<T> type, Class<K> keyType, SearchConfig searchConfig, IndexNamingStrategy indexNamingStrategy) {
-		super(type, keyType, searchConfig, indexNamingStrategy);
-	}
+    /**
+     * Create an {@link IdGaeSearchService} for the given type and the given id type using the given {@link IndexNamingStrategy}/
+     *
+     * @param type
+     * @param keyType
+     * @param searchConfig
+     * @param indexNamingStrategy
+     */
+    public IdGaeSearchService(Class<T> type, Class<K> keyType, SearchConfig searchConfig, IndexNamingStrategy indexNamingStrategy) {
+        super(type, keyType, searchConfig, indexNamingStrategy);
+    }
 
-	@Override
-	public IndexOperation index(T object, K id) {
-		return super.index(object, id);
-	}
+    @Override
+    public IndexOperation index(T object, K id) {
+        return super.index(object, id);
+    }
 
-	@Override
-	public IndexOperation index(Map<K, T> objects) {
-		return super.index(objects);
-	}
+    @Override
+    public IndexOperation index(Map<K, T> objects) {
+        return super.index(objects);
+    }
 
-	@Override
-	public IndexOperation removeById(K id) {
-		return super.removeById(id);
-	}
+    @Override
+    public IndexOperation removeById(K id) {
+        return super.removeById(id);
+    }
 
-	@Override
-	public IndexOperation removeById(Iterable<K> ids) {
-		return super.removeById(ids);
-	}
+    @Override
+    public IndexOperation removeById(Iterable<K> ids) {
+        return super.removeById(ids);
+    }
 
-	@Override
-	public int removeAll() {
-		return super.removeAll();
-	}
+    @Override
+    public int removeAll() {
+        return super.removeAll();
+    }
 
-	@Override
-	public SearchImpl<T, K> search() {
-		return super.search();
-	}
+    @Override
+    public SearchImpl<T, K> search() {
+        return super.search();
+    }
 
-	@Override
-	public Result<T, K> createSearchResult(SearchImpl<T, K> searchRequest) {
-		return super.createSearchResult(searchRequest);
-	}
+    @Override
+    public Result<T, K> createSearchResult(SearchImpl<T, K> searchRequest) {
+        return super.createSearchResult(searchRequest);
+    }
 }

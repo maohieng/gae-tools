@@ -25,44 +25,44 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class BigDecimalFieldMediator implements FieldMediator<BigDecimal> {
-	private static final BigDecimal Min = new BigDecimal(SearchApiLimits.MINIMUM_NUMBER_VALUE);
-	private static final BigDecimal Max = new BigDecimal(SearchApiLimits.MAXIMUM_NUMBER_VALUE);
+    private static final BigDecimal Min = new BigDecimal(SearchApiLimits.MINIMUM_NUMBER_VALUE);
+    private static final BigDecimal Max = new BigDecimal(SearchApiLimits.MAXIMUM_NUMBER_VALUE);
 
-	private int shift;
-	private int scale;
+    private int shift;
+    private int scale;
 
-	public BigDecimalFieldMediator() {
-		this(3, 3);
-	}
+    public BigDecimalFieldMediator() {
+        this(3, 3);
+    }
 
-	public BigDecimalFieldMediator(int shift, int scale) {
-		this.shift = shift;
-		this.scale = scale;
-	}
+    public BigDecimalFieldMediator(int shift, int scale) {
+        this.shift = shift;
+        this.scale = scale;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <In> BigDecimal normalise(TransformerManager transformerManager, In value) {
-		Class<In> valueClass = (Class<In>) value.getClass();
-		BigDecimal bigDecimalValue = transformerManager.transform(valueClass, BigDecimal.class, value);
-		bigDecimalValue = bigDecimalValue.movePointLeft(shift).setScale(shift + scale, RoundingMode.DOWN);
-		bigDecimalValue = bigDecimalValue.min(Max).max(Min);
-		return bigDecimalValue;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <In> BigDecimal normalise(TransformerManager transformerManager, In value) {
+        Class<In> valueClass = (Class<In>) value.getClass();
+        BigDecimal bigDecimalValue = transformerManager.transform(valueClass, BigDecimal.class, value);
+        bigDecimalValue = bigDecimalValue.movePointLeft(shift).setScale(shift + scale, RoundingMode.DOWN);
+        bigDecimalValue = bigDecimalValue.min(Max).max(Min);
+        return bigDecimalValue;
+    }
 
-	@Override
-	public void setValue(Builder builder, BigDecimal value) {
-		builder.setNumber(value.doubleValue());
-	}
+    @Override
+    public void setValue(Builder builder, BigDecimal value) {
+        builder.setNumber(value.doubleValue());
+    }
 
-	@Override
-	public String stringify(BigDecimal value) {
-		return Double.valueOf(value.doubleValue()).toString();
-	}
+    @Override
+    public String stringify(BigDecimal value) {
+        return Double.valueOf(value.doubleValue()).toString();
+    }
 
-	@Override
-	public Class<BigDecimal> getTargetType() {
-		return BigDecimal.class;
-	}
+    @Override
+    public Class<BigDecimal> getTargetType() {
+        return BigDecimal.class;
+    }
 
 }

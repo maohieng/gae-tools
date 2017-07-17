@@ -26,34 +26,34 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class ObjectToEnum<From, E extends Enum<E>> implements ETransformer<From, E> {
-	private static ConcurrentMap<Class<? extends Enum<?>>, Map<String, Object>> enumValueCache = new ConcurrentHashMap<>();
-	private Class<E> type;
+    private static ConcurrentMap<Class<? extends Enum<?>>, Map<String, Object>> enumValueCache = new ConcurrentHashMap<>();
+    private Class<E> type;
 
-	public ObjectToEnum(Class<E> type) {
-		this.type = type;
-		buildEnumValueCacheForType();
-	}
+    public ObjectToEnum(Class<E> type) {
+        this.type = type;
+        buildEnumValueCacheForType();
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public E from(From from) {
-		if (from == null) {
-			return null;
-		}
-		String fromString = StringUtils.trimToEmpty(StringUtils.lowerCase(from.toString()));
-		Map<String, Object> cache = enumValueCache.get(type);
-		return (E) cache.get(fromString);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public E from(From from) {
+        if (from == null) {
+            return null;
+        }
+        String fromString = StringUtils.trimToEmpty(StringUtils.lowerCase(from.toString()));
+        Map<String, Object> cache = enumValueCache.get(type);
+        return (E) cache.get(fromString);
+    }
 
-	Map<String, Object> buildEnumValueCacheForType() {
-		Map<String, Object> cache = enumValueCache.get(type);
-		if (cache == null) {
-			cache = new HashMap<>();
-			for (E e : type.getEnumConstants()) {
-				cache.put(e.name().toLowerCase(), (Object) e);
-			}
-			enumValueCache.putIfAbsent(type, cache);
-		}
-		return cache;
-	}
+    Map<String, Object> buildEnumValueCacheForType() {
+        Map<String, Object> cache = enumValueCache.get(type);
+        if (cache == null) {
+            cache = new HashMap<>();
+            for (E e : type.getEnumConstants()) {
+                cache.put(e.name().toLowerCase(), (Object) e);
+            }
+            enumValueCache.putIfAbsent(type, cache);
+        }
+        return cache;
+    }
 }

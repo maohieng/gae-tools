@@ -35,178 +35,176 @@ import java.util.List;
 /**
  * Represents a search on the {@link TextSearchService}. Searches are performed by building the request up by invoking
  * fluent methods.
- * 
- * 
- * 
+ *
  * @param <T>
  */
 public class SearchImpl<T, K> implements Search<T, K> {
-	private SearchExecutor<T, K, SearchImpl<T, K>> searchExecutor;
-	private List<QueryComponent> queryComponents = new ArrayList<>();
-	private List<OrderComponent> sortOrder = new ArrayList<OrderComponent>();
-	private Integer limit;
-	private Integer offset;
-	private Integer accuracy;
+    private SearchExecutor<T, K, SearchImpl<T, K>> searchExecutor;
+    private List<QueryComponent> queryComponents = new ArrayList<>();
+    private List<OrderComponent> sortOrder = new ArrayList<>();
+    private Integer limit;
+    private Integer offset;
+    private Integer accuracy;
 
-	public SearchImpl(SearchExecutor<T, K, SearchImpl<T, K>> searchExecutor) {
-		this(searchExecutor, new ArrayList<QueryComponent>(), new ArrayList<OrderComponent>(), null, null, null);
-	}
+    public SearchImpl(SearchExecutor<T, K, SearchImpl<T, K>> searchExecutor) {
+        this(searchExecutor, new ArrayList<>(), new ArrayList<>(), null, null, null);
+    }
 
-	protected SearchImpl(SearchExecutor<T, K, SearchImpl<T, K>> searchExecutor, List<QueryComponent> queryComponents, List<OrderComponent> sortOrder, Integer limit, Integer offset, Integer accuracy) {
-		super();
-		this.searchExecutor = searchExecutor;
-		this.queryComponents = queryComponents;
-		this.sortOrder = sortOrder;
-		this.limit = limit;
-		this.offset = offset;
-		this.accuracy = accuracy;
-	}
+    protected SearchImpl(SearchExecutor<T, K, SearchImpl<T, K>> searchExecutor, List<QueryComponent> queryComponents, List<OrderComponent> sortOrder, Integer limit, Integer offset, Integer accuracy) {
+        super();
+        this.searchExecutor = searchExecutor;
+        this.queryComponents = queryComponents;
+        this.sortOrder = sortOrder;
+        this.limit = limit;
+        this.offset = offset;
+        this.accuracy = accuracy;
+    }
 
-	/**
-	 * includes a string query which applies across all fields in the index.
-	 * 
-	 * @param query
-	 * @return
-	 */
-	@Override
-	public Search<T, K> query(CharSequence query) {
-		return createNewInstance(components(QueryComponent.forRawQuery(query)), sortOrder, limit, offset, accuracy);
-	}
+    /**
+     * includes a string query which applies across all fields in the index.
+     *
+     * @param query
+     * @return
+     */
+    @Override
+    public Search<T, K> query(CharSequence query) {
+        return createNewInstance(components(QueryComponent.forRawQuery(query)), sortOrder, limit, offset, accuracy);
+    }
 
-	/**
-	 * Defines a search operation on the given field to apply to the current search.
-	 */
-	@Override
-	public <V> Search<T, K> field(String field, Is is, V value) {
-		if (value == null) {
-			return this;
-		}
-		return createNewInstance(components(QueryComponent.forFieldQuery(field, is, value)), sortOrder, limit, offset, accuracy);
-	}
+    /**
+     * Defines a search operation on the given field to apply to the current search.
+     */
+    @Override
+    public <V> Search<T, K> field(String field, Is is, V value) {
+        if (value == null) {
+            return this;
+        }
+        return createNewInstance(components(QueryComponent.forFieldQuery(field, is, value)), sortOrder, limit, offset, accuracy);
+    }
 
-	@Override
-	public <V> Search<T, K> field(String field, Collection<V> values) {
-		if (Expressive.isEmpty(values)) {
-			return this;
-		}
-		return createNewInstance(components(QueryComponent.forCollection(field, values)), sortOrder, limit, offset, accuracy);
-	}
+    @Override
+    public <V> Search<T, K> field(String field, Collection<V> values) {
+        if (Expressive.isEmpty(values)) {
+            return this;
+        }
+        return createNewInstance(components(QueryComponent.forCollection(field, values)), sortOrder, limit, offset, accuracy);
+    }
 
-	/**
-	 * Limits the number of results in the final {@link ResultImpl}
-	 * 
-	 * @param limit
-	 * @return
-	 */
-	@Override
-	public Search<T, K> limit(Integer limit) {
-		return createNewInstance(queryComponents, sortOrder, limit, offset, accuracy);
-	}
+    /**
+     * Limits the number of results in the final {@link ResultImpl}
+     *
+     * @param limit
+     * @return
+     */
+    @Override
+    public Search<T, K> limit(Integer limit) {
+        return createNewInstance(queryComponents, sortOrder, limit, offset, accuracy);
+    }
 
-	/**
-	 * Adjusts the results in the final {@link ResultImpl} such that the given number of results are skipped over
-	 * and not included in the results.
-	 * 
-	 * @param offset
-	 * @return
-	 */
-	@Override
-	public Search<T, K> offset(Integer offset) {
-		return createNewInstance(queryComponents, sortOrder, limit, offset, accuracy);
-	}
+    /**
+     * Adjusts the results in the final {@link ResultImpl} such that the given number of results are skipped over
+     * and not included in the results.
+     *
+     * @param offset
+     * @return
+     */
+    @Override
+    public Search<T, K> offset(Integer offset) {
+        return createNewInstance(queryComponents, sortOrder, limit, offset, accuracy);
+    }
 
-	/**
-	 * Allows control of the accuracy of the number of matches on the response. If the number of
-	 * matches is less than the given accuracy, then it is absolutely correct. Above that, it is
-	 * an estimate based on samples. A high number has performance implications.
-	 * 
-	 * @return
-	 * @see ResultImpl#getMatchingRecordCount()
-	 */
-	@Override
-	public Search<T, K> accuracy(Integer accuracy) {
-		return createNewInstance(queryComponents, sortOrder, limit, offset, accuracy);
-	}
+    /**
+     * Allows control of the accuracy of the number of matches on the response. If the number of
+     * matches is less than the given accuracy, then it is absolutely correct. Above that, it is
+     * an estimate based on samples. A high number has performance implications.
+     *
+     * @return
+     * @see ResultImpl#getMatchingRecordCount()
+     */
+    @Override
+    public Search<T, K> accuracy(Integer accuracy) {
+        return createNewInstance(queryComponents, sortOrder, limit, offset, accuracy);
+    }
 
-	/**
-	 * Performs the search operation by combining all the previously specified search operations, sort orders, limits and offset.
-	 * 
-	 * @return
-	 */
-	@Override
-	public Result<T, K> run() {
-		return searchExecutor.createSearchResult(this);
-	}
+    /**
+     * Performs the search operation by combining all the previously specified search operations, sort orders, limits and offset.
+     *
+     * @return
+     */
+    @Override
+    public Result<T, K> run() {
+        return searchExecutor.createSearchResult(this);
+    }
 
-	/**
-	 * @return the ordered series of query fragments that were specified on this search request
-	 */
-	@Override
-	public List<QueryComponent> query() {
-		return queryComponents;
-	}
+    /**
+     * @return the ordered series of query fragments that were specified on this search request
+     */
+    @Override
+    public List<QueryComponent> query() {
+        return queryComponents;
+    }
 
-	/**
-	 * @return the ordered series of sort operations that were specified on this search request
-	 */
-	@Override
-	public List<OrderComponent> order() {
-		return sortOrder;
-	}
+    /**
+     * @return the ordered series of sort operations that were specified on this search request
+     */
+    @Override
+    public List<OrderComponent> order() {
+        return sortOrder;
+    }
 
-	/**
-	 * @return the limit applied to this search request
-	 */
-	@Override
-	public Integer limit() {
-		return limit;
-	}
+    /**
+     * @return the limit applied to this search request
+     */
+    @Override
+    public Integer limit() {
+        return limit;
+    }
 
-	/**
-	 * @return the offset applied to this search request
-	 */
-	@Override
-	public Integer offset() {
-		return offset;
-	}
+    /**
+     * @return the offset applied to this search request
+     */
+    @Override
+    public Integer offset() {
+        return offset;
+    }
 
-	/**
-	 * @return the accuracy applied to this search request
-	 */
-	@Override
-	public Integer accuracy() {
-		return accuracy;
-	}
+    /**
+     * @return the accuracy applied to this search request
+     */
+    @Override
+    public Integer accuracy() {
+        return accuracy;
+    }
 
-	@Override
-	public Search<T, K> order(String field, boolean ascending) {
-		List<OrderComponent> sortOrder = new ArrayList<OrderComponent>(this.sortOrder);
-		sortOrder.add(OrderComponent.forField(field, ascending));
-		return createNewInstance(queryComponents, sortOrder, limit, offset, accuracy);
-	}
+    @Override
+    public Search<T, K> order(String field, boolean ascending) {
+        List<OrderComponent> sortOrder = new ArrayList<>(this.sortOrder);
+        sortOrder.add(OrderComponent.forField(field, ascending));
+        return createNewInstance(queryComponents, sortOrder, limit, offset, accuracy);
+    }
 
-	@Override
-	public String toString() {
-		return (queryComponents.isEmpty() ? "*" : StringUtils.join(queryComponents, " ")) + (sortOrder.isEmpty() ? "" : " " + sortOrder);
-	}
+    @Override
+    public String toString() {
+        return (queryComponents.isEmpty() ? "*" : StringUtils.join(queryComponents, " ")) + (sortOrder.isEmpty() ? "" : " " + sortOrder);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
 
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 
-	protected Search<T, K> createNewInstance(List<QueryComponent> queryComponents, List<OrderComponent> sortOrder, Integer limit, Integer offset, Integer accuracy) {
-		return new SearchImpl<T, K>(searchExecutor, queryComponents, sortOrder, limit, offset, accuracy);
-	}
+    protected Search<T, K> createNewInstance(List<QueryComponent> queryComponents, List<OrderComponent> sortOrder, Integer limit, Integer offset, Integer accuracy) {
+        return new SearchImpl<>(searchExecutor, queryComponents, sortOrder, limit, offset, accuracy);
+    }
 
-	private List<QueryComponent> components(QueryComponent queryComponent) {
-		List<QueryComponent> components = new ArrayList<>(this.queryComponents);
-		components.add(queryComponent);
-		return components;
-	}
+    private List<QueryComponent> components(QueryComponent queryComponent) {
+        List<QueryComponent> components = new ArrayList<>(this.queryComponents);
+        components.add(queryComponent);
+        return components;
+    }
 }

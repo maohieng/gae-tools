@@ -24,15 +24,15 @@ import jodd.introspector.CtorDescriptor;
 import jodd.util.ReflectUtil;
 import org.apache.commons.lang3.ClassUtils;
 
-//import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+//import javax.inject.Inject;
 
 /**
  * Provides reflective information on a {@link Class}.
@@ -40,84 +40,70 @@ import java.util.List;
  * @see TypeIntrospector
  */
 public class ClassIntrospector {
-	public static final boolean supportsInjection = TypeIntrospector.classExists("javax.inject.Inject");
+    public static final boolean supportsInjection = TypeIntrospector.classExists("javax.inject.Inject");
 
-	@SuppressWarnings("unchecked")
-	public <T> List<Constructor<T>> listConstructors(Class<T> type) {
-		ClassDescriptor classDescriptor = new ClassDescriptor(type, false, false, true, null);
-		List<Constructor<T>> ctors = new ArrayList<>();
-		for (CtorDescriptor desc : classDescriptor.getAllCtorDescriptors()) {
-			ctors.add(desc.getConstructor());
-		}
-		Collections.sort(ctors, new ConstructorComparator());
-		return ctors;
-	}
+    @SuppressWarnings("unchecked")
+    public <T> List<Constructor<T>> listConstructors(Class<T> type) {
+        ClassDescriptor classDescriptor = new ClassDescriptor(type, false, false, true, null);
+        List<Constructor<T>> ctors = new ArrayList<>();
+        for (CtorDescriptor desc : classDescriptor.getAllCtorDescriptors()) {
+            ctors.add(desc.getConstructor());
+        }
+        ctors.sort(new ConstructorComparator());
+        return ctors;
+    }
 
-	public <T> List<Method> listSetters(Class<T> type) {
-		Method[] methods = ReflectUtil.getSupportedMethods(type);
-		List<Method> setters = new ArrayList<Method>();
-		for (Method method : methods) {
-			if (ReflectUtil.getBeanPropertySetterName(method) != null) {
-				setters.add(method);
-			}
-		}
-		return setters;
-	}
+    public <T> List<Method> listSetters(Class<T> type) {
+        Method[] methods = ReflectUtil.getSupportedMethods(type);
+        List<Method> setters = new ArrayList<>();
+        for (Method method : methods) {
+            if (ReflectUtil.getBeanPropertySetterName(method) != null) {
+                setters.add(method);
+            }
+        }
+        return setters;
+    }
 
-	public <T> List<Field> listFields(Class<T> type) {
-		return Arrays.asList(ReflectUtil.getSupportedFields(type));
-	}
+    public <T> List<Field> listFields(Class<T> type) {
+        return Arrays.asList(ReflectUtil.getSupportedFields(type));
+    }
 
-//	public <T> List<Field> listInjectionFields(Class<T> type) {
-//		List<Field> injectionFields = new ArrayList<Field>();
-//		if (supportsInjection) {
-//			Field[] fields = ReflectUtil.getSupportedFields(type);
-//			for (Field field : fields) {
-//				boolean shouldInject = field.getAnnotation(Inject.class) != null;
-//				if (shouldInject) {
-//					injectionFields.add(field);
-//				}
-//			}
-//		}
-//		return injectionFields;
-//	}
+    public List<Class<?>> listImplementedTypes(Class<?> type) {
+        EList<Class<?>> types = Expressive.<Class<?>>list(type);
+        types.addItems(ClassUtils.getAllSuperclasses(type));
+        types.addItems(ClassUtils.getAllInterfaces(type));
+        return types;
+    }
 
-	public List<Class<?>> listImplementedTypes(Class<?> type) {
-		EList<Class<?>> types = Expressive.<Class<?>> list(type);
-		types.addItems(ClassUtils.getAllSuperclasses(type));
-		types.addItems(ClassUtils.getAllInterfaces(type));
-		return types;
-	}
+    public Method getMethod(Class<?> type, String methodName) {
+        for (Method method : listMethods(type)) {
+            if (method.getName().equals(methodName)) {
+                return method;
+            }
+        }
+        return null;
+    }
 
-	public Method getMethod(Class<?> type, String methodName) {
-		for (Method method : listMethods(type)) {
-			if (method.getName().equals(methodName)) {
-				return method;
-			}
-		}
-		return null;
-	}
+    // TODO - NAO - Isolate dependencies on ReflectUtil and other introspection magic to
+    // just this package.
+    public List<Method> listMethods(Class<?> type) {
+        return Arrays.asList(ReflectUtil.getSupportedMethods(type));
+    }
 
-	// TODO - NAO - Isolate dependencies on ReflectUtil and other introspection magic to
-	// just this package.
-	public List<Method> listMethods(Class<?> type) {
-		return Arrays.asList(ReflectUtil.getSupportedMethods(type));
-	}
-
-	@SuppressWarnings("rawtypes")
-	static class ConstructorComparator implements Comparator<Constructor> {
-		@Override
-		public int compare(Constructor o1, Constructor o2) {
-			Class<?>[] types1 = o1.getParameterTypes();
-			Class<?>[] types2 = o2.getParameterTypes();
-			int compare = new Integer(types1.length).compareTo(types2.length);
-			if (compare == 0) {
-				// to keep the outcome consistent, we want to deterministically sort
-				for (int i = 0; compare == 0 && i < types1.length; i++) {
-					compare = types1[i].getName().compareTo(types2[i].getName());
-				}
-			}
-			return compare;
-		}
-	}
+    @SuppressWarnings("rawtypes")
+    static class ConstructorComparator implements Comparator<Constructor> {
+        @Override
+        public int compare(Constructor o1, Constructor o2) {
+            Class<?>[] types1 = o1.getParameterTypes();
+            Class<?>[] types2 = o2.getParameterTypes();
+            int compare = new Integer(types1.length).compareTo(types2.length);
+            if (compare == 0) {
+                // to keep the outcome consistent, we want to deterministically sort
+                for (int i = 0; compare == 0 && i < types1.length; i++) {
+                    compare = types1[i].getName().compareTo(types2[i].getName());
+                }
+            }
+            return compare;
+        }
+    }
 }

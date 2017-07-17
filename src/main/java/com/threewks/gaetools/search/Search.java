@@ -23,100 +23,100 @@ import java.util.List;
 /**
  * Represents a search on the {@link TextSearchService}. Searches are performed by building the request up by invoking
  * fluent methods.
- * 
+ *
  * @param <T>
  */
 public interface Search<T, K> {
 
-	/**
-	 * Includes a string query which applies across all fields in the index.
-	 * 
-	 * @param query
-	 * @return
-	 */
-	public Search<T, K> query(CharSequence query);
+    /**
+     * Includes a string query which applies across all fields in the index.
+     *
+     * @param query
+     * @return
+     */
+    public Search<T, K> query(CharSequence query);
 
-	/**
-	 * Defines a search operation on the given field to apply to the current search.
-	 * 
-	 * @param field
-	 * @return
-	 */
-	public <V> Search<T, K> field(String field, Is is, V value);
+    /**
+     * Defines a search operation on the given field to apply to the current search.
+     *
+     * @param field
+     * @return
+     */
+    public <V> Search<T, K> field(String field, Is is, V value);
 
-	/**
-	 * Defines a search operation on the given field to match one of the given values
-	 * 
-	 * @param field
-	 * @return
-	 */
-	public <V> Search<T, K> field(String field, Collection<V> values);
+    /**
+     * Defines a search operation on the given field to match one of the given values
+     *
+     * @param field
+     * @return
+     */
+    public <V> Search<T, K> field(String field, Collection<V> values);
 
-	/**
-	 * Limits the number of results in the final {@link Result}
-	 * 
-	 * @param limit
-	 * @return
-	 */
-	public Search<T, K> limit(Integer limit);
+    /**
+     * Limits the number of results in the final {@link Result}
+     *
+     * @param limit
+     * @return
+     */
+    public Search<T, K> limit(Integer limit);
 
-	/**
-	 * Adjusts the results in the final {@link Result} such that the given number of results are skipped over
-	 * and not included in the results.
-	 * 
-	 * @param offset
-	 * @return
-	 */
-	public Search<T, K> offset(Integer offset);
+    /**
+     * Adjusts the results in the final {@link Result} such that the given number of results are skipped over
+     * and not included in the results.
+     *
+     * @param offset
+     * @return
+     */
+    public Search<T, K> offset(Integer offset);
 
-	/**
-	 * Allows control of the accuracy of the number of matches on the response. If the number of
-	 * matches is less than the given accuracy, then it is absolutely correct. Above that, it is
-	 * an estimate based on samples. A high number has performance implications.
-	 * 
-	 * @return
-	 * @see Result#getMatchingRecordCount()
-	 */
-	public Search<T, K> accuracy(Integer accuracy);
+    /**
+     * Allows control of the accuracy of the number of matches on the response. If the number of
+     * matches is less than the given accuracy, then it is absolutely correct. Above that, it is
+     * an estimate based on samples. A high number has performance implications.
+     *
+     * @return
+     * @see Result#getMatchingRecordCount()
+     */
+    public Search<T, K> accuracy(Integer accuracy);
 
-	/**
-	 * Defines a sort order on the given field to apply to the current search.
-	 * 
-	 * @param field
-	 * @return
-	 */
-	public Search<T, K> order(String field, boolean ascending);
+    /**
+     * Defines a sort order on the given field to apply to the current search.
+     *
+     * @param field
+     * @return
+     */
+    public Search<T, K> order(String field, boolean ascending);
 
-	/**
-	 * Performs the search operation by combining all the previously specified search operations, sort orders, limits and offset.
-	 * 
-	 * @return
-	 */
-	public Result<T, K> run();
+    /**
+     * Performs the search operation by combining all the previously specified search operations, sort orders, limits and offset.
+     *
+     * @return
+     */
+    public Result<T, K> run();
 
-	/**
-	 * @return the ordered series of query fragments that were specified on this search request
-	 */
-	public List<QueryComponent> query();
+    /**
+     * @return the ordered series of query fragments that were specified on this search request
+     */
+    public List<QueryComponent> query();
 
-	/**
-	 * @return the ordered series of sort operations that were specified on this search request
-	 */
-	public List<OrderComponent> order();
+    /**
+     * @return the ordered series of sort operations that were specified on this search request
+     */
+    public List<OrderComponent> order();
 
-	/**
-	 * @return the limit applied to this search request
-	 */
-	public Integer limit();
+    /**
+     * @return the limit applied to this search request
+     */
+    public Integer limit();
 
-	/**
-	 * @return the offset applied to this search request
-	 */
-	public Integer offset();
+    /**
+     * @return the offset applied to this search request
+     */
+    public Integer offset();
 
-	/**
-	 * @return the accuracy applied to this search request
-	 */
-	public Integer accuracy();
+    /**
+     * @return the accuracy applied to this search request
+     */
+    public Integer accuracy();
 
 }

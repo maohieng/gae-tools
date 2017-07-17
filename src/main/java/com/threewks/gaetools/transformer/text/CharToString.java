@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class CharToString implements ETransformer<Character, String> {
 
-	@Override
-	public String from(Character from) {
-		return from == null ? null : from.toString();
-	}
+    @Override
+    public String from(Character from) {
+        return from == null ? null : from.toString();
+    }
 
 }

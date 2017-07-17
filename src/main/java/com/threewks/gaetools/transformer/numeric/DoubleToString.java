@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class DoubleToString implements ETransformer<Double, String> {
 
-	@Override
-	public String from(Double from) {
-		return from == null ? null : Double.toString(from);
-	}
+    @Override
+    public String from(Double from) {
+        return from == null ? null : Double.toString(from);
+    }
 
 }

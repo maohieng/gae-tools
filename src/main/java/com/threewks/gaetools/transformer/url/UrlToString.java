@@ -23,9 +23,9 @@ import java.net.URL;
 
 public class UrlToString implements ETransformer<URL, String> {
 
-	@Override
-	public String from(URL from) {
-		return from == null ? null : from.toString();
-	}
+    @Override
+    public String from(URL from) {
+        return from == null ? null : from.toString();
+    }
 
 }

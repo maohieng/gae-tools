@@ -22,9 +22,9 @@ import com.atomicleopard.expressive.ETransformer;
 import java.util.Date;
 
 public class LongToDate implements ETransformer<Long, Date> {
-	@Override
-	public Date from(Long from) {
-		return from == null ? null : new Date(from);
-	}
+    @Override
+    public Date from(Long from) {
+        return from == null ? null : new Date(from);
+    }
 
 }

@@ -24,11 +24,11 @@ import org.joda.time.format.ISODateTimeFormat;
 import java.util.Date;
 
 public class StringToDate implements ETransformer<String, Date> {
-	private static final DateTimeFormatter LenientIsoParser = ISODateTimeFormat.dateOptionalTimeParser();
+    private static final DateTimeFormatter LenientIsoParser = ISODateTimeFormat.dateOptionalTimeParser();
 
-	@Override
-	public Date from(String from) {
-		return from == null ? null : LenientIsoParser.parseDateTime(from).toDate();
-	}
+    @Override
+    public Date from(String from) {
+        return from == null ? null : LenientIsoParser.parseDateTime(from).toDate();
+    }
 
 }

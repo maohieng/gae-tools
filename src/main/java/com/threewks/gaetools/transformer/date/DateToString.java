@@ -24,11 +24,11 @@ import org.joda.time.format.ISODateTimeFormat;
 import java.util.Date;
 
 public class DateToString implements ETransformer<Date, String> {
-	private static final DateTimeFormatter IsoFormat = ISODateTimeFormat.dateTime().withZoneUTC();
+    private static final DateTimeFormatter IsoFormat = ISODateTimeFormat.dateTime().withZoneUTC();
 
-	@Override
-	public String from(Date from) {
-		return from == null ? null : IsoFormat.print(from.getTime());
-	}
+    @Override
+    public String from(Date from) {
+        return from == null ? null : IsoFormat.print(from.getTime());
+    }
 
 }

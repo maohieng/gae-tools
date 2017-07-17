@@ -21,9 +21,9 @@ import com.atomicleopard.expressive.ETransformer;
 
 public class BooleanToString implements ETransformer<Boolean, String> {
 
-	@Override
-	public String from(Boolean from) {
-		return from == null ? null : from.toString();
-	}
+    @Override
+    public String from(Boolean from) {
+        return from == null ? null : from.toString();
+    }
 
 }

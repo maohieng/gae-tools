@@ -25,30 +25,20 @@ import java.util.UUID;
 
 public class UuidRepository<E> extends AbstractRepository<E, UUID> {
 
-	public UuidRepository(final Class<E> entityType, SearchConfig searchConfig) {
-		super(entityType, fromUuid(entityType), toUuid(entityType), searchConfig);
-	}
+    public UuidRepository(final Class<E> entityType, SearchConfig searchConfig) {
+        super(entityType, fromUuid(entityType), toUuid(entityType), searchConfig);
+    }
 
-	static <E> ETransformer<UUID, Key<E>> fromUuid(final Class<E> type) {
-		return new ETransformer<UUID, Key<E>>() {
-			@Override
-			public Key<E> from(UUID from) {
-				return Key.create(type, from.toString());
-			}
-		};
-	}
+    static <E> ETransformer<UUID, Key<E>> fromUuid(final Class<E> type) {
+        return from -> Key.create(type, from.toString());
+    }
 
-	static <E> ETransformer<Key<E>, UUID> toUuid(final Class<E> type) {
-		return new ETransformer<Key<E>, UUID>() {
-			@Override
-			public UUID from(Key<E> from) {
-				return UUID.fromString(from.getName());
-			}
-		};
-	}
+    static <E> ETransformer<Key<E>, UUID> toUuid(final Class<E> type) {
+        return from -> UUID.fromString(from.getName());
+    }
 
-	protected Key<E> fromWebSafeKey(String key) {
-		Key<E> k = Key.create(key);
-		return k;
-	}
+    protected Key<E> fromWebSafeKey(String key) {
+        Key<E> k = Key.create(key);
+        return k;
+    }
 }

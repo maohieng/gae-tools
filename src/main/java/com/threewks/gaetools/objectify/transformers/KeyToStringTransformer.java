@@ -23,9 +23,9 @@ import com.googlecode.objectify.Key;
 @SuppressWarnings("rawtypes")
 public class KeyToStringTransformer implements ETransformer<Key, String> {
 
-	@Override
-	public String from(Key from) {
-		return from == null ? null : from.getString();
-	}
+    @Override
+    public String from(Key from) {
+        return from == null ? null : from.getString();
+    }
 
 }

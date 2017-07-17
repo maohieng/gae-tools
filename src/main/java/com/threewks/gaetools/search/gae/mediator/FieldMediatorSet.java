@@ -30,39 +30,36 @@ import java.util.Map;
  * them to the appropriate {@link IndexType}.
  */
 public class FieldMediatorSet {
-	private Map<IndexType, FieldMediator<?>> fieldMediators = initIndexFieldBuilders();
+    private Map<IndexType, FieldMediator<?>> fieldMediators = initIndexFieldBuilders();
 
-	@SuppressWarnings("unchecked")
-	public <T> FieldMediator<T> get(IndexType indexType) {
-		FieldMediator<T> result = (FieldMediator<T>) fieldMediators.get(indexType);
-		if (result == null) {
-			throw new SearchException("No %s present for %s '%s'", FieldMediator.class.getSimpleName(), IndexType.class.getSimpleName(), indexType);
-		}
-		return result;
-	}
+    @SuppressWarnings("unchecked")
+    public <T> FieldMediator<T> get(IndexType indexType) {
+        FieldMediator<T> result = (FieldMediator<T>) fieldMediators.get(indexType);
+        if (result == null) {
+            throw new SearchException("No %s present for %s '%s'", FieldMediator.class.getSimpleName(), IndexType.class.getSimpleName(), indexType);
+        }
+        return result;
+    }
 
-	public <T> void put(IndexType indexType, FieldMediator<T> mediator) {
-		this.fieldMediators.put(indexType, mediator);
-	}
+    public <T> void put(IndexType indexType, FieldMediator<T> mediator) {
+        this.fieldMediators.put(indexType, mediator);
+    }
 
-	protected static Map<IndexType, FieldMediator<?>> initIndexFieldBuilders() {
-		Map<IndexType, FieldMediator<?>> map = new HashMap<>();
-		map.put(IndexType.Automatic, new TextFieldMediator());
-		map.put(IndexType.BigDecimal, new BigDecimalFieldMediator());
-		map.put(IndexType.Date, new DateFieldMediator());
-		map.put(IndexType.GeoPoint, new GeoPointFieldMediator());
-		map.put(IndexType.Html, new HtmlFieldMediator());
-		map.put(IndexType.Identifier, new AtomFieldMediator());
-		map.put(IndexType.SmallDecimal, new SmallDecimalFieldMediator());
-		map.put(IndexType.Text, new TextFieldMediator());
-		return map;
-	}
+    protected static Map<IndexType, FieldMediator<?>> initIndexFieldBuilders() {
+        Map<IndexType, FieldMediator<?>> map = new HashMap<>();
+        map.put(IndexType.Automatic, new TextFieldMediator());
+        map.put(IndexType.BigDecimal, new BigDecimalFieldMediator());
+        map.put(IndexType.Date, new DateFieldMediator());
+        map.put(IndexType.GeoPoint, new GeoPointFieldMediator());
+        map.put(IndexType.Html, new HtmlFieldMediator());
+        map.put(IndexType.Identifier, new AtomFieldMediator());
+        map.put(IndexType.SmallDecimal, new SmallDecimalFieldMediator());
+        map.put(IndexType.Text, new TextFieldMediator());
+        return map;
+    }
 
-	public static final ETransformer<String, String> quote = new ETransformer<String, String>() {
-		@Override
-		public String from(String from) {
-			from = from.replaceAll("\"", "\\\\\"");
-			return String.format("\"%s\"", from);
-		}
-	};
+    public static final ETransformer<String, String> quote = from -> {
+        from = from.replaceAll("\"", "\\\\\"");
+        return String.format("\"%s\"", from);
+    };
 }
